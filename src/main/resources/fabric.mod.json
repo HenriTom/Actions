@@ -1,0 +1,48 @@
+{
+	"schemaVersion": 1,
+	"id": "actions",
+	"version": "${version}",
+	"name": "Actions",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/actions/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "de.henritom.actions.Actions",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "de.henritom.actions.ActionsClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"actions.mixins.json",
+		{
+			"config": "actions.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
