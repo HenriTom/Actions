@@ -1,0 +1,55 @@
+{
+	"schemaVersion": 1,
+	"id": "actions",
+	"version": "1.0",
+	"name": "Actions",
+	"description": "Allows you to create actions that do things for you in Minecraft.",
+	"authors": [
+		"HenriTom"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/actions",
+		"issues": "https://github.com/HenriTom/Actions/issues",
+		"sources": "https://github.com/HenriTom/Actions",
+		"wiki": "https://github.com/HenriTom/Actions/wiki",
+		"discord": "https://discord.gg/w5aWc2tgFY"
+	},
+	"license": "LGPL-3.0-or-later",
+	"icon": "assets/actions/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			{
+				"value": "de.henritom.actions.ActionsClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		{
+			"config": "actions.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.modrinth": "https://modrinth.com/mod/actions",
+				"modmenu.issues": "https://github.com/HenriTom/Actions/issues",
+				"modmenu.wiki": "https://github.com/HenriTom/Actions/wiki",
+				"modmenu.discord": "https://discord.gg/w5aWc2tgFY"
+			},
+			"update_checker": true
+		}
+	}
+}
