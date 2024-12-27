@@ -13,10 +13,11 @@ class CommandTrigger {
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.COMMAND && trigger.value == nameID) {
                     action.call()
-                    MessageUtil().sendChat("§8» §7Action $nameID called.")
+                    MessageUtil().sendChat("§8» §7Action '${action.name}' called.")
                     return
                 }
 
-        MessageUtil().sendChat("§8» §7Command-Trigger $nameID not found.")
+        if (nameID.isNotEmpty())
+            MessageUtil().sendChat("§8» §7Command-Trigger '$nameID' not found.")
     }
 }
