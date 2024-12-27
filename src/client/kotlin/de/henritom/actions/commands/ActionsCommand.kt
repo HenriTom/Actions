@@ -93,7 +93,7 @@ class ActionsCommand {
                                         .then(CommandManager.literal("add")
                                             .then(CommandManager.argument("trigger", StringArgumentType.string())
                                                 .suggests { context, builder ->
-                                                    val nameID = StringArgumentType.getString(context, "name/id") 
+                                                    val nameID = StringArgumentType.getString(context, "name/id")
                                                     val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                     for (trigger in TriggerEnum.entries)
@@ -102,6 +102,34 @@ class ActionsCommand {
 
                                                     builder.buildFuture()
                                                 }
+                                                .then(CommandManager.argument("initValue", StringArgumentType.string())
+                                                    .executes { context ->
+                                                        val nameID = StringArgumentType.getString(context, "name/id")
+                                                        val triggerName = StringArgumentType.getString(context, "trigger")
+                                                        val initValue = StringArgumentType.getString(context, "initValue")
+                                                        val action = ActionManager.instance.getActionByNameID(nameID)
+
+                                                        if (action == null) {
+                                                            MessageUtil().sendChat("§8» §7Action '$nameID' not found.")
+                                                            return@executes Command.SINGLE_SUCCESS
+                                                        }
+
+                                                        val trigger = try {
+                                                            TriggerEnum.valueOf(triggerName)
+                                                        } catch (e: IllegalArgumentException) {
+                                                            MessageUtil().sendChat("§8» §7Trigger '$triggerName' not found.")
+                                                            return@executes Command.SINGLE_SUCCESS
+                                                        }
+
+                                                        if (ActionEditManager.instance.addTrigger(action, trigger) == 1) {
+                                                            action.triggers.last().value = initValue
+
+                                                            MessageUtil().sendChat("§8» §7Trigger '${trigger.name}' added to action $nameID with initial value: $initValue.")
+                                                        } else if (ActionEditManager.instance.addTrigger(action, trigger) == 2)
+                                                            MessageUtil().sendChat("§8» §7Can't add multiple call triggers.")
+
+                                                        Command.SINGLE_SUCCESS
+                                                    })
                                                 .executes { context ->
                                                     val nameID = StringArgumentType.getString(context, "name/id")
                                                     val triggerName = StringArgumentType.getString(context, "trigger")
@@ -128,37 +156,37 @@ class ActionsCommand {
                                                 }))
 
                                         .then(CommandManager.literal("remove")
-                                                .then(CommandManager.argument("triggerID", IntegerArgumentType.integer(1))
-                                                    .suggests { context, builder ->
-                                                        val nameID = StringArgumentType.getString(context, "name/id")
-                                                        ActionManager.instance.getActionByNameID(nameID)?.triggers?.forEach { trigger ->
-                                                            builder.suggest(trigger.id)
-                                                        }
-                                                        builder.buildFuture()
-                                                    }.executes { context ->
-                                                        val nameID = StringArgumentType.getString(context, "name/id")
-                                                        val triggerID = IntegerArgumentType.getInteger(context, "triggerID")
-                                                        val action = ActionManager.instance.getActionByNameID(nameID)
+                                            .then(CommandManager.argument("triggerID", IntegerArgumentType.integer(1))
+                                                .suggests { context, builder ->
+                                                    val nameID = StringArgumentType.getString(context, "name/id")
+                                                    ActionManager.instance.getActionByNameID(nameID)?.triggers?.forEach { trigger ->
+                                                        builder.suggest(trigger.id)
+                                                    }
+                                                    builder.buildFuture()
+                                                }.executes { context ->
+                                                    val nameID = StringArgumentType.getString(context, "name/id")
+                                                    val triggerID = IntegerArgumentType.getInteger(context, "triggerID")
+                                                    val action = ActionManager.instance.getActionByNameID(nameID)
 
-                                                        if (action == null) {
-                                                            MessageUtil().sendChat("§8» §7Action '$nameID' not found.")
-                                                            return@executes Command.SINGLE_SUCCESS
-                                                        }
+                                                    if (action == null) {
+                                                        MessageUtil().sendChat("§8» §7Action '$nameID' not found.")
+                                                        return@executes Command.SINGLE_SUCCESS
+                                                    }
 
-                                                        val trigger = action.triggers.find { it.id == triggerID }
+                                                    val trigger = action.triggers.find { it.id == triggerID }
 
-                                                        if (trigger == null) {
-                                                            MessageUtil().sendChat("§8» §7Trigger '$triggerID' not found.")
-                                                            return@executes Command.SINGLE_SUCCESS
-                                                        }
+                                                    if (trigger == null) {
+                                                        MessageUtil().sendChat("§8» §7Trigger '$triggerID' not found.")
+                                                        return@executes Command.SINGLE_SUCCESS
+                                                    }
 
-                                                        if (ActionEditManager.instance.removeTrigger(action, trigger))
-                                                            MessageUtil().sendChat("§8» §7Trigger '${trigger.type.name}§8[§7${trigger.id}§8]§7' removed from action '${action.name}'.")
-                                                        else
-                                                            MessageUtil().sendChat("§8» §7Trigger '${trigger.type.name}' not found in action '${action.name}'.")
+                                                    if (ActionEditManager.instance.removeTrigger(action, trigger))
+                                                        MessageUtil().sendChat("§8» §7Trigger '${trigger.type.name}§8[§7${trigger.id}§8]§7' removed from action '${action.name}'.")
+                                                    else
+                                                        MessageUtil().sendChat("§8» §7Trigger '${trigger.type.name}' not found in action '${action.name}'.")
 
-                                                        Command.SINGLE_SUCCESS
-                                                    }))
+                                                    Command.SINGLE_SUCCESS
+                                                }))
 
                                         .then(CommandManager.literal("edit")
                                             .then(CommandManager.argument("triggerID", IntegerArgumentType.integer(1))
@@ -247,7 +275,7 @@ class ActionsCommand {
 
                                                 for (trigger in action.triggers)
                                                     if (trigger.type == TriggerEnum.CALL)
-                                                    MessageUtil().sendChat("§8» §7${trigger.type.name}§8[§7#${trigger.id}§8]")
+                                                        MessageUtil().sendChat("§8» §7${trigger.type.name}§8[§7#${trigger.id}§8]")
                                                     else
                                                         MessageUtil().sendChat("§8» §7${trigger.type.name}§8(§7${trigger.value}§8)[§7#${trigger.id}§8]")
                                             }
