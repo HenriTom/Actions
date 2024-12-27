@@ -1,6 +1,6 @@
 package de.henritom.actions.actions
 
-import de.henritom.actions.trigger.Trigger
+import de.henritom.actions.trigger.TriggerEnum
 import net.minecraft.client.MinecraftClient
 
 class ActionManager {
@@ -9,15 +9,18 @@ class ActionManager {
     }
 
     val actions = mutableListOf<Action>()
+    var commandPrefix = ""
 
     // 1: Success | 2: Action not found | 3: Action is not callable
     fun callAction(nameID: String): Int {
         getActionByNameID(nameID)?.let { action ->
-            if (action.triggers.contains(Trigger.CALL)) {
-                action.call()
-                return 1
-            } else
-                return 3
+            for (trigger in action.triggers)
+                if (trigger.type == TriggerEnum.CALL) {
+                    action.call()
+                    return 1
+                }
+
+            return 3
         }
 
         return 2
@@ -39,6 +42,7 @@ class ActionManager {
                 println("[AM] Action $name called.")
             }
         }.let {
+            ActionEditManager.instance.addTrigger(it, TriggerEnum.CALL)
             actions.add(it)
             it.author = MinecraftClient.getInstance().player?.name?.literalString ?: "%Unknown%"
         }

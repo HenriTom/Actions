@@ -5,7 +5,7 @@ import de.henritom.actions.trigger.Trigger
 abstract class Action(val name: String) {
 
     val id: Int = ActionManager.instance.getNextAvailableID()
-    val triggers = MutableList(1) { Trigger.CALL }
+    val triggers = mutableListOf<Trigger>()
     var author = "%Unknown%"
 
     abstract fun call()

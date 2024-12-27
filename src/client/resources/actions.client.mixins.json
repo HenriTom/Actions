@@ -3,7 +3,7 @@
 	"package": "de.henritom.actions.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin"
+		"KeyboardMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

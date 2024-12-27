@@ -1,9 +1,11 @@
 package de.henritom.actions.trigger
 
-enum class Trigger(triggerID: Int) {
+import de.henritom.actions.actions.Action
 
-    CALL(0),
-    KEYBIND(1),
-    EVENT(2),
-    COMMAND(3)
+class Trigger(action: Action, typeDef: TriggerEnum, valueDef: Any? = 0) {
+
+    val id = TriggerManager.instance.getNextAvailableID(action)
+    val type = typeDef
+    var value: Any = valueDef ?: 0
+
 }

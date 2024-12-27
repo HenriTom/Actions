@@ -1,18 +1,21 @@
 package de.henritom.actions.actions
 
 import de.henritom.actions.trigger.Trigger
+import de.henritom.actions.trigger.TriggerEnum
 
 class ActionEditManager {
     companion object {
         val instance = ActionEditManager()
     }
 
-    fun addTrigger(action: Action, trigger: Trigger): Boolean {
-        if (action.triggers.contains(trigger))
-            return false
+    // 1 = success, 2 = can't add multiple call triggers
+    fun addTrigger(action: Action, trigger: TriggerEnum): Int {
+        if (trigger == TriggerEnum.CALL)
+            if (action.triggers.any { it.type == TriggerEnum.CALL })
+                return 2
 
-        action.triggers.add(trigger)
-        return true
+        action.triggers.add(Trigger(action, trigger))
+        return 1
     }
 
     fun removeTrigger(action: Action, trigger: Trigger): Boolean {
