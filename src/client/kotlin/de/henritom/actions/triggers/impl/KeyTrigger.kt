@@ -1,7 +1,7 @@
-package de.henritom.actions.trigger.impl
+package de.henritom.actions.triggers.impl
 
 import de.henritom.actions.actions.ActionManager
-import de.henritom.actions.trigger.TriggerEnum
+import de.henritom.actions.triggers.TriggerEnum
 import net.minecraft.client.MinecraftClient
 
 class KeyTrigger {

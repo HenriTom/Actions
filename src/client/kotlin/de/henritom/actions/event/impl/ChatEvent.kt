@@ -1,7 +1,7 @@
 package de.henritom.actions.event.impl
 
 import de.henritom.actions.actions.ActionManager
-import de.henritom.actions.trigger.impl.CommandTrigger
+import de.henritom.actions.triggers.impl.CommandTrigger
 import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents
 
 class ChatEvent {

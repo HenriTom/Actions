@@ -1,4 +1,4 @@
-package de.henritom.actions.trigger
+package de.henritom.actions.triggers
 
 import de.henritom.actions.actions.Action
 

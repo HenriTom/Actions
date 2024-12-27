@@ -1,6 +1,6 @@
 package de.henritom.actions.actions
 
-import de.henritom.actions.trigger.Trigger
+import de.henritom.actions.triggers.Trigger
 
 abstract class Action(val name: String) {
 

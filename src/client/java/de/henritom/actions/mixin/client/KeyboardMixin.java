@@ -1,6 +1,6 @@
 package de.henritom.actions.mixin.client;
 
-import de.henritom.actions.trigger.impl.KeyTrigger;
+import de.henritom.actions.triggers.impl.KeyTrigger;
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

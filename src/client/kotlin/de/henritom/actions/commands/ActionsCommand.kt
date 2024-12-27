@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
-import de.henritom.actions.trigger.TriggerEnum
+import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.server.command.CommandManager

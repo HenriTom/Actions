@@ -1,6 +1,6 @@
 package de.henritom.actions.actions
 
-import de.henritom.actions.trigger.TriggerEnum
+import de.henritom.actions.triggers.TriggerEnum
 import net.minecraft.client.MinecraftClient
 
 class ActionManager {
