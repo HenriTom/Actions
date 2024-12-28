@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
+import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
@@ -232,9 +233,7 @@ class ActionsCommand {
                                         .then(CommandManager.literal("task")
                                             .then(CommandManager.literal("add")
                                                 .then(CommandManager.argument("task", StringArgumentType.string())
-                                                    .suggests { context, builder ->
-                                                        val nameID = StringArgumentType.getString(context, "name/id")
-
+                                                    .suggests { _, builder ->
                                                         for (task in TaskEnum.entries)
                                                             builder.suggest(task.name)
 
@@ -447,22 +446,53 @@ class ActionsCommand {
                                 Command.SINGLE_SUCCESS
                             })
 
-                        .then(CommandManager.literal("prefix")
-                            .then(CommandManager.literal("set")
-                                .then(CommandManager.argument("prefix", StringArgumentType.string())
-                                    .executes { context ->
-                                        val prefix = StringArgumentType.getString(context, "prefix")
-                                        ActionManager.instance.commandPrefix = prefix
-                                        MessageUtil().printChat("§8» §7Command prefix set to '$prefix'.")
+                        .then(CommandManager.literal("file")
+                            .then(CommandManager.literal("reload")
+                                .then(CommandManager.literal("config")
+                                    .executes {
+                                        ConfigManager().loadConfig()
+                                        MessageUtil().printChat("§8» §7Config reloaded.")
+                                        Command.SINGLE_SUCCESS
+                                    })
+
+                                .then(CommandManager.literal("actions")
+                                    .executes {
+                                        ConfigManager().loadActions()
+                                        MessageUtil().printChat("§8» §7Actions reloaded.")
                                         Command.SINGLE_SUCCESS
                                     }))
 
-                            .then(CommandManager.literal("clear")
-                                .executes {
-                                    ActionManager.instance.commandPrefix = ""
-                                    MessageUtil().printChat("§8» §7Command prefix got cleared.")
-                                    Command.SINGLE_SUCCESS
-                                })
+                            .then(CommandManager.literal("save")
+                                .then(CommandManager.literal("actions")
+                                    .executes {
+                                        ConfigManager().saveActions()
+                                        MessageUtil().printChat("§8» §7Actions saved.")
+                                        Command.SINGLE_SUCCESS
+                                    })
+
+                                .then(CommandManager.literal("config")
+                                    .executes {
+                                        ConfigManager().saveConfig()
+                                        MessageUtil().printChat("§8» §7Config saved.")
+                                        Command.SINGLE_SUCCESS
+                                    })))
+
+                            .then(CommandManager.literal("prefix")
+                                .then(CommandManager.literal("set")
+                                    .then(CommandManager.argument("prefix", StringArgumentType.string())
+                                        .executes { context ->
+                                            val prefix = StringArgumentType.getString(context, "prefix")
+                                            ActionManager.instance.commandPrefix = prefix
+                                            MessageUtil().printChat("§8» §7Command prefix set to '$prefix'.")
+                                            Command.SINGLE_SUCCESS
+                                        }))
+
+                                .then(CommandManager.literal("clear")
+                                    .executes {
+                                        ActionManager.instance.commandPrefix = ""
+                                        MessageUtil().printChat("§8» §7Command prefix got cleared.")
+                                        Command.SINGLE_SUCCESS
+                                    })
                         )
                 )
             }

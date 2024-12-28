@@ -30,7 +30,7 @@ class ActionManager {
     }
 
     // 1: Success | 2: Name already used | 3: Name must start with a letter | 4: Name must be at least 3 characters long
-    fun createAction(name: String): Int  {
+    fun createAction(name: String, addCallTrigger: Boolean = true): Int  {
         if (name.length < 3)
             return 4
 
@@ -55,7 +55,9 @@ class ActionManager {
                 }.start()
             }
         }.let {
-            ActionEditManager.instance.addTrigger(it, TriggerEnum.CALL)
+            if (addCallTrigger)
+                ActionEditManager.instance.addTrigger(it, TriggerEnum.CALL)
+
             actions.add(it)
             it.author = MinecraftClient.getInstance().player?.name?.literalString ?: "%Unknown%"
         }

@@ -10,6 +10,14 @@ class ActionEditManager {
         val instance = ActionEditManager()
     }
 
+    fun addDirectTrigger(action: Action, trigger: Trigger): Boolean {
+        if (trigger.type == TriggerEnum.CALL)
+            if (action.triggers.any { it.type == TriggerEnum.CALL })
+                return false
+
+        return action.triggers.add(trigger)
+    }
+
     // 1 = success, 2 = can't add multiple call triggers
     fun addTrigger(action: Action, trigger: TriggerEnum): Int {
         if (trigger == TriggerEnum.CALL)
@@ -22,6 +30,10 @@ class ActionEditManager {
 
     fun removeTrigger(action: Action, trigger: Trigger): Boolean {
         return action.triggers.remove(trigger)
+    }
+
+    fun addDirectTask(action: Action, task: Task): Boolean {
+        return action.tasks.add(task)
     }
 
     fun addTask(action: Action, task: TaskEnum): Boolean {
