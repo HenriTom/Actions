@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
 	id 'fabric-loom' version '1.9-SNAPSHOT'
 	id 'maven-publish'
@@ -44,7 +46,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
-	modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+	//modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {
@@ -59,7 +61,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+tasks.withType(KotlinCompile).configureEach {
 	kotlinOptions {
 		jvmTarget = 21
 	}

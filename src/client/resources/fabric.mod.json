@@ -12,7 +12,7 @@
 		"issues": "https://github.com/HenriTom/Actions/issues",
 		"sources": "https://github.com/HenriTom/Actions",
 		"wiki": "https://github.com/HenriTom/Actions/wiki",
-		"discord": "https://discord.gg/w5aWc2tgFY"
+		"discord": "https://discord.gg/XdHBJKTvxJ"
 	},
 	"license": "LGPL-3.0-or-later",
 	"icon": "assets/actions/icon.png",
@@ -33,7 +33,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.16.9",
-		"minecraft": "~1.21.4",
+		"minecraft": ">=1.21.0",
 		"java": ">=21",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*"
