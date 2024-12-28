@@ -1,7 +1,10 @@
 package de.henritom.actions.actions
 
+import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.util.MessageUtil
 import net.minecraft.client.MinecraftClient
+import java.lang.Thread.sleep
 
 class ActionManager {
     companion object {
@@ -39,7 +42,17 @@ class ActionManager {
 
         object : Action(name) {
             override fun call() {
-                println("[AM] Action $name called.")
+                Thread {
+                    for (task in tasks) {
+                        when (task.type) {
+                            TaskEnum.SAY -> MessageUtil().sayChat(task.value.toString())
+                            TaskEnum.PRINT -> MessageUtil().printChat(task.value.toString())
+                            TaskEnum.COMMAND -> MessageUtil().sendCommand(task.value.toString())
+                            TaskEnum.CONSOLE -> println(task.value)
+                            TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
+                        }
+                    }
+                }.start()
             }
         }.let {
             ActionEditManager.instance.addTrigger(it, TriggerEnum.CALL)

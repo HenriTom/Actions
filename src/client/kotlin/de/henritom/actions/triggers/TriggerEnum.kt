@@ -5,4 +5,5 @@ enum class TriggerEnum {
     CALL,
     KEYBIND,
     COMMAND
+
 }
