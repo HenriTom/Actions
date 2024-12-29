@@ -9,6 +9,7 @@ import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.motion.MoveEnum
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.triggers.settings.ReceiveMessageEnum
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.server.command.CommandManager
@@ -106,6 +107,18 @@ class ActionsCommand {
                                                     builder.buildFuture()
                                                 }
                                                 .then(CommandManager.argument("initValue", StringArgumentType.string())
+                                                    .suggests { context, builder ->
+                                                        val trigger = TriggerEnum.valueOf(StringArgumentType.getString(context, "trigger"))
+
+                                                        if (trigger == TriggerEnum.RECEIVE_MESSAGE)
+                                                            for (receiveType in ReceiveMessageEnum.entries)
+                                                                if (receiveType != ReceiveMessageEnum.ANY)
+                                                                    builder.suggest("${receiveType.name}-")
+                                                                else
+                                                                    builder.suggest(receiveType.name)
+
+                                                        builder.buildFuture()
+                                                    }
                                                     .executes { context ->
                                                         val nameID = StringArgumentType.getString(context, "name/id")
                                                         val triggerName = StringArgumentType.getString(context, "trigger")
@@ -248,6 +261,9 @@ class ActionsCommand {
                                                             if (task == TaskEnum.MOVE)
                                                                 for (move in MoveEnum.entries)
                                                                     builder.suggest(move.name)
+
+                                                            if (task == TaskEnum.MINE || task == TaskEnum.USE)
+                                                                builder.suggest("true").suggest("false")
 
                                                             builder.buildFuture()
                                                         }

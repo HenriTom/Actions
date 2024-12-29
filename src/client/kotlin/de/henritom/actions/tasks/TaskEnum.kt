@@ -7,6 +7,8 @@ enum class TaskEnum {
     COMMAND,
     CONSOLE,
     WAIT,
-    MOVE
+    MOVE,
+    MINE,
+    USE
 
 }

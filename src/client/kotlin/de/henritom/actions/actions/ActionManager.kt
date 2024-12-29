@@ -54,6 +54,8 @@ class ActionManager {
                             TaskEnum.CONSOLE -> println(task.value)
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
+                            TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
+                            TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
                         }
                     }
                 }.start()

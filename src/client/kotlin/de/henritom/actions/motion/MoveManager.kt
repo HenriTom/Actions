@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient
 
 class MoveManager {
 
-    fun setMovement(move: MoveEnum): MoveManager {
+    fun setMovement(move: MoveEnum) {
         val options = MinecraftClient.getInstance().options
 
         when (move) {
@@ -24,7 +24,17 @@ class MoveManager {
                 options.sprintKey.isPressed = false
             }
         }
+    }
 
-        return this
+    fun setMining(state: Boolean) {
+        val options = MinecraftClient.getInstance().options
+
+        options.attackKey.isPressed = state
+    }
+
+    fun setUse(state: Boolean) {
+        val options = MinecraftClient.getInstance().options
+
+        options.useKey.isPressed = state
     }
 }
