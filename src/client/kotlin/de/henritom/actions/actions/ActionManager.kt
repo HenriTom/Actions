@@ -1,5 +1,6 @@
 package de.henritom.actions.actions
 
+import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.motion.MoveEnum
 import de.henritom.actions.motion.MoveManager
 import de.henritom.actions.tasks.TaskEnum
@@ -71,6 +72,8 @@ class ActionManager {
     fun deleteAction(nameID: String): Boolean  {
         getActionByNameID(nameID)?.let {
             actions.remove(it)
+
+            ConfigManager().deleteAction(it)
             return true
         }
 
