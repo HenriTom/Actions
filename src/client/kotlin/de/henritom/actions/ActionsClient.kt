@@ -9,6 +9,7 @@ object ActionsClient : ClientModInitializer {
 
 	override fun onInitializeClient() {
 		ActionsCommand.register()
+
 		ChatEvent.register()
 
 		Runtime.getRuntime().addShutdownHook(Thread {

@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
+import de.henritom.actions.motion.MoveEnum
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
@@ -240,6 +241,16 @@ class ActionsCommand {
                                                         builder.buildFuture()
                                                     }
                                                     .then(CommandManager.argument("initValue", StringArgumentType.string())
+                                                        .suggests { context, builder ->
+                                                            val taskName = StringArgumentType.getString(context, "task")
+                                                            val task = TaskEnum.valueOf(taskName)
+
+                                                            if (task == TaskEnum.MOVE)
+                                                                for (move in MoveEnum.entries)
+                                                                    builder.suggest(move.name)
+
+                                                            builder.buildFuture()
+                                                        }
                                                         .executes { context ->
                                                             val nameID = StringArgumentType.getString(context, "name/id")
                                                             val taskName = StringArgumentType.getString(context, "task")

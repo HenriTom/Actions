@@ -6,6 +6,7 @@ enum class TaskEnum {
     PRINT,
     COMMAND,
     CONSOLE,
-    WAIT
+    WAIT,
+    MOVE
 
 }

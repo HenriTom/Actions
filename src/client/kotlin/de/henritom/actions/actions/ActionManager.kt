@@ -1,5 +1,7 @@
 package de.henritom.actions.actions
 
+import de.henritom.actions.motion.MoveEnum
+import de.henritom.actions.motion.MoveManager
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
@@ -50,6 +52,7 @@ class ActionManager {
                             TaskEnum.COMMAND -> MessageUtil().sendCommand(task.value.toString())
                             TaskEnum.CONSOLE -> println(task.value)
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
+                            TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
                         }
                     }
                 }.start()
