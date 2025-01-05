@@ -12,6 +12,7 @@ import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.triggers.settings.ReceiveMessageEnum
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.server.command.CommandManager
 
 class ActionsCommand {
@@ -469,6 +470,13 @@ class ActionsCommand {
 
                                 for (action in ActionManager.instance.actions)
                                     MessageUtil().printChat("§8» §7${action.name}§8[§7#${action.id}§8]")
+
+                                Command.SINGLE_SUCCESS
+                            })
+
+                        .then(CommandManager.literal("version")
+                            .executes {
+                                MessageUtil().printChat("§8» §7Actions v§7${FabricLoader.getInstance().getModContainer("actions").get().metadata.version}")
 
                                 Command.SINGLE_SUCCESS
                             })
