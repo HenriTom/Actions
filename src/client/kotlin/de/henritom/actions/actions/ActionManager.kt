@@ -1,5 +1,8 @@
 package de.henritom.actions.actions
 
+import de.henritom.actions.config.ConfigManager
+import de.henritom.actions.motion.MoveEnum
+import de.henritom.actions.motion.MoveManager
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
@@ -50,6 +53,9 @@ class ActionManager {
                             TaskEnum.COMMAND -> MessageUtil().sendCommand(task.value.toString())
                             TaskEnum.CONSOLE -> println(task.value)
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
+                            TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
+                            TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
+                            TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
                         }
                     }
                 }.start()
@@ -68,6 +74,8 @@ class ActionManager {
     fun deleteAction(nameID: String): Boolean  {
         getActionByNameID(nameID)?.let {
             actions.remove(it)
+
+            ConfigManager().deleteAction(it)
             return true
         }
 

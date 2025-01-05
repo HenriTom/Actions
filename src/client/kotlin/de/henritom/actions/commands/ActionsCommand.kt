@@ -6,10 +6,13 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
+import de.henritom.actions.motion.MoveEnum
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.triggers.settings.ReceiveMessageEnum
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.server.command.CommandManager
 
 class ActionsCommand {
@@ -105,6 +108,18 @@ class ActionsCommand {
                                                     builder.buildFuture()
                                                 }
                                                 .then(CommandManager.argument("initValue", StringArgumentType.string())
+                                                    .suggests { context, builder ->
+                                                        val trigger = TriggerEnum.valueOf(StringArgumentType.getString(context, "trigger"))
+
+                                                        if (trigger == TriggerEnum.RECEIVE_MESSAGE)
+                                                            for (receiveType in ReceiveMessageEnum.entries)
+                                                                if (receiveType != ReceiveMessageEnum.ANY)
+                                                                    builder.suggest("${receiveType.name}-")
+                                                                else
+                                                                    builder.suggest(receiveType.name)
+
+                                                        builder.buildFuture()
+                                                    }
                                                     .executes { context ->
                                                         val nameID = StringArgumentType.getString(context, "name/id")
                                                         val triggerName = StringArgumentType.getString(context, "trigger")
@@ -240,6 +255,19 @@ class ActionsCommand {
                                                         builder.buildFuture()
                                                     }
                                                     .then(CommandManager.argument("initValue", StringArgumentType.string())
+                                                        .suggests { context, builder ->
+                                                            val taskName = StringArgumentType.getString(context, "task")
+                                                            val task = TaskEnum.valueOf(taskName)
+
+                                                            if (task == TaskEnum.MOVE)
+                                                                for (move in MoveEnum.entries)
+                                                                    builder.suggest(move.name)
+
+                                                            if (task == TaskEnum.MINE || task == TaskEnum.USE)
+                                                                builder.suggest("true").suggest("false")
+
+                                                            builder.buildFuture()
+                                                        }
                                                         .executes { context ->
                                                             val nameID = StringArgumentType.getString(context, "name/id")
                                                             val taskName = StringArgumentType.getString(context, "task")
@@ -442,6 +470,13 @@ class ActionsCommand {
 
                                 for (action in ActionManager.instance.actions)
                                     MessageUtil().printChat("§8» §7${action.name}§8[§7#${action.id}§8]")
+
+                                Command.SINGLE_SUCCESS
+                            })
+
+                        .then(CommandManager.literal("version")
+                            .executes {
+                                MessageUtil().printChat("§8» §7Actions v§7${FabricLoader.getInstance().getModContainer("actions").get().metadata.version}")
 
                                 Command.SINGLE_SUCCESS
                             })

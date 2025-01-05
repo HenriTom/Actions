@@ -4,6 +4,7 @@ enum class TriggerEnum {
 
     CALL,
     KEYBIND,
-    COMMAND
+    COMMAND,
+    RECEIVE_MESSAGE
 
 }

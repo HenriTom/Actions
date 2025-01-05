@@ -2,6 +2,7 @@ package de.henritom.actions.config
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import de.henritom.actions.actions.Action
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.tasks.Task
@@ -188,5 +189,13 @@ class ConfigManager {
         }
 
         logger.info("Loaded actions!")
+    }
+
+    fun deleteAction(action: Action) {
+        val configDir = FabricLoader.getInstance().configDir.toFile()
+        val actionFile = configDir.resolve("actions/actions/${action.name}.json")
+
+        if (actionFile.exists())
+            actionFile.delete()
     }
 }
