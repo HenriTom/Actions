@@ -109,7 +109,11 @@ class ActionsCommand {
                                                 }
                                                 .then(CommandManager.argument("initValue", StringArgumentType.string())
                                                     .suggests { context, builder ->
-                                                        val trigger = TriggerEnum.valueOf(StringArgumentType.getString(context, "trigger"))
+                                                        val trigger = try {
+                                                            TriggerEnum.valueOf(StringArgumentType.getString(context, "trigger"))
+                                                        } catch (e: IllegalArgumentException) {
+                                                            builder.buildFuture()
+                                                        }
 
                                                         if (trigger == TriggerEnum.RECEIVE_MESSAGE)
                                                             for (receiveType in ReceiveMessageEnum.entries)
@@ -256,8 +260,11 @@ class ActionsCommand {
                                                     }
                                                     .then(CommandManager.argument("initValue", StringArgumentType.string())
                                                         .suggests { context, builder ->
-                                                            val taskName = StringArgumentType.getString(context, "task")
-                                                            val task = TaskEnum.valueOf(taskName)
+                                                            val task = try {
+                                                                TaskEnum.valueOf(StringArgumentType.getString(context, "task"))
+                                                            } catch (e: IllegalArgumentException) {
+                                                                builder.buildFuture()
+                                                            }
 
                                                             if (task == TaskEnum.MOVE)
                                                                 for (move in MoveEnum.entries)
@@ -282,7 +289,7 @@ class ActionsCommand {
                                                             val task = try {
                                                                 TaskEnum.valueOf(taskName)
                                                             } catch (e: IllegalArgumentException) {
-                                                                MessageUtil().printChat("§8» §Task '$taskName' not found.")
+                                                                MessageUtil().printChat("§8» §7Task '$taskName' not found.")
                                                                 return@executes Command.SINGLE_SUCCESS
                                                             }
 
@@ -338,7 +345,7 @@ class ActionsCommand {
                                                         val task = action.tasks.find { it.id == taskID }
 
                                                         if (task == null) {
-                                                            MessageUtil().printChat("§8» §7Trigger '$taskID' not found.")
+                                                            MessageUtil().printChat("§8» §7Task '$taskID' not found.")
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
@@ -374,7 +381,7 @@ class ActionsCommand {
                                                             val task = action.tasks.find { it.id == taskID }
 
                                                             if (task == null) {
-                                                                MessageUtil().printChat("§8» §7Trigger '$taskID' not found.")
+                                                                MessageUtil().printChat("§8» §7Task '$taskID' not found.")
                                                                 return@executes Command.SINGLE_SUCCESS
                                                             }
 
