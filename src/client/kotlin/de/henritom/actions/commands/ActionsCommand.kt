@@ -11,6 +11,8 @@ import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.triggers.settings.ReceiveMessageEnum
 import de.henritom.actions.util.MessageUtil
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.server.command.CommandManager
@@ -18,12 +20,12 @@ import net.minecraft.server.command.CommandManager
 class ActionsCommand {
     companion object {
         fun register() {
-            CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
+            ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
                 dispatcher.register(
-                    CommandManager.literal("actions")
-                        .then(CommandManager.literal("action")
-                            .then(CommandManager.literal("call")
-                                .then(CommandManager.argument("name/id", StringArgumentType.string())
+                    ClientCommandManager.literal("actions")
+                        .then(ClientCommandManager.literal("action")
+                            .then(ClientCommandManager.literal("call")
+                                .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
                                     .suggests { _, builder ->
                                         ActionManager.instance.actions.filter { action ->
                                             for (trigger in action.triggers)
@@ -49,8 +51,8 @@ class ActionsCommand {
                                         Command.SINGLE_SUCCESS
                                     }))
 
-                            .then(CommandManager.literal("create")
-                                .then(CommandManager.argument("name", StringArgumentType.string())
+                            .then(ClientCommandManager.literal("create")
+                                .then(ClientCommandManager.argument("name", StringArgumentType.string())
                                     .executes { context ->
                                         val name = StringArgumentType.getString(context, "name")
 
@@ -64,8 +66,8 @@ class ActionsCommand {
                                         Command.SINGLE_SUCCESS
                                     }))
 
-                            .then(CommandManager.literal("delete")
-                                .then(CommandManager.argument("name/id", StringArgumentType.string())
+                            .then(ClientCommandManager.literal("delete")
+                                .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
                                     .suggests { _, builder ->
                                         ActionManager.instance.actions.forEach { action ->
                                             builder.suggest(action.name)
@@ -86,17 +88,17 @@ class ActionsCommand {
                                         Command.SINGLE_SUCCESS
                                     }))
 
-                            .then(CommandManager.literal("edit")
-                                .then(CommandManager.argument("name/id", StringArgumentType.string())
+                            .then(ClientCommandManager.literal("edit")
+                                .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
                                     .suggests { _, builder ->
                                         ActionManager.instance.actions.forEach { action ->
                                             builder.suggest(action.name)
                                         }
                                         builder.buildFuture()
                                     }
-                                    .then(CommandManager.literal("trigger")
-                                        .then(CommandManager.literal("add")
-                                            .then(CommandManager.argument("trigger", StringArgumentType.string())
+                                    .then(ClientCommandManager.literal("trigger")
+                                        .then(ClientCommandManager.literal("add")
+                                            .then(ClientCommandManager.argument("trigger", StringArgumentType.string())
                                                 .suggests { context, builder ->
                                                     val nameID = StringArgumentType.getString(context, "name/id")
                                                     val action = ActionManager.instance.getActionByNameID(nameID)
@@ -107,7 +109,7 @@ class ActionsCommand {
 
                                                     builder.buildFuture()
                                                 }
-                                                .then(CommandManager.argument("initValue", StringArgumentType.string())
+                                                .then(ClientCommandManager.argument("initValue", StringArgumentType.string())
                                                     .suggests { context, builder ->
                                                         val trigger = try {
                                                             TriggerEnum.valueOf(StringArgumentType.getString(context, "trigger"))
@@ -176,8 +178,8 @@ class ActionsCommand {
                                                     Command.SINGLE_SUCCESS
                                                 }))
 
-                                        .then(CommandManager.literal("remove")
-                                            .then(CommandManager.argument("triggerID", IntegerArgumentType.integer(1))
+                                        .then(ClientCommandManager.literal("remove")
+                                            .then(ClientCommandManager.argument("triggerID", IntegerArgumentType.integer(1))
                                                 .suggests { context, builder ->
                                                     val nameID = StringArgumentType.getString(context, "name/id")
                                                     ActionManager.instance.getActionByNameID(nameID)?.triggers?.forEach { trigger ->
@@ -209,8 +211,8 @@ class ActionsCommand {
                                                     Command.SINGLE_SUCCESS
                                                 }))
 
-                                        .then(CommandManager.literal("edit")
-                                            .then(CommandManager.argument("triggerID", IntegerArgumentType.integer(1))
+                                        .then(ClientCommandManager.literal("edit")
+                                            .then(ClientCommandManager.argument("triggerID", IntegerArgumentType.integer(1))
                                                 .suggests { context, builder ->
                                                     val nameID = StringArgumentType.getString(context, "name/id")
                                                     ActionManager.instance.getActionByNameID(nameID)?.triggers?.forEach { trigger ->
@@ -219,7 +221,7 @@ class ActionsCommand {
                                                     }
                                                     builder.buildFuture()
                                                 }
-                                                .then(CommandManager.argument("triggerValue", StringArgumentType.string())
+                                                .then(ClientCommandManager.argument("triggerValue", StringArgumentType.string())
                                                     .executes { context ->
                                                         val nameID = StringArgumentType.getString(context, "name/id")
                                                         val triggerID = IntegerArgumentType.getInteger(context, "triggerID")
@@ -249,16 +251,16 @@ class ActionsCommand {
                                                         Command.SINGLE_SUCCESS
                                                     }))))
 
-                                        .then(CommandManager.literal("task")
-                                            .then(CommandManager.literal("add")
-                                                .then(CommandManager.argument("task", StringArgumentType.string())
+                                        .then(ClientCommandManager.literal("task")
+                                            .then(ClientCommandManager.literal("add")
+                                                .then(ClientCommandManager.argument("task", StringArgumentType.string())
                                                     .suggests { _, builder ->
                                                         for (task in TaskEnum.entries)
                                                             builder.suggest(task.name)
 
                                                         builder.buildFuture()
                                                     }
-                                                    .then(CommandManager.argument("initValue", StringArgumentType.string())
+                                                    .then(ClientCommandManager.argument("initValue", StringArgumentType.string())
                                                         .suggests { context, builder ->
                                                             val task = try {
                                                                 TaskEnum.valueOf(StringArgumentType.getString(context, "task"))
@@ -324,8 +326,8 @@ class ActionsCommand {
                                                         Command.SINGLE_SUCCESS
                                                     }))
 
-                                            .then(CommandManager.literal("remove")
-                                                .then(CommandManager.argument("taskID", IntegerArgumentType.integer(1))
+                                            .then(ClientCommandManager.literal("remove")
+                                                .then(ClientCommandManager.argument("taskID", IntegerArgumentType.integer(1))
                                                     .suggests { context, builder ->
                                                         val nameID = StringArgumentType.getString(context, "name/id")
                                                         ActionManager.instance.getActionByNameID(nameID)?.tasks?.forEach { task ->
@@ -357,8 +359,8 @@ class ActionsCommand {
                                                         Command.SINGLE_SUCCESS
                                                     }))
 
-                                            .then(CommandManager.literal("edit")
-                                                .then(CommandManager.argument("taskID", IntegerArgumentType.integer(1))
+                                            .then(ClientCommandManager.literal("edit")
+                                                .then(ClientCommandManager.argument("taskID", IntegerArgumentType.integer(1))
                                                     .suggests { context, builder ->
                                                         val nameID = StringArgumentType.getString(context, "name/id")
                                                         ActionManager.instance.getActionByNameID(nameID)?.tasks?.forEach { task ->
@@ -366,7 +368,7 @@ class ActionsCommand {
                                                         }
                                                         builder.buildFuture()
                                                     }
-                                                    .then(CommandManager.argument("taskValue", StringArgumentType.string())
+                                                    .then(ClientCommandManager.argument("taskValue", StringArgumentType.string())
                                                         .executes { context ->
                                                             val nameID = StringArgumentType.getString(context, "name/id")
                                                             val taskID = IntegerArgumentType.getInteger(context, "taskID")
@@ -391,7 +393,7 @@ class ActionsCommand {
                                                             Command.SINGLE_SUCCESS
                                                         }))))
 
-                                    .then(CommandManager.literal("removeauthor")
+                                    .then(ClientCommandManager.literal("removeauthor")
                                         .executes { context ->
                                             val nameID = StringArgumentType.getString(context, "name/id")
                                             val action = ActionManager.instance.getActionByNameID(nameID)
@@ -410,8 +412,8 @@ class ActionsCommand {
                                         })
                                 ))
 
-                            .then(CommandManager.literal("info")
-                                .then(CommandManager.argument("name/id", StringArgumentType.string())
+                            .then(ClientCommandManager.literal("info")
+                                .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
                                     .suggests { _, builder ->
                                         ActionManager.instance.actions.forEach { action ->
                                             builder.suggest(action.name)
@@ -435,7 +437,7 @@ class ActionsCommand {
                                         Command.SINGLE_SUCCESS
                                     }
 
-                                    .then(CommandManager.literal("triggers")
+                                    .then(ClientCommandManager.literal("triggers")
                                         .executes { context ->
                                             val nameID = StringArgumentType.getString(context, "name/id")
                                             val action = ActionManager.instance.getActionByNameID(nameID)
@@ -454,7 +456,7 @@ class ActionsCommand {
                                         }
                                     )
 
-                                    .then(CommandManager.literal("tasks")
+                                    .then(ClientCommandManager.literal("tasks")
                                         .executes { context ->
                                             val nameID = StringArgumentType.getString(context, "name/id")
                                             val action = ActionManager.instance.getActionByNameID(nameID)
@@ -471,7 +473,7 @@ class ActionsCommand {
                                     )
                                 )))
 
-                        .then(CommandManager.literal("list")
+                        .then(ClientCommandManager.literal("list")
                             .executes {
                                 MessageUtil().printChat("§8» §7Actions§8[§7${ActionManager.instance.actions.size}§8]:")
 
@@ -481,47 +483,47 @@ class ActionsCommand {
                                 Command.SINGLE_SUCCESS
                             })
 
-                        .then(CommandManager.literal("version")
+                        .then(ClientCommandManager.literal("version")
                             .executes {
                                 MessageUtil().printChat("§8» §7Actions v§7${FabricLoader.getInstance().getModContainer("actions").get().metadata.version}")
 
                                 Command.SINGLE_SUCCESS
                             })
 
-                        .then(CommandManager.literal("file")
-                            .then(CommandManager.literal("reload")
-                                .then(CommandManager.literal("config")
+                        .then(ClientCommandManager.literal("file")
+                            .then(ClientCommandManager.literal("reload")
+                                .then(ClientCommandManager.literal("config")
                                     .executes {
                                         ConfigManager().loadConfig()
                                         MessageUtil().printChat("§8» §7Config reloaded.")
                                         Command.SINGLE_SUCCESS
                                     })
 
-                                .then(CommandManager.literal("actions")
+                                .then(ClientCommandManager.literal("actions")
                                     .executes {
                                         ConfigManager().loadActions()
                                         MessageUtil().printChat("§8» §7Actions reloaded.")
                                         Command.SINGLE_SUCCESS
                                     }))
 
-                            .then(CommandManager.literal("save")
-                                .then(CommandManager.literal("actions")
+                            .then(ClientCommandManager.literal("save")
+                                .then(ClientCommandManager.literal("actions")
                                     .executes {
                                         ConfigManager().saveActions()
                                         MessageUtil().printChat("§8» §7Actions saved.")
                                         Command.SINGLE_SUCCESS
                                     })
 
-                                .then(CommandManager.literal("config")
+                                .then(ClientCommandManager.literal("config")
                                     .executes {
                                         ConfigManager().saveConfig()
                                         MessageUtil().printChat("§8» §7Config saved.")
                                         Command.SINGLE_SUCCESS
                                     })))
 
-                            .then(CommandManager.literal("prefix")
-                                .then(CommandManager.literal("set")
-                                    .then(CommandManager.argument("prefix", StringArgumentType.string())
+                            .then(ClientCommandManager.literal("prefix")
+                                .then(ClientCommandManager.literal("set")
+                                    .then(ClientCommandManager.argument("prefix", StringArgumentType.string())
                                         .executes { context ->
                                             val prefix = StringArgumentType.getString(context, "prefix")
                                             ActionManager.instance.commandPrefix = prefix
@@ -529,7 +531,7 @@ class ActionsCommand {
                                             Command.SINGLE_SUCCESS
                                         }))
 
-                                .then(CommandManager.literal("clear")
+                                .then(ClientCommandManager.literal("clear")
                                     .executes {
                                         ActionManager.instance.commandPrefix = ""
                                         MessageUtil().printChat("§8» §7Command prefix got cleared.")
