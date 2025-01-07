@@ -1,11 +1,12 @@
 {
-	"required": true,
-	"package": "de.henritom.actions.mixin.client",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"KeyboardMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "de.henritom.actions.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClientPlayNetworkHandlerMixin",
+    "KeyboardMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }
