@@ -26,9 +26,10 @@ class ChatEvent {
                     true
             })
 
-            ClientReceiveMessageEvents.ALLOW_CHAT.register { message: Text, _: SignedMessage?, _: GameProfile?, _: MessageType.Parameters, _: Instant ->
-                if (message.string.split("> ")[0].split("<")[1] != MinecraftClient.getInstance().session.username)
-                    ReceiveMessageTrigger().trigger(message.string.split("> ")[1])
+            ClientReceiveMessageEvents.ALLOW_CHAT.register { message: Text, _: SignedMessage?, gameProfile: GameProfile?, _: MessageType.Parameters, _: Instant ->
+                if (gameProfile != null)
+                    if (gameProfile.name != MinecraftClient.getInstance().session.username)
+                        ReceiveMessageTrigger().trigger(message.string.split("> ")[1])
 
                 true
             }
