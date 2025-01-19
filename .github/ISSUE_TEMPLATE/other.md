@@ -1,6 +1,6 @@
 ---
 name: Other
-about: Describe this issue template's purpose here.
+about: Share any feedback, questions, or other topics related to the project
 title: "[OTHER]"
 labels: ''
 assignees: HenriTom
