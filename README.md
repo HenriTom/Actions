@@ -16,4 +16,4 @@ The "Actions" Mod is a Minecraft client-side modification that allows players to
 
 ## 📖 Wiki
 
-For more information, visit the [wiki](https://github.com/HenriTom/Actions/wiki).
+If you need help, you can check the [wiki](https://github.com/HenriTom/Actions/wiki) for additional information and guides, join our Discord server [here](https://discord.gg/XdHBJKTvxJ), or open an issue on GitHub [here](https://github.com/HenriTom/Actions/issues/new/choose).
