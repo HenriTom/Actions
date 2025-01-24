@@ -41,9 +41,9 @@ class ActionsCommand {
                                         val actionName = ActionManager.instance.getActionByNameID(nameID)?.name ?: nameID
 
                                         when (ActionManager.instance.callAction(nameID)) {
-                                            1 -> MessageUtil().printChat("§8» §7Action '$actionName' called.")
-                                            2 -> MessageUtil().printChat("§8» §7Action '$nameID' not found.")
-                                            3 -> MessageUtil().printChat("§8» §7Action '$actionName' is not callable.")
+                                            1 -> MessageUtil().printTranslatable("actions.action.called", actionName)
+                                            2 -> MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                                            3 -> MessageUtil().printTranslatable("actions.action.not_callable", actionName)
                                         }
 
                                         Command.SINGLE_SUCCESS
@@ -55,10 +55,10 @@ class ActionsCommand {
                                         val name = StringArgumentType.getString(context, "name")
 
                                         when (ActionManager.instance.createAction(name)) {
-                                            1 -> MessageUtil().printChat("§8» §7Action '$name' created.")
-                                            2 -> MessageUtil().printChat("§8» §7Name '$name' already used.")
-                                            3 -> MessageUtil().printChat("§8» §7Name must start with a letter.")
-                                            4 -> MessageUtil().printChat("§8» §7Name must be at least 3 characters long.")
+                                            1 -> MessageUtil().printTranslatable("actions.action.created", name)
+                                            2 -> MessageUtil().printTranslatable("actions.action.already_used", name)
+                                            3 -> MessageUtil().printTranslatable("actions.action.start_with_letter")
+                                            4 -> MessageUtil().printTranslatable("actions.action.min_length")
                                         }
 
                                         Command.SINGLE_SUCCESS
@@ -78,10 +78,10 @@ class ActionsCommand {
                                         val actionName = ActionManager.instance.getActionByNameID(nameID)?.name ?: nameID
 
                                         if (ActionManager.instance.deleteAction(nameID))
-                                            MessageUtil().printChat("§8» §7Action '$actionName' deleted.")
+                                            MessageUtil().printTranslatable("actions.action.deleted", actionName)
 
                                         else
-                                            MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                            MessageUtil().printTranslatable("actions.action.not_found", actionName)
 
                                         Command.SINGLE_SUCCESS
                                     }))
@@ -131,23 +131,23 @@ class ActionsCommand {
                                                         val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                         if (action == null) {
-                                                            MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                            MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         val trigger = try {
                                                             TriggerEnum.valueOf(triggerName)
                                                         } catch (e: IllegalArgumentException) {
-                                                            MessageUtil().printChat("§8» §7Trigger '$triggerName' not found.")
+                                                            MessageUtil().printTranslatable("actions.trigger.not_found", nameID)
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         if (ActionEditManager.instance.addTrigger(action, trigger) == 1) {
                                                             action.triggers.last().value = initValue
 
-                                                            MessageUtil().printChat("§8» §7Trigger '${trigger.name}' added to action $nameID with initial value: $initValue.")
+                                                            MessageUtil().printTranslatable("actions.trigger.added.initial_value", trigger.name, nameID, initValue)
                                                         } else if (ActionEditManager.instance.addTrigger(action, trigger) == 2)
-                                                            MessageUtil().printChat("§8» §7Can't add multiple call triggers.")
+                                                            MessageUtil().printTranslatable("actions.trigger.multiple_calls")
 
                                                         Command.SINGLE_SUCCESS
                                                     })
@@ -157,21 +157,21 @@ class ActionsCommand {
                                                     val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                     if (action == null) {
-                                                        MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                         return@executes Command.SINGLE_SUCCESS
                                                     }
 
                                                     val trigger = try {
                                                         TriggerEnum.valueOf(triggerName)
                                                     } catch (e: IllegalArgumentException) {
-                                                        MessageUtil().printChat("§8» §7Trigger '$triggerName' not found.")
+                                                        MessageUtil().printTranslatable("actions.trigger.not_found", triggerName)
                                                         return@executes Command.SINGLE_SUCCESS
                                                     }
 
                                                     if (ActionEditManager.instance.addTrigger(action, trigger) == 1)
-                                                        MessageUtil().printChat("§8» §7Trigger '${trigger.name}' added to action $nameID.")
+                                                        MessageUtil().printTranslatable("actions.trigger.added", trigger.name, nameID)
                                                     else if (ActionEditManager.instance.addTrigger(action, trigger) == 2)
-                                                        MessageUtil().printChat("§8» §7Can't add multiple call triggers.")
+                                                        MessageUtil().printTranslatable("actions.trigger.multiple_calls")
 
                                                     Command.SINGLE_SUCCESS
                                                 }))
@@ -190,21 +190,21 @@ class ActionsCommand {
                                                     val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                     if (action == null) {
-                                                        MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                         return@executes Command.SINGLE_SUCCESS
                                                     }
 
                                                     val trigger = action.triggers.find { it.id == triggerID }
 
                                                     if (trigger == null) {
-                                                        MessageUtil().printChat("§8» §7Trigger '$triggerID' not found.")
+                                                        MessageUtil().printTranslatable("actions.trigger.not_found", triggerID.toString())
                                                         return@executes Command.SINGLE_SUCCESS
                                                     }
 
                                                     if (ActionEditManager.instance.removeTrigger(action, trigger))
-                                                        MessageUtil().printChat("§8» §7Trigger '${trigger.type.name}§8[§7${trigger.id}§8]§7' removed from action '${action.name}'.")
+                                                        MessageUtil().printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action.name)
                                                     else
-                                                        MessageUtil().printChat("§8» §7Trigger '${trigger.type.name}' not found in action '${action.name}'.")
+                                                        MessageUtil().printTranslatable("actions.trigger.not_found_in_action", trigger.type.name, action.name)
 
                                                     Command.SINGLE_SUCCESS
                                                 }))
@@ -227,24 +227,24 @@ class ActionsCommand {
                                                         val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                         if (action == null) {
-                                                            MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                            MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         val trigger = action.triggers.find { it.id == triggerID }
 
                                                         if (trigger == null) {
-                                                            MessageUtil().printChat("§8» §7Trigger '$triggerID' not found.")
+                                                            MessageUtil().printTranslatable("actions.trigger.not_found", triggerID.toString())
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         if (trigger.type == TriggerEnum.CALL) {
-                                                            MessageUtil().printChat("§8» §7Can't change value of a call trigger.")
+                                                            MessageUtil().printTranslatable("actions.trigger.not_editable")
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         trigger.value = triggerValue
-                                                        MessageUtil().printChat("§8» §7Changed value of trigger '${trigger.type.name}§8[§7${trigger.id}§8]§7' to: $triggerValue.")
+                                                        MessageUtil().printTranslatable("actions.trigger.edited", trigger.type.name, trigger.id.toString(), triggerValue)
 
                                                         Command.SINGLE_SUCCESS
                                                     }))))
@@ -282,21 +282,21 @@ class ActionsCommand {
                                                             val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                             if (action == null) {
-                                                                MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                                MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                                 return@executes Command.SINGLE_SUCCESS
                                                             }
 
                                                             val task = try {
                                                                 TaskEnum.valueOf(taskName)
                                                             } catch (e: IllegalArgumentException) {
-                                                                MessageUtil().printChat("§8» §7Task '$taskName' not found.")
+                                                                MessageUtil().printTranslatable("actions.task.not_found", taskName)
                                                                 return@executes Command.SINGLE_SUCCESS
                                                             }
 
                                                             if (ActionEditManager.instance.addTask(action, task)) {
                                                                 action.tasks.last().value = initValue
 
-                                                                MessageUtil().printChat("§8» §7Task '${task.name}' added to action $nameID with initial value: $initValue.")
+                                                                MessageUtil().printTranslatable("actions.task.added.initial_value", task.name, nameID, initValue)
                                                             }
 
                                                             Command.SINGLE_SUCCESS
@@ -307,19 +307,19 @@ class ActionsCommand {
                                                         val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                         if (action == null) {
-                                                            MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                            MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         val task = try {
                                                             TaskEnum.valueOf(taskName)
                                                         } catch (e: IllegalArgumentException) {
-                                                            MessageUtil().printChat("§8» §7Task '$taskName' not found.")
+                                                            MessageUtil().printTranslatable("actions.task.not_found", taskName)
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         if (ActionEditManager.instance.addTask(action, task))
-                                                            MessageUtil().printChat("§8» §7Task '${task.name}' added to action $nameID.")
+                                                            MessageUtil().printTranslatable("actions.task.added", task.name, nameID)
 
                                                         Command.SINGLE_SUCCESS
                                                     }))
@@ -338,21 +338,21 @@ class ActionsCommand {
                                                         val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                         if (action == null) {
-                                                            MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                            MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         val task = action.tasks.find { it.id == taskID }
 
                                                         if (task == null) {
-                                                            MessageUtil().printChat("§8» §7Task '$taskID' not found.")
+                                                            MessageUtil().printTranslatable("actions.task.not_found", taskID.toString())
                                                             return@executes Command.SINGLE_SUCCESS
                                                         }
 
                                                         if (ActionEditManager.instance.removeTask(action, task))
-                                                            MessageUtil().printChat("§8» §7Task '${task.type.name}§8[§7${task.id}§8]§7' removed from action '${action.name}'.")
+                                                            MessageUtil().printTranslatable("actions.task.removed", task.type.name, task.id.toString(), action.name)
                                                         else
-                                                            MessageUtil().printChat("§8» §7Task '${task.type.name}' not found in action '${action.name}'.")
+                                                            MessageUtil().printTranslatable("actions.task.not_found_in_action", task.type.name, action.name)
 
                                                         Command.SINGLE_SUCCESS
                                                     }))
@@ -374,19 +374,19 @@ class ActionsCommand {
                                                             val action = ActionManager.instance.getActionByNameID(nameID)
 
                                                             if (action == null) {
-                                                                MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                                MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                                 return@executes Command.SINGLE_SUCCESS
                                                             }
 
                                                             val task = action.tasks.find { it.id == taskID }
 
                                                             if (task == null) {
-                                                                MessageUtil().printChat("§8» §7Task '$taskID' not found.")
+                                                                MessageUtil().printTranslatable("actions.task.not_found", taskID.toString())
                                                                 return@executes Command.SINGLE_SUCCESS
                                                             }
 
                                                             task.value = taskValue
-                                                            MessageUtil().printChat("§8» §7Changed value of task '${task.type.name}§8[§7${task.id}§8]§7' to: $taskValue.")
+                                                            MessageUtil().printTranslatable("actions.task.edited", task.type.name, task.id.toString(), taskValue)
 
                                                             Command.SINGLE_SUCCESS
                                                         }))))
@@ -397,14 +397,14 @@ class ActionsCommand {
                                             val action = ActionManager.instance.getActionByNameID(nameID)
 
                                             if (action == null) {
-                                                MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                                MessageUtil().printTranslatable("actions.action.not_found", nameID)
                                                 return@executes Command.SINGLE_SUCCESS
                                             }
 
                                             if (ActionEditManager.instance.removeAuthor(action))
-                                                MessageUtil().printChat("§8» §7Author removed from action '${action.name}'.")
+                                                MessageUtil().printTranslatable("actions.author.removed", action.name)
                                             else
-                                                MessageUtil().printChat("§8» §7Author not found in action '${action.name}'.")
+                                                MessageUtil().printTranslatable("actions.author.not_found", action.name)
 
                                             Command.SINGLE_SUCCESS
                                         })
@@ -423,14 +423,14 @@ class ActionsCommand {
                                         val action = ActionManager.instance.getActionByNameID(nameID)
 
                                         if (action != null) {
-                                            MessageUtil().printChat("§8» §7Action Info§8:")
-                                            MessageUtil().printChat("§8» §7Name§8: §7'${action.name}'")
-                                            MessageUtil().printChat("§8» §7ID§8: §7'${action.id}'")
-                                            MessageUtil().printChat("§8» §7Author§8: §7'${action.author}'")
-                                            MessageUtil().printChat("§8» §7Triggers§8: §7'${action.triggers.size}'")
-                                            MessageUtil().printChat("§8» §7Tasks§8: §7'${action.tasks.size}'")
+                                            MessageUtil().printTranslatable("actions.action.info.title")
+                                            MessageUtil().printTranslatable("actions.action.info.name", action.name)
+                                            MessageUtil().printTranslatable("actions.action.info.id", action.id.toString())
+                                            MessageUtil().printTranslatable("actions.action.info.author", action.author)
+                                            MessageUtil().printTranslatable("actions.action.info.triggers", action.triggers.size.toString())
+                                            MessageUtil().printTranslatable("actions.action.info.tasks", action.tasks.size.toString())
                                         } else
-                                            MessageUtil().printChat("§8» §7Action '$nameID' not found.")
+                                            MessageUtil().printTranslatable("actions.action.not_found", nameID)
 
                                         Command.SINGLE_SUCCESS
                                     }
@@ -441,13 +441,13 @@ class ActionsCommand {
                                             val action = ActionManager.instance.getActionByNameID(nameID)
 
                                             if (action != null) {
-                                                MessageUtil().printChat("§8» §7Triggers§8[§7${action.triggers.size}§8]:")
+                                                MessageUtil().printTranslatable("actions.action.triggers.title", action.triggers.size.toString())
 
                                                 for (trigger in action.triggers)
                                                     if (trigger.type == TriggerEnum.CALL)
-                                                        MessageUtil().printChat("§8» §7${trigger.type.name}§8[§7#${trigger.id}§8]")
+                                                        MessageUtil().printTranslatable("actions.action.triggers.it.call", trigger.type.name, trigger.id.toString())
                                                     else
-                                                        MessageUtil().printChat("§8» §7${trigger.type.name}§8(§7${trigger.value}§8)[§7#${trigger.id}§8]")
+                                                        MessageUtil().printTranslatable("actions.action.triggers.it.other", trigger.type.name, trigger.value.toString(), trigger.id.toString())
                                             }
 
                                             Command.SINGLE_SUCCESS
@@ -460,10 +460,10 @@ class ActionsCommand {
                                             val action = ActionManager.instance.getActionByNameID(nameID)
 
                                             if (action != null) {
-                                                MessageUtil().printChat("§8» §7Tasks§8[§7${action.tasks.size}§8]:")
+                                                MessageUtil().printTranslatable("actions.action.tasks.title", action.tasks.size.toString())
 
                                                 for (task in action.tasks)
-                                                    MessageUtil().printChat("§8» §7${task.type.name}§8(§7${task.value}§8)[§7#${task.id}§8]")
+                                                    MessageUtil().printTranslatable("actions.action.tasks.it.other", task.type.name, task.value.toString(), task.id.toString())
                                             }
 
                                             Command.SINGLE_SUCCESS
@@ -473,17 +473,17 @@ class ActionsCommand {
 
                         .then(ClientCommandManager.literal("list")
                             .executes {
-                                MessageUtil().printChat("§8» §7Actions§8[§7${ActionManager.instance.actions.size}§8]:")
+                                MessageUtil().printTranslatable("actions.list.title", ActionManager.instance.actions.size.toString())
 
                                 for (action in ActionManager.instance.actions)
-                                    MessageUtil().printChat("§8» §7${action.name}§8[§7#${action.id}§8]")
+                                    MessageUtil().printTranslatable("actions.list.it", action.name, action.id.toString())
 
                                 Command.SINGLE_SUCCESS
                             })
 
                         .then(ClientCommandManager.literal("version")
                             .executes {
-                                MessageUtil().printChat("§8» §7Actions v§7${FabricLoader.getInstance().getModContainer("actions").get().metadata.version}")
+                                MessageUtil().printTranslatable("actions.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString())
 
                                 Command.SINGLE_SUCCESS
                             })
@@ -493,14 +493,14 @@ class ActionsCommand {
                                 .then(ClientCommandManager.literal("config")
                                     .executes {
                                         ConfigManager().loadConfig()
-                                        MessageUtil().printChat("§8» §7Config reloaded.")
+                                        MessageUtil().printTranslatable("actions.file.reloaded.config")
                                         Command.SINGLE_SUCCESS
                                     })
 
                                 .then(ClientCommandManager.literal("actions")
                                     .executes {
                                         ConfigManager().loadActions()
-                                        MessageUtil().printChat("§8» §7Actions reloaded.")
+                                        MessageUtil().printTranslatable("actions.file.reloaded.actions")
                                         Command.SINGLE_SUCCESS
                                     }))
 
@@ -508,14 +508,14 @@ class ActionsCommand {
                                 .then(ClientCommandManager.literal("actions")
                                     .executes {
                                         ConfigManager().saveActions()
-                                        MessageUtil().printChat("§8» §7Actions saved.")
+                                        MessageUtil().printTranslatable("actions.file.save.actions")
                                         Command.SINGLE_SUCCESS
                                     })
 
                                 .then(ClientCommandManager.literal("config")
                                     .executes {
                                         ConfigManager().saveConfig()
-                                        MessageUtil().printChat("§8» §7Config saved.")
+                                        MessageUtil().printTranslatable("actions.file.save.config")
                                         Command.SINGLE_SUCCESS
                                     })))
 
@@ -525,14 +525,14 @@ class ActionsCommand {
                                         .executes { context ->
                                             val prefix = StringArgumentType.getString(context, "prefix")
                                             ActionManager.instance.commandPrefix = prefix
-                                            MessageUtil().printChat("§8» §7Command prefix set to '$prefix'.")
+                                            MessageUtil().printTranslatable("actions.prefix.set", prefix)
                                             Command.SINGLE_SUCCESS
                                         }))
 
                                 .then(ClientCommandManager.literal("clear")
                                     .executes {
                                         ActionManager.instance.commandPrefix = ""
-                                        MessageUtil().printChat("§8» §7Command prefix got cleared.")
+                                        MessageUtil().printTranslatable("actions.prefix.clear")
                                         Command.SINGLE_SUCCESS
                                     })
                         )

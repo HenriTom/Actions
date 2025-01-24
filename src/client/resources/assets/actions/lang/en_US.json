@@ -1,0 +1,59 @@
+{
+  "actions.action.called": "§8» §7Action §f'%s'§7 called.",
+  "actions.action.not_found": "§8» §7Action §f'%s'§7 not found.",
+  "actions.action.not_callable": "§8» §7Action §f'%s'§7 not callable.",
+  "actions.action.created": "§8» §7Action §f'%s'§7 created.",
+  "actions.action.already_used": "§8» §7Name §f'%s'§7 already used.",
+  "actions.action.deleted": "§8» §7Action §f'%s'§7 deleted.",
+  "actions.action.start_with_letter": "§8» §7Name must start with a letter.",
+  "actions.action.min_length": "§8» §7Name must be at least 3 characters long.",
+
+  "actions.action.info.title": "§8» §7Action Info§8:",
+  "actions.action.info.name": "§8» §7Name§8: §f'%s'§7",
+  "actions.action.info.id": "§8» §7ID§8: §f'%s'§7",
+  "actions.action.info.author": "§8» §7Author§8: §f'%s'§7",
+  "actions.action.info.triggers": "§8» §7Triggers§8: §f'%s'§7",
+  "actions.action.info.tasks": "§8» §7Tasks§8: §f'%s'§7",
+
+  "actions.trigger.not_found": "§8» §7Trigger §f'%s'§7 not found.",
+  "actions.trigger.added.initial_value": "§8» §7Trigger §f'%s'§7 added to action §f'%s'§7 with initial value: §f'%s'§7.",
+  "actions.trigger.multiple_calls": "§8» §7Can't add multiple call triggers.",
+  "actions.trigger.added": "§8» §7Trigger §f'%s'§7 added to action §f'%s'§7.",
+  "actions.trigger.removed": "§8» §7Trigger §f'%s[%s]'§7 removed from action §f'%s'§7.",
+  "actions.trigger.not_found_in_action": "§8» §7Trigger §f'%s'§7 not found in action §f'%s'§7.",
+  "actions.trigger.not_editable": "§8» §7Can't change value of a call trigger.",
+  "actions.trigger.edited": "§8» §7Changed value of trigger §f'%s[%s]'§7 to: §f'%s'§7.",
+
+  "actions.task.not_found": "§8» §7Task §f'%s'§7 not found.",
+  "actions.task.added.initial_value": "§8» §7Task §f'%s'§7 added to action §f'%s'§7 with initial value: §f'%s'§7.",
+  "actions.task.added": "§8» §7Task §f'%s'§7 added to action §f'%s'§7.",
+  "actions.task.removed": "§8» §7Task §f'%s[%s]'§7 removed from action §f'%s'§7.",
+  "actions.task.not_found_in_action": "§8» §7Task §f'%s'§7 not found in action §f'%s'§7.",
+  "actions.task.edited": "§8» §7Changed value of task §f'%s[%s]'§7 to: §f'%s'§7.",
+
+  "actions.author.removed": "§8» §7Author removed from action §f'%s'§7.",
+  "actions.author.not_found": "§8» §7Author not found in action §f'%s'§7.",
+
+  "actions.action.triggers.title": "§8» §7Triggers§8[§f%s§8]:",
+  "actions.action.triggers.it.call": "§8» §7%s§8[§f%s§8]",
+  "actions.action.triggers.it.other": "§8» §7%s§8(§f%s§8)[§f%s§8]",
+
+  "actions.action.tasks.title": "§8» §7Tasks§8[§f%s§8]:",
+  "actions.action.tasks.it.other": "§8» §7%s§8(§f%s§8)[§f%s§8]",
+
+  "actions.list.title": "§8» §7Actions§8[§f%s§8]:",
+  "actions.list.it": "§8» §7%s§8[§f%s§8]",
+
+  "actions.version": "§8» §7Actions v%s",
+
+  "actions.file.reloaded.config": "§8» §7Config reloaded.",
+  "actions.file.reloaded.actions": "§8» §7Actions reloaded.",
+  "actions.file.save.config": "§8» §7Config saved.",
+  "actions.file.save.actions": "§8» §7Actions saved.",
+
+  "actions.prefix.set": "§8» §7Command prefix set to §f'%s'§7.",
+  "actions.prefix.clear": "§8» §7Command prefix got cleared.",
+
+  "actions.triggers.command.called": "§8» §7Action §f'%s'§7 called.",
+  "actions.triggers.command.not_found": "§8» §7Command-Trigger §f'%s'§7 not found."
+}
