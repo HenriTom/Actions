@@ -59,4 +59,10 @@
 
   "actions.triggers.command.called": "§8» §7Aktion §f'%s'§7 aufgerufen.",
   "actions.triggers.command.not_found": "§8» §7Befehl-Trigger §f'%s'§7 nicht gefunden.",
+
+  "actions.ui.main.title": "Aktionen GUI",
+  "actions.ui.main.drag_and_drop": "Aktionen per Drag-and-Drop hier einfügen.",
+
+  "actions.options.category": "Actions",
+  "actions.options.open_gui": "GUI öffnen"
 }

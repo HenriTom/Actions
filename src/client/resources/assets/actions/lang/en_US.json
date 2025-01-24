@@ -58,5 +58,11 @@
   "actions.prefix.clear": "§8» §7Command prefix got cleared.",
 
   "actions.triggers.command.called": "§8» §7Action §f'%s'§7 called.",
-  "actions.triggers.command.not_found": "§8» §7Command-Trigger §f'%s'§7 not found."
+  "actions.triggers.command.not_found": "§8» §7Command-Trigger §f'%s'§7 not found.",
+
+  "actions.ui.main.title": "Actions GUI",
+  "actions.ui.main.drag_and_drop": "Drag and drop actions here.",
+
+  "actions.options.category": "Actions",
+  "actions.options.open_gui": "Open GUI"
 }
