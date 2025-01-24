@@ -41,6 +41,12 @@
 	"suggests": {
 		"another-mod": "*"
 	},
+	"language": {
+		"translation": [
+			"en_us",
+			"de_de"
+		]
+	},
 	"custom": {
 		"modmenu": {
 			"links": {
