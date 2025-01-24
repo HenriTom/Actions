@@ -9,6 +9,7 @@ enum class TaskEnum {
     WAIT,
     MOVE,
     MINE,
-    USE
+    USE,
+    COMMENT
 
 }

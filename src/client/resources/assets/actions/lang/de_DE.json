@@ -39,6 +39,7 @@
   "actions.action.triggers.it.other": "§8» §7%s§8(§f%s§8)[§f%s§8]",
 
   "actions.action.tasks.title": "§8» §7Aufgaben§8[§f%s§8]:",
+  "actions.action.tasks.it.comment": "§8» §7#§f%s§8[§f%s§8]",
   "actions.action.tasks.it.other": "§8» §7%s§8(§f%s§8)[§f%s§8]",
   "actions.action.tasks.it.first": "§8» §fSTART§8[§fS§8]",
   "actions.action.tasks.it.last": "§8» §fENDE§8[§fE§8]",
@@ -57,5 +58,5 @@
   "actions.prefix.clear": "§8» §7Befehl-Präfix wurde gelöscht.",
 
   "actions.triggers.command.called": "§8» §7Aktion §f'%s'§7 aufgerufen.",
-  "actions.triggers.command.not_found": "§8» §7Befehl-Trigger §f'%s'§7 nicht gefunden."
+  "actions.triggers.command.not_found": "§8» §7Befehl-Trigger §f'%s'§7 nicht gefunden.",
 }

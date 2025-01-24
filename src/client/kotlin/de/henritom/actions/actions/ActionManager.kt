@@ -56,6 +56,7 @@ class ActionManager {
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
+                            TaskEnum.COMMENT -> {}
                         }
                     }
                 }.start()

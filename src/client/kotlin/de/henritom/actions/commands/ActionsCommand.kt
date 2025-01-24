@@ -464,7 +464,10 @@ class ActionsCommand {
                                                 MessageUtil().printTranslatable("actions.action.tasks.it.first")
 
                                                 for (task in action.tasks)
-                                                    MessageUtil().printTranslatable("actions.action.tasks.it.other", task.type.name, task.value.toString(), task.id.toString())
+                                                    if (task.type == TaskEnum.COMMENT)
+                                                        MessageUtil().printTranslatable("actions.action.tasks.it.comment", task.value.toString(), task.id.toString())
+                                                    else
+                                                        MessageUtil().printTranslatable("actions.action.tasks.it.other", task.type.name, task.value.toString(), task.id.toString())
 
                                                 MessageUtil().printTranslatable("actions.action.tasks.it.last")
                                             }

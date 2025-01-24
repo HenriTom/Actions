@@ -39,6 +39,7 @@
   "actions.action.triggers.it.other": "§8» §f%s§8(§f%s§8)[§f%s§8]",
 
   "actions.action.tasks.title": "§8» §7Tasks§8[§f%s§8]:",
+  "actions.action.tasks.it.comment": "§8» §7#§f%s§8[§f%s§8]",
   "actions.action.tasks.it.other": "§8» §f%s§8(§f%s§8)[§f%s§8]",
   "actions.action.tasks.it.first": "§8» §fSTART§8[§fS§8]",
   "actions.action.tasks.it.last": "§8» §fEND§8[§fE§8]",
