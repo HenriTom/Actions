@@ -461,9 +461,12 @@ class ActionsCommand {
 
                                             if (action != null) {
                                                 MessageUtil().printTranslatable("actions.action.tasks.title", action.tasks.size.toString())
+                                                MessageUtil().printTranslatable("actions.action.tasks.it.first")
 
                                                 for (task in action.tasks)
                                                     MessageUtil().printTranslatable("actions.action.tasks.it.other", task.type.name, task.value.toString(), task.id.toString())
+
+                                                MessageUtil().printTranslatable("actions.action.tasks.it.last")
                                             }
 
                                             Command.SINGLE_SUCCESS

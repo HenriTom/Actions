@@ -35,14 +35,16 @@
   "actions.author.not_found": "§8» §7Author not found in action §f'%s'§7.",
 
   "actions.action.triggers.title": "§8» §7Triggers§8[§f%s§8]:",
-  "actions.action.triggers.it.call": "§8» §7%s§8[§f%s§8]",
-  "actions.action.triggers.it.other": "§8» §7%s§8(§f%s§8)[§f%s§8]",
+  "actions.action.triggers.it.call": "§8» §f%s§8[§f%s§8]",
+  "actions.action.triggers.it.other": "§8» §f%s§8(§f%s§8)[§f%s§8]",
 
   "actions.action.tasks.title": "§8» §7Tasks§8[§f%s§8]:",
-  "actions.action.tasks.it.other": "§8» §7%s§8(§f%s§8)[§f%s§8]",
+  "actions.action.tasks.it.other": "§8» §f%s§8(§f%s§8)[§f%s§8]",
+  "actions.action.tasks.it.first": "§8» §fSTART§8[§fS§8]",
+  "actions.action.tasks.it.last": "§8» §fEND§8[§fE§8]",
 
   "actions.list.title": "§8» §7Actions§8[§f%s§8]:",
-  "actions.list.it": "§8» §7%s§8[§f%s§8]",
+  "actions.list.it": "§8» §f%s§8[§f%s§8]",
 
   "actions.version": "§8» §7Actions v%s",
 
