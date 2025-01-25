@@ -33,7 +33,6 @@ object DisableCommand {
                     if (ActionEditManager.instance.disableAction(action)) {
                         MessageUtil().printTranslatable("actions.action.disabled", action.name)
                         ConfigManager().reloadActions()
-                        MessageUtil().printTranslatable("actions.file.reloaded.actions")
                     } else
                         MessageUtil().printTranslatable("actions.action.not_disabled", action.name)
 

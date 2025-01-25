@@ -29,7 +29,6 @@ object EnableCommand {
                     if (ActionEditManager.instance.enableAction(file)) {
                         MessageUtil().printTranslatable("actions.action.enabled", name)
                         ConfigManager().reloadActions()
-                        MessageUtil().printTranslatable("actions.file.reloaded.actions")
                     } else
                         MessageUtil().printTranslatable("actions.action.not_enabled", name)
 
