@@ -1,4 +1,4 @@
-package ui
+package de.henritom.actions.ui
 
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.util.MessageUtil
