@@ -13,6 +13,7 @@ import de.henritom.actions.triggers.TriggerManager
 import net.fabricmc.loader.api.FabricLoader
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.io.File
 
 class ConfigManager {
 
@@ -46,52 +47,59 @@ class ConfigManager {
         ActionManager.instance.commandPrefix = data["command_prefix"] as? String ?: ""
     }
 
-    fun saveActions() {
-        logger.info("Trying to save actions...")
-
+    fun saveAction(action: Action, enabled: Boolean = true): File? {
         val gson = GsonBuilder().setPrettyPrinting().create()
-
         val configDir = FabricLoader.getInstance().configDir.toFile()
+        val actionFile = configDir.resolve("actions/actions/${action.name}." + if (enabled) "json" else "disabled")
 
-        for (action in ActionManager.instance.actions) {
-            val actionFile = configDir.resolve("actions/actions/${action.name}.json")
+        if (!actionFile.parentFile.exists())
+            actionFile.parentFile.mkdirs()
 
-            if (!actionFile.parentFile.exists())
-                actionFile.parentFile.mkdirs()
+        if (!actionFile.exists())
+            actionFile.createNewFile()
 
-            if (!actionFile.exists())
-                actionFile.createNewFile()
-
-            val data = mapOf(
-                "name" to action.name,
-                "preferred_id" to action.id,
-                "author" to action.author,
-
-                "triggers" to action.triggers.map { trigger ->
-                    mapOf(
-                        "id" to trigger.id,
-                        "type" to trigger.type,
-                        "value" to trigger.value
-                    )
-                },
-
-                "tasks" to action.tasks.map { task ->
-                    mapOf(
-                        "id" to task.id,
-                        "type" to task.type,
-                        "value" to task.value
-                    )
-                }
-            )
-
-            try {
-                actionFile.writeText(gson.toJson(data))
-            } catch (e: Exception) {
-                logger.error("Failed to save action ${action.name}!", e)
+        val data = mapOf(
+            "name" to action.name,
+            "preferred_id" to action.id,
+            "author" to action.author,
+            "triggers" to action.triggers.map { trigger ->
+                mapOf(
+                    "id" to trigger.id,
+                    "type" to trigger.type,
+                    "value" to trigger.value
+                )
+            },
+            "tasks" to action.tasks.map { task ->
+                mapOf(
+                    "id" to task.id,
+                    "type" to task.type,
+                    "value" to task.value
+                )
             }
+        )
+
+        try {
+            actionFile.writeText(gson.toJson(data))
+            return actionFile
+        } catch (e: Exception) {
+            logger.error("Failed to save action ${action.name}!", e)
         }
 
-        logger.info("Saved actions!")
+        return null;
+    }
+
+    fun saveAllActions() {
+        logger.info("Trying to save all actions...")
+
+        for (action in ActionManager.instance.actions)
+            saveAction(action)
+
+        logger.info("Saved all actions!")
+    }
+
+    fun reloadActions() {
+        ActionManager.instance.actions.clear()
+        loadActions()
     }
 
     fun loadActions() {
@@ -197,5 +205,15 @@ class ConfigManager {
 
         if (actionFile.exists())
             actionFile.delete()
+    }
+
+    fun getDisabledActions(): List<File> {
+        val configDir = FabricLoader.getInstance().configDir.toFile()
+        val actionsDir = configDir.resolve("actions/actions")
+
+        if (!actionsDir.exists() || !actionsDir.isDirectory)
+            return emptyList()
+
+        return actionsDir.listFiles { _, name -> name.endsWith(".disabled") }?.toList() ?: emptyList()
     }
 }

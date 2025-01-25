@@ -86,6 +86,58 @@ class ActionsCommand {
                                         Command.SINGLE_SUCCESS
                                     }))
 
+                            .then(ClientCommandManager.literal("disable")
+                                .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
+                                    .suggests { _, builder ->
+                                        ActionManager.instance.actions.forEach { action ->
+                                            builder.suggest(action.name)
+                                        }
+                                        builder.buildFuture()
+                                    }
+                                    .executes { context ->
+                                        val nameID = StringArgumentType.getString(context, "name/id")
+                                        val action = ActionManager.instance.getActionByNameID(nameID)
+
+                                        if (action == null) {
+                                            MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                                            return@executes Command.SINGLE_SUCCESS
+                                        }
+
+                                        if (ActionEditManager.instance.disableAction(action)) {
+                                            MessageUtil().printTranslatable("actions.action.disabled", action.name)
+                                            ConfigManager().reloadActions()
+                                            MessageUtil().printTranslatable("actions.file.reloaded.actions")
+                                        } else
+                                            MessageUtil().printTranslatable("actions.action.not_disabled", action.name)
+
+                                        Command.SINGLE_SUCCESS
+                                    }
+                                ))
+
+                            .then(ClientCommandManager.literal("enable")
+                                .then(ClientCommandManager.argument("name", StringArgumentType.string())
+                                    .suggests { _, builder ->
+                                        ConfigManager().getDisabledActions().forEach { file ->
+                                            builder.suggest(file.nameWithoutExtension)
+                                        }
+                                        builder.buildFuture()
+                                    }
+                                    .executes { context ->
+                                        val name = StringArgumentType.getString(context, "name")
+
+                                        val file = FabricLoader.getInstance().configDir.toFile().resolve("actions/actions/$name.disabled")
+
+                                        if (ActionEditManager.instance.enableAction(file)) {
+                                            MessageUtil().printTranslatable("actions.action.enabled", name)
+                                            ConfigManager().reloadActions()
+                                            MessageUtil().printTranslatable("actions.file.reloaded.actions")
+                                        } else
+                                            MessageUtil().printTranslatable("actions.action.not_enabled", name)
+
+                                        Command.SINGLE_SUCCESS
+                                    }
+                                ))
+
                             .then(ClientCommandManager.literal("edit")
                                 .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
                                     .suggests { _, builder ->
@@ -407,8 +459,7 @@ class ActionsCommand {
                                                 MessageUtil().printTranslatable("actions.author.not_found", action.name)
 
                                             Command.SINGLE_SUCCESS
-                                        })
-                                ))
+                                        })))
 
                             .then(ClientCommandManager.literal("info")
                                 .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
@@ -505,7 +556,7 @@ class ActionsCommand {
 
                                 .then(ClientCommandManager.literal("actions")
                                     .executes {
-                                        ConfigManager().loadActions()
+                                        ConfigManager().reloadActions()
                                         MessageUtil().printTranslatable("actions.file.reloaded.actions")
                                         Command.SINGLE_SUCCESS
                                     }))
@@ -513,7 +564,7 @@ class ActionsCommand {
                             .then(ClientCommandManager.literal("save")
                                 .then(ClientCommandManager.literal("actions")
                                     .executes {
-                                        ConfigManager().saveActions()
+                                        ConfigManager().saveAllActions()
                                         MessageUtil().printTranslatable("actions.file.save.actions")
                                         Command.SINGLE_SUCCESS
                                     })

@@ -1,9 +1,12 @@
 package de.henritom.actions.actions
 
+import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.tasks.Task
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.Trigger
 import de.henritom.actions.triggers.TriggerEnum
+import java.io.File
+import java.nio.file.Files
 
 class ActionEditManager {
     companion object {
@@ -46,6 +49,24 @@ class ActionEditManager {
 
     fun removeAuthor(action: Action): Boolean {
         action.author = "%Unknown%"
+        return true
+    }
+
+    fun disableAction(action: Action): Boolean {
+        ConfigManager().deleteAction(action)
+        ConfigManager().saveAction(action, false)
+        ActionManager().actions.remove(action)
+
+        return true
+    }
+
+    fun enableAction(file: File): Boolean {
+        if (!file.exists())
+            return false
+
+        Files.copy(file.toPath(), file.parentFile.resolve(file.nameWithoutExtension + ".json").outputStream())
+        file.delete()
+
         return true
     }
 }

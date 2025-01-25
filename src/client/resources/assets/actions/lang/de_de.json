@@ -44,6 +44,12 @@
   "actions.action.tasks.it.first": "§8» §fSTART§8[§fS§8]",
   "actions.action.tasks.it.last": "§8» §fENDE§8[§fE§8]",
 
+  "actions.action.enabled": "§8» §7Aktion §f'%s'§7 aktiviert.",
+  "actions.action.not_enabled" : "§8» §7Konnte Aktion §f'%s'§7 nicht aktivieren.",
+
+  "actions.action.disabled": "§8» §7Aktion §f'%s'§7 deaktiviert.",
+  "actions.action.not_disabled": "§8» §7Konnte Aktion §f'%s'§7 nicht aktivieren.",
+
   "actions.list.title": "§8» §7Aktionen§8[§f%s§8]:",
   "actions.list.it": "§8» §7%s§8[§f%s§8]",
 

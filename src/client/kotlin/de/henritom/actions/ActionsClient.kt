@@ -15,7 +15,7 @@ object ActionsClient : ClientModInitializer {
 
 		Runtime.getRuntime().addShutdownHook(Thread {
 			ConfigManager().saveConfig()
-			ConfigManager().saveActions()
+			ConfigManager().saveAllActions()
 		})
 
 		ConfigManager().loadConfig()

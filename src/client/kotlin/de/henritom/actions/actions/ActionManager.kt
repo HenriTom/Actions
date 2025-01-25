@@ -65,6 +65,9 @@ class ActionManager {
             if (addCallTrigger)
                 ActionEditManager.instance.addTrigger(it, TriggerEnum.CALL)
 
+
+            it.file = ConfigManager().saveAction(it)
+
             actions.add(it)
             it.author = MinecraftClient.getInstance().player?.name?.literalString ?: "%Unknown%"
         }
