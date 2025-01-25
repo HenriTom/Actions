@@ -9,6 +9,7 @@ import de.henritom.actions.commands.impl.action.disable.DisableCommand
 import de.henritom.actions.commands.impl.action.edit.EditCommand
 import de.henritom.actions.commands.impl.action.enable.EnableCommand
 import de.henritom.actions.commands.impl.action.info.InfoCommand
+import de.henritom.actions.commands.impl.action.rename.RenameCommand
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 
@@ -24,5 +25,6 @@ object ActionCommand {
             .then(EditCommand.register())
             .then(EnableCommand.register())
             .then(InfoCommand.register())
+            .then(RenameCommand.register())
     }
 }

@@ -7,6 +7,7 @@ import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
 import net.minecraft.client.MinecraftClient
+import java.io.File
 import java.lang.Thread.sleep
 
 class ActionManager {
@@ -33,7 +34,7 @@ class ActionManager {
     }
 
     // 1: Success | 2: Name already used | 3: Name must start with a letter | 4: Name must be at least 3 characters long
-    fun createAction(name: String, addCallTrigger: Boolean = true): Int  {
+    fun createAction(name: String, addCallTrigger: Boolean = true, file: File? = null): Int  {
         if (name.length < 3)
             return 4
 
@@ -65,8 +66,10 @@ class ActionManager {
             if (addCallTrigger)
                 ActionEditManager.instance.addTrigger(it, TriggerEnum.CALL)
 
-
-            it.file = ConfigManager().saveAction(it)
+            if (file == null)
+                it.file = ConfigManager().saveAction(it)
+            else
+                it.file = file
 
             actions.add(it)
             it.author = MinecraftClient.getInstance().player?.name?.literalString ?: "%Unknown%"

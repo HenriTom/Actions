@@ -130,7 +130,7 @@ class ConfigManager {
                 val preferredID = (data["preferred_id"] as? Double)?.toInt() ?: -1
                 val author = data["author"] as? String ?: "Unknown"
 
-                if (ActionManager.instance.createAction(name, false) == 1) {
+                if (ActionManager.instance.createAction(name, false, file) == 1) {
                     val action = ActionManager.instance.getActionByNameID(name)
 
                     if (action == null) {
