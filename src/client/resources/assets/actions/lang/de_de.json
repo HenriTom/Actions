@@ -50,6 +50,10 @@
   "actions.action.disabled": "§8» §7Aktion §f'%s'§7 deaktiviert.",
   "actions.action.not_disabled": "§8» §7Konnte Aktion §f'%s'§7 nicht aktivieren.",
 
+  "actions.action.cleared": "§8» §7Aktion §f'%s'§7 geleert.",
+  "actions.action.renamed": "§8» §7Aktion §f'%s'§7 umbenannt zu §f'%s'§7.",
+  "actions.action.cloned": "§8» §7Aktion §f'%s'§7 kopiert zu §f'%s'§7.",
+
   "actions.list.title": "§8» §7Aktionen§8[§f%s§8]:",
   "actions.list.it": "§8» §7%s§8[§f%s§8]",
 

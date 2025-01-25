@@ -46,6 +46,8 @@ object RenameCommand {
 
                         ConfigManager().reloadActions()
 
+                        MessageUtil().printTranslatable("actions.action.renamed", name, newName)
+
                         Command.SINGLE_SUCCESS
                     }
                 )

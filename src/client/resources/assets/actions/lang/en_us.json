@@ -50,6 +50,10 @@
   "actions.action.disabled": "§8» §7Action §f'%s'§7 disabled.",
   "actions.action.not_disabled": "§8» §7Couldn't disable Action §f'%s'§7.",
 
+  "actions.action.cleared": "§8» §7Action §f'%s'§7 cleared.",
+  "actions.action.renamed": "§8» §7Action §f'%s'§7 renamed to §f'%s'§7.",
+  "actions.action.cloned": "§8» §7Action §f'%s'§7 cloned to §f'%s'§7.",
+
   "actions.list.title": "§8» §7Actions§8[§f%s§8]:",
   "actions.list.it": "§8» §f%s§8[§f%s§8]",
 

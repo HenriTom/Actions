@@ -2,6 +2,7 @@ package de.henritom.actions.commands.impl.action
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import de.henritom.actions.commands.impl.action.call.CallCommand
+import de.henritom.actions.commands.impl.action.clear.ClearCommand
 import de.henritom.actions.commands.impl.action.clone.CloneCommand
 import de.henritom.actions.commands.impl.action.create.CreateCommand
 import de.henritom.actions.commands.impl.action.delete.DeleteCommand
@@ -18,6 +19,7 @@ object ActionCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("action")
             .then(CallCommand.register())
+            .then(ClearCommand.register())
             .then(CloneCommand.register())
             .then(CreateCommand.register())
             .then(DeleteCommand.register())

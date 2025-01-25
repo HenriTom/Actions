@@ -44,6 +44,8 @@ object CloneCommand {
 
                         ConfigManager().reloadActions()
 
+                        MessageUtil().printTranslatable("actions.action.cloned", name, newName)
+
                         Command.SINGLE_SUCCESS
                     }
                 )
