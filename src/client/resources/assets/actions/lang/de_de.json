@@ -70,8 +70,17 @@
   "actions.triggers.command.called": "§8» §7Aktion §f'%s'§7 aufgerufen.",
   "actions.triggers.command.not_found": "§8» §7Befehl-Trigger §f'%s'§7 nicht gefunden.",
 
-  "actions.ui.main.title": "Aktionen GUI",
-  "actions.ui.main.drag_and_drop": "Aktionen per Drag-and-Drop hier einfügen.",
+  "actions.ui.main.title": "Actions GUI",
+  "actions.ui.main.version": "v%s",
+  "actions.ui.main.drag_and_drop": "Aktionen per Drag-and-Drop einfügen.",
+
+  "actions.ui.main.running_actions": "Laufende Aktionen:",
+  "actions.ui.main.running_actions.it": "• %s[%s] (%s/%s)",
+  "actions.ui.main.running_actions.end": "BEENDEN",
+  "actions.ui.main.running_actions.end_all": "BEENDE ALLE AKTIONEN",
+
+  "actions.ui.main.console": "Konsole:",
+  "actions.ui.main.console.clear": "LEERE DIE KONSOLE",
 
   "actions.options.category": "Actions",
   "actions.options.open_gui": "GUI öffnen"

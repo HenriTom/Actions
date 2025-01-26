@@ -3,6 +3,7 @@ package de.henritom.actions.actions
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.motion.MoveEnum
 import de.henritom.actions.motion.MoveManager
+import de.henritom.actions.scheduler.ActionScheduler
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
@@ -47,18 +48,28 @@ class ActionManager {
         object : Action(name) {
             override fun call() {
                 Thread {
+                    val actionScheduler = ActionScheduler(this).start()
+
                     for (task in tasks) {
+                        actionScheduler.currentTask++
+
+                        if (actionScheduler.cancelled)
+                            return@Thread
+
                         when (task.type) {
                             TaskEnum.SAY -> MessageUtil().sayChat(task.value.toString())
                             TaskEnum.PRINT -> MessageUtil().printChat(task.value.toString())
                             TaskEnum.COMMAND -> MessageUtil().sendCommand(task.value.toString())
-                            TaskEnum.CONSOLE -> println(task.value)
+                            TaskEnum.CONSOLE -> MessageUtil().printConsole(task.value.toString(), actionScheduler)
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
                             TaskEnum.COMMENT -> {}
                         }
+
+                        if (task == tasks.last())
+                            actionScheduler.end()
                     }
                 }.start()
             }
