@@ -38,7 +38,7 @@ object TriggerAddCommand {
                             if (trigger == TriggerEnum.RECEIVE_MESSAGE)
                                 for (receiveType in ReceiveMessageEnum.entries)
                                     if (receiveType != ReceiveMessageEnum.ANY)
-                                        builder.suggest("${receiveType.name}-")
+                                        builder.suggest("\"${receiveType.name}-")
                                     else
                                         builder.suggest(receiveType.name)
 
@@ -58,7 +58,7 @@ object TriggerAddCommand {
                             val trigger = try {
                                 TriggerEnum.valueOf(triggerName)
                             } catch (e: IllegalArgumentException) {
-                                MessageUtil().printTranslatable("actions.trigger.not_found", nameID)
+                                MessageUtil().printTranslatable("actions.trigger.not_found", triggerName)
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
