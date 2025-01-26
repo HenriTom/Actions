@@ -5,6 +5,9 @@ enum class TriggerEnum {
     CALL,
     KEYBIND,
     COMMAND,
-    RECEIVE_MESSAGE
+    DISCONNECT,
+    JOIN,
+    RECEIVE_MESSAGE,
+    RESPAWN
 
 }
