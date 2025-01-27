@@ -82,6 +82,18 @@
   "actions.ui.main.console": "Konsole:",
   "actions.ui.main.console.clear": "LEERE DIE KONSOLE",
 
+  "actions.ui.main.button1.title": "Create a new Action",
+  "actions.ui.main.button2.title": "Manage existing Actions",
+  "actions.ui.main.button3.title": "Coming Soon...",
+  "actions.ui.main.button4.title": "Settings",
+
+  "actions.ui.create.title": "Erstellen",
+  "actions.ui.manage.title": "Verwalten",
+  "actions.ui.coming.title": "Kommend",
+  "actions.ui.settings.title": "Einstellungen",
+
+  "actions.ui.coming.text": "Diese Funktion ist noch nicht implementiert. Komme später wieder.",
+
   "actions.options.category": "Actions",
   "actions.options.open_gui": "GUI öffnen"
 }

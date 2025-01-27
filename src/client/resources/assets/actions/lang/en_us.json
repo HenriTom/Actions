@@ -74,13 +74,25 @@
   "actions.ui.main.version": "v%s",
   "actions.ui.main.drag_and_drop": "Drag and drop actions anywhere.",
 
-  "actions.ui.main.running_actions": "Running Actions:",
+  "actions.ui.main.running_actions": "Running Actions(%s/%s):",
   "actions.ui.main.running_actions.it": "• %s[%s] (%s/%s)",
   "actions.ui.main.running_actions.end": "END",
   "actions.ui.main.running_actions.end_all": "END ALL ACTIONS",
 
-  "actions.ui.main.console": "Console:",
+  "actions.ui.main.console": "Console(%s/%s):",
   "actions.ui.main.console.clear": "CLEAR THE CONSOLE",
+
+  "actions.ui.main.button1.title": "Create a new Action",
+  "actions.ui.main.button2.title": "Manage existing Actions",
+  "actions.ui.main.button3.title": "Coming Soon...",
+  "actions.ui.main.button4.title": "Settings",
+
+  "actions.ui.create.title": "Create",
+  "actions.ui.manage.title": "Manage",
+  "actions.ui.coming.title": "Coming",
+  "actions.ui.settings.title": "Settings",
+
+  "actions.ui.coming.text": "This feature is not implemented yet. Please check back later.",
 
   "actions.options.category": "Actions",
   "actions.options.open_gui": "Open GUI"
