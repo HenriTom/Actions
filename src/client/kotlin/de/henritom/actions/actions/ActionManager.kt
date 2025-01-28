@@ -50,6 +50,9 @@ class ActionManager {
                 Thread {
                     val actionScheduler = ActionScheduler(this).start()
 
+                    if (tasks.isEmpty())
+                        actionScheduler.end()
+
                     for (task in tasks) {
                         actionScheduler.currentTask++
 

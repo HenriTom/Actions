@@ -14,4 +14,8 @@ class SchedulerHelper {
         ArrayList(ActionScheduler.runningActions).forEach { it.end() }
         return 0
     }
+
+    fun getSchedulerByRunID(runID: Int): ActionScheduler? {
+        return ActionScheduler.runningActions.find { it.runID == runID }
+    }
 }

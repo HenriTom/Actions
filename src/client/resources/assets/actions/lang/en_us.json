@@ -54,6 +54,11 @@
   "actions.action.renamed": "§8» §7Action §f'%s'§7 renamed to §f'%s'§7.",
   "actions.action.cloned": "§8» §7Action §f'%s'§7 cloned to §f'%s'§7.",
 
+  "actions.scheduler.list.title": "§8» §7Running Actions§8[§f%s§8]:",
+  "actions.scheduler.end_all": "§8» §7Ended all Actions.",
+  "actions.scheduler.ended": "§8» §7Ended Action §f'%s§7[§f%s§7]'§7.",
+  "actions.scheduler.not_ended": "§8» §7Failed to end Action.",
+
   "actions.list.title": "§8» §7Actions§8[§f%s§8]:",
   "actions.list.it": "§8» §f%s§8[§f%s§8]",
 

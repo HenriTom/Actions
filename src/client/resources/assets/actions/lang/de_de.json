@@ -54,6 +54,11 @@
   "actions.action.renamed": "§8» §7Aktion §f'%s'§7 umbenannt zu §f'%s'§7.",
   "actions.action.cloned": "§8» §7Aktion §f'%s'§7 kopiert zu §f'%s'§7.",
 
+  "actions.scheduler.list.title": "§8» §7Laufende Aktionen§8[§f%s§8]:",
+  "actions.scheduler.end_all": "§8» §7Alle Aktionen beendet.",
+  "actions.scheduler.ended": "§8» §7Aktion §f'%s§7[§f%s§7]'§7 beendet.",
+  "actions.scheduler.not_ended": "§8» §7Beenden der Aktion fehlgeschlagen.",
+
   "actions.list.title": "§8» §7Aktionen§8[§f%s§8]:",
   "actions.list.it": "§8» §7%s§8[§f%s§8]",
 
