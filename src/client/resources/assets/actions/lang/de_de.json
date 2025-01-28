@@ -82,15 +82,25 @@
   "actions.ui.main.console": "Konsole:",
   "actions.ui.main.console.clear": "LEERE DIE KONSOLE",
 
-  "actions.ui.main.button1.title": "Create a new Action",
-  "actions.ui.main.button2.title": "Manage existing Actions",
-  "actions.ui.main.button3.title": "Coming Soon...",
-  "actions.ui.main.button4.title": "Settings",
+  "actions.ui.main.button1.title": "Erstelle eine neue Aktion",
+  "actions.ui.main.button2.title": "Verwalte bestehende Aktionen",
+  "actions.ui.main.button3.title": "Kommt bald...",
+  "actions.ui.main.button4.title": "Einstellungen",
 
   "actions.ui.create.title": "Erstellen",
   "actions.ui.manage.title": "Verwalten",
+  "actions.ui.edit.title": "Bearbeiten",
   "actions.ui.coming.title": "Kommend",
   "actions.ui.settings.title": "Einstellungen",
+
+  "actions.ui.create.name": "Name:",
+  "actions.ui.create.id": "Bevorzugte Id:",
+  "actions.ui.create.create": "Erstellen",
+  "actions.ui.create.default": "Drücke 'Erstellen' um die Erstellung abzuschließen.",
+  "actions.ui.create.failed": "Erstellen der Aktion fehlgeschlagen.",
+  "actions.ui.create.already_used": "Name bereits benutzt.",
+  "actions.ui.create.start_with_letter": "Name muss mit einem Buchstaben starten.",
+  "actions.ui.create.min_length": "Name muss mindestens 3 Buchstaben lang sein.",
 
   "actions.ui.coming.text": "Diese Funktion ist noch nicht implementiert. Komme später wieder.",
 

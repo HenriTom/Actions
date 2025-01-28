@@ -1,10 +1,14 @@
 package de.henritom.actions.ui
 
+import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
+import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import java.nio.file.Files
 import java.nio.file.Path
@@ -13,6 +17,12 @@ import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
 class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
+
+    private var nameField: TextFieldWidget? = null
+    private var idField: TextFieldWidget? = null
+    private var createButton: ButtonWidget? = null
+
+    private var createText = "actions.ui.create.default";
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)
@@ -38,13 +48,94 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
             true
         )
 
-        // Text
+        // Name Textbox
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.coming.text"),
-            width / 2 - textRenderer.getWidth(Text.translatable("actions.ui.coming.text")) / 2,
-            height / 2 - textRenderer.fontHeight / 2,
-            UIColors.WHITE.color.rgb,
+            Text.translatable("actions.ui.create.name"),
+            4,
+            4 + textRenderer.fontHeight * 3,
+            UIColors.BLUE.color.rgb,
+            true
+        )
+
+        if (nameField == null)
+            nameField = TextFieldWidget(
+                textRenderer,
+                4,
+                4 + textRenderer.fontHeight * 4,
+                textRenderer.getWidth(" ________________ "),
+                textRenderer.fontHeight + 8,
+                Text.translatable("actions.ui.create.name")
+            )
+        nameField?.setMaxLength(16)
+
+        addDrawableChild(nameField)
+
+        // Preferred ID Textbox
+        context.drawText(
+            textRenderer,
+            Text.translatable("actions.ui.create.id"),
+            4,
+            4 + textRenderer.fontHeight * 7,
+            UIColors.BLUE.color.rgb,
+            true
+        )
+
+        if (idField == null)
+            idField = TextFieldWidget(
+                textRenderer,
+                4,
+                4 + textRenderer.fontHeight * 8,
+                textRenderer.getWidth(" 2147483647 "),
+                textRenderer.fontHeight + 8,
+                Text.translatable("actions.ui.create.id")
+            )
+        idField?.setMaxLength(10)
+        idField?.setChangedListener { newText ->
+            if (!newText.matches(Regex("\\d*")))
+                idField?.text = newText.filter { it.isDigit() }
+        }
+
+        addDrawableChild(idField)
+
+        // Create Button
+        createButton = ButtonWidget.builder(Text.translatable("actions.ui.create.create")) {
+            val name = nameField?.text ?: ""
+            val preferredID = idField?.text?.toIntOrNull()?: 0
+
+            when (ActionManager.instance.createAction(name)) {
+                1 -> {
+                    val action = ActionManager.instance.getActionByNameID(name)
+
+                    if (action == null) {
+                        createText = "actions.ui.create.failed"
+                        return@builder
+                    }
+
+                    if (action.id != preferredID)
+                        action.id = if (ActionManager.instance.actions.none { it.id == preferredID })
+                            preferredID
+                        else
+                            ActionManager.instance.getNextAvailableID()
+
+                    MinecraftClient.getInstance().setScreen(EditActionScreen().asAction(action))
+                }
+                2 -> createText = "actions.ui.create.already_used"
+                3 -> createText = "actions.ui.create.start_with_letter"
+                4 -> createText = "actions.ui.create.min_length"
+            }
+        }
+            .dimensions(4, 4 + textRenderer.fontHeight * 11, textRenderer.getWidth(Text.translatable("actions.ui.create.create")) + textRenderer.getWidth("  "), textRenderer.fontHeight + 8)
+            .build()
+
+        addDrawableChild(createButton)
+
+        context.drawText(
+            textRenderer,
+            Text.translatable(createText),
+            4,
+            4 + textRenderer.fontHeight * 13,
+            UIColors.BLUE.color.rgb,
             true
         )
 

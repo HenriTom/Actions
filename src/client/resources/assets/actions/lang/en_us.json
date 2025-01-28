@@ -89,8 +89,18 @@
 
   "actions.ui.create.title": "Create",
   "actions.ui.manage.title": "Manage",
+  "actions.ui.edit.title": "Edit",
   "actions.ui.coming.title": "Coming",
   "actions.ui.settings.title": "Settings",
+
+  "actions.ui.create.name": "Name:",
+  "actions.ui.create.id": "Preferred Id:",
+  "actions.ui.create.create": "Create",
+  "actions.ui.create.default": "Press 'Create' to finish the creation.",
+  "actions.ui.create.failed": "Failed to create the action.",
+  "actions.ui.create.already_used": "Name already used.",
+  "actions.ui.create.start_with_letter": "Name must start with a letter.",
+  "actions.ui.create.min_length": "Name must be at least 3 characters long.",
 
   "actions.ui.coming.text": "This feature is not implemented yet. Please check back later.",
 
