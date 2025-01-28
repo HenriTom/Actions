@@ -10,7 +10,7 @@
 
   "actions.action.info.title": "§8» §7Action Info§8:",
   "actions.action.info.name": "§8» §7Name§8: §f'%s'§7",
-  "actions.action.info.id": "§8» §7ID§8: §f'%s'§7",
+  "actions.action.info.id": "§8» §7Id§8: §f'%s'§7",
   "actions.action.info.author": "§8» §7Author§8: §f'%s'§7",
   "actions.action.info.triggers": "§8» §7Triggers§8: §f'%s'§7",
   "actions.action.info.tasks": "§8» §7Tasks§8: §f'%s'§7",
@@ -97,6 +97,8 @@
   "actions.ui.edit.title": "Edit",
   "actions.ui.coming.title": "Coming",
   "actions.ui.settings.title": "Settings",
+  "actions.ui.triggers.title": "Triggers",
+  "actions.ui.tasks.title": "Tasks",
 
   "actions.ui.create.name": "Name:",
   "actions.ui.create.id": "Preferred Id:",
@@ -117,6 +119,20 @@
   "actions.ui.manage.top.triggers": "Triggers",
   "actions.ui.manage.top.tasks": "Tasks",
   "actions.ui.manage.top.separator": "┃",
+
+  "actions.ui.edit.change": "Change",
+  "actions.ui.edit.clear": "Clear",
+  "actions.ui.edit.disable": "Disable",
+  "actions.ui.edit.name": "Name:",
+  "actions.ui.edit.id": "Id:",
+  "actions.ui.edit.author": "Author:",
+  "actions.ui.edit.changed_name": "§8» §7Changed Name to: §f'%s'",
+  "actions.ui.edit.changed_id": "§8» §7Changed Id to: §f'%s'",
+  "actions.ui.edit.cleared_author": "§8» §7Cleared Author.",
+  "actions.ui.edit.invalid_name": "§8» §7Failed to change the name.",
+  "actions.ui.edit.invalid_id": "§8» §7Failed to change the Id.",
+  "actions.ui.edit.triggers": "Triggers (%s)",
+  "actions.ui.edit.tasks": "Tasks (%s)",
 
   "actions.ui.coming.text": "This feature is not implemented yet. Please check back later.",
 

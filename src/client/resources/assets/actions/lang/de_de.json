@@ -97,6 +97,8 @@
   "actions.ui.edit.title": "Bearbeiten",
   "actions.ui.coming.title": "Kommend",
   "actions.ui.settings.title": "Einstellungen",
+  "actions.ui.triggers.title": "Trigger",
+  "actions.ui.tasks.title": "Aufgaben",
 
   "actions.ui.create.name": "Name:",
   "actions.ui.create.id": "Bevorzugte Id:",
@@ -117,6 +119,20 @@
   "actions.ui.manage.top.triggers": "Trigger",
   "actions.ui.manage.top.tasks": "Aufgaben",
   "actions.ui.manage.top.separator": "┃",
+
+  "actions.ui.edit.change": "Verändern",
+  "actions.ui.edit.clear": "Löschen",
+  "actions.ui.edit.disable": "Deaktivieren",
+  "actions.ui.edit.name": "Name:",
+  "actions.ui.edit.id": "Id:",
+  "actions.ui.edit.author": "Autor:",
+  "actions.ui.edit.changed_name": "§8» §7Name geändert zu: §f'%s'",
+  "actions.ui.edit.changed_id": "§8» §7Id geändert zu: §f'%s'",
+  "actions.ui.edit.cleared_author": "§8» §7Autor gelöscht.",
+  "actions.ui.edit.invalid_name": "§8» §7Ändern des Namens fehlgeschlagen.",
+  "actions.ui.edit.invalid_id": "§8» §7Ändern der Id fehlgeschlagen.",
+  "actions.ui.edit.triggers": "Trigger (%s)",
+  "actions.ui.edit.tasks": "Aufgaben (%s)",
 
   "actions.ui.coming.text": "Diese Funktion ist noch nicht implementiert. Komme später wieder.",
 
