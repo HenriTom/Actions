@@ -56,7 +56,7 @@ class MainScreen : Screen(Text.translatable("actions.ui.main.title")) {
             Text.translatable("actions.ui.main.drag_and_drop"),
             4,
             height - textRenderer.fontHeight - 4,
-            UIColors.WHITE.color.rgb,
+            UIColors.BLUE.color.rgb,
             true
         )
 
@@ -280,6 +280,9 @@ class MainScreen : Screen(Text.translatable("actions.ui.main.title")) {
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         super.mouseClicked(mouseX, mouseY, button)
+
+        if (button != 0)
+            return false
 
         // Single End Buttons
         if (mouseX.toInt() in (width / 1.5 + width / 24).toInt()..(width - width / 24) && mouseY.toInt() in width / 24..height - width / 24) {

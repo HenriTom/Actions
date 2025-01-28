@@ -34,9 +34,9 @@ class ActionManager {
         return 2
     }
 
-    // 1: Success | 2: Name already used | 3: Name must start with a letter | 4: Name must be at least 3 characters long
+    // 1: Success | 2: Name already used | 3: Name must start with a letter | 4: Name must be between 3 and 16 characters
     fun createAction(name: String, addCallTrigger: Boolean = true, file: File? = null): Int  {
-        if (name.length < 3)
+        if (name.length < 3 || name.length > 16)
             return 4
 
         if (!name.first().isLetter())

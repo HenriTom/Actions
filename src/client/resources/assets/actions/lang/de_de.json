@@ -101,6 +101,17 @@
   "actions.ui.create.already_used": "Name bereits benutzt.",
   "actions.ui.create.start_with_letter": "Name muss mit einem Buchstaben starten.",
   "actions.ui.create.min_length": "Name muss mindestens 3 Buchstaben lang sein.",
+  "actions.ui.create.call_trigger": "Füge einen Call-Trigger hinzu",
+
+  "actions.ui.manage.top.call": "Aufrufen",
+  "actions.ui.manage.top.delete": "Löschen",
+  "actions.ui.manage.top.edit": "Bearbeiten",
+  "actions.ui.manage.top.name": "Name",
+  "actions.ui.manage.top.id": "Id",
+  "actions.ui.manage.top.author": "Autor",
+  "actions.ui.manage.top.triggers": "Trigger",
+  "actions.ui.manage.top.tasks": "Aufgaben",
+  "actions.ui.manage.top.separator": "┃",
 
   "actions.ui.coming.text": "Diese Funktion ist noch nicht implementiert. Komme später wieder.",
 

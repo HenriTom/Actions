@@ -54,7 +54,7 @@ class SettingsScreen : Screen(Text.translatable("actions.ui.settings.title")) {
             Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
-            UIColors.BLUE.color.rgb,
+            UIColors.PURPLE.color.rgb,
             true
         )
 

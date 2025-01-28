@@ -21,6 +21,7 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
     private var nameField: TextFieldWidget? = null
     private var idField: TextFieldWidget? = null
     private var createButton: ButtonWidget? = null
+    private var callTrigger = true
 
     private var createText = "actions.ui.create.default";
 
@@ -76,7 +77,7 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
             textRenderer,
             Text.translatable("actions.ui.create.id"),
             4,
-            4 + textRenderer.fontHeight * 7,
+            5 + textRenderer.fontHeight * 7,
             UIColors.BLUE.color.rgb,
             true
         )
@@ -85,7 +86,7 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
             idField = TextFieldWidget(
                 textRenderer,
                 4,
-                4 + textRenderer.fontHeight * 8,
+                5 + textRenderer.fontHeight * 8,
                 textRenderer.getWidth(" 2147483647 "),
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.create.id")
@@ -98,12 +99,31 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
 
         addDrawableChild(idField)
 
+        // Call Trigger Checkbox
+        context.drawText(
+            textRenderer,
+            Text.translatable("actions.ui.create.call_trigger"),
+            textRenderer.fontHeight + 8,
+            7 + textRenderer.fontHeight * 11,
+            UIColors.BLUE.color.rgb,
+            true
+        )
+
+        context.drawText(
+            textRenderer,
+            Text.literal(if (callTrigger) "☑" else "☐"),
+            4,
+            7 + textRenderer.fontHeight * 11,
+            if (mouseX in 4..4 + textRenderer.fontHeight && mouseY in 7 + textRenderer.fontHeight * 11..7 + textRenderer.fontHeight * 12) UIColors.BLUE.color.rgb else UIColors.WHITE.color.rgb,
+            true
+        )
+
         // Create Button
         createButton = ButtonWidget.builder(Text.translatable("actions.ui.create.create")) {
             val name = nameField?.text ?: ""
             val preferredID = idField?.text?.toIntOrNull()?: 0
 
-            when (ActionManager.instance.createAction(name)) {
+            when (ActionManager.instance.createAction(name, callTrigger)) {
                 1 -> {
                     val action = ActionManager.instance.getActionByNameID(name)
 
@@ -118,14 +138,14 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
                         else
                             ActionManager.instance.getNextAvailableID()
 
-                    MinecraftClient.getInstance().setScreen(EditActionScreen().asAction(action))
+                    MinecraftClient.getInstance().setScreen(ManageScreen())
                 }
                 2 -> createText = "actions.ui.create.already_used"
                 3 -> createText = "actions.ui.create.start_with_letter"
                 4 -> createText = "actions.ui.create.min_length"
             }
         }
-            .dimensions(4, 4 + textRenderer.fontHeight * 11, textRenderer.getWidth(Text.translatable("actions.ui.create.create")) + textRenderer.getWidth("  "), textRenderer.fontHeight + 8)
+            .dimensions(4, 1 + textRenderer.fontHeight * 13, textRenderer.getWidth(Text.translatable("actions.ui.create.create")) + textRenderer.getWidth("  "), textRenderer.fontHeight + 8)
             .build()
 
         addDrawableChild(createButton)
@@ -134,7 +154,7 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
             textRenderer,
             Text.translatable(createText),
             4,
-            4 + textRenderer.fontHeight * 13,
+            4 + textRenderer.fontHeight * 15,
             UIColors.BLUE.color.rgb,
             true
         )
@@ -163,11 +183,11 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         super.mouseClicked(mouseX, mouseY, button)
 
-        return true
-    }
+        if (button != 0)
+            return false
 
-    override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
-        super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
+        if (mouseX.toInt() in 4..4 + textRenderer.fontHeight && mouseY.toInt() in 7 + textRenderer.fontHeight * 11..7 + textRenderer.fontHeight * 12)
+            callTrigger = !callTrigger
 
         return true
     }

@@ -6,7 +6,7 @@
   "actions.action.already_used": "§8» §7Name §f'%s'§7 already used.",
   "actions.action.deleted": "§8» §7Action §f'%s'§7 deleted.",
   "actions.action.start_with_letter": "§8» §7Name must start with a letter.",
-  "actions.action.min_length": "§8» §7Name must be at least 3 characters long.",
+  "actions.action.min_length": "§8» §7Name must be between 3 and 16 characters.",
 
   "actions.action.info.title": "§8» §7Action Info§8:",
   "actions.action.info.name": "§8» §7Name§8: §f'%s'§7",
@@ -100,7 +100,18 @@
   "actions.ui.create.failed": "Failed to create the action.",
   "actions.ui.create.already_used": "Name already used.",
   "actions.ui.create.start_with_letter": "Name must start with a letter.",
-  "actions.ui.create.min_length": "Name must be at least 3 characters long.",
+  "actions.ui.create.min_length": "Name must be between 3 and 16 characters.",
+  "actions.ui.create.call_trigger": "Add Call Trigger",
+
+  "actions.ui.manage.top.call": "Call",
+  "actions.ui.manage.top.delete": "Delete",
+  "actions.ui.manage.top.edit": "Edit",
+  "actions.ui.manage.top.name": "Name",
+  "actions.ui.manage.top.id": "Id",
+  "actions.ui.manage.top.author": "Author",
+  "actions.ui.manage.top.triggers": "Triggers",
+  "actions.ui.manage.top.tasks": "Tasks",
+  "actions.ui.manage.top.separator": "┃",
 
   "actions.ui.coming.text": "This feature is not implemented yet. Please check back later.",
 

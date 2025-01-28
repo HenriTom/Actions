@@ -62,7 +62,7 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
             Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
-            UIColors.BLUE.color.rgb,
+            UIColors.YELLOW.color.rgb,
             true
         )
 
