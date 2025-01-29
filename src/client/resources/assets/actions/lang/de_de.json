@@ -120,6 +120,11 @@
   "actions.ui.manage.top.tasks": "Aufgaben",
   "actions.ui.manage.top.separator": "┃",
 
+  "actions.ui.triggers.top.type": "Typ",
+  "actions.ui.triggers.top.value": "Wert",
+  "actions.ui.triggers.top.remove": "Entfernen",
+  "actions.ui.triggers.add": "Hinzufügen",
+
   "actions.ui.edit.change": "Verändern",
   "actions.ui.edit.clear": "Löschen",
   "actions.ui.edit.disable": "Deaktivieren",
