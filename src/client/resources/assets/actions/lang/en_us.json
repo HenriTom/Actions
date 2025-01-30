@@ -150,6 +150,7 @@
 
   "actions.ui.addtask.title": "AddTask",
   "actions.ui.addtask.type": "Type",
+  "actions.ui.addtask.filter": "Filter",
   "actions.ui.addtask.value": "Value",
   "actions.ui.addtask.add": "Add",
 

@@ -5,6 +5,7 @@ import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.triggers.settings.ReceiveMessageEnum
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -23,6 +24,7 @@ import kotlin.io.path.exists
 class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
 
     private var typeButton: CyclingButtonWidget<TriggerEnum>? = null
+    private var subtypeButton: CyclingButtonWidget<ReceiveMessageEnum>? = null
     private var valueField: TextFieldWidget? = null
     private var addButton: ButtonWidget? = null
 
@@ -36,6 +38,7 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
     override fun init() {
         super.init()
         typeButton = null
+        subtypeButton = null
         valueField = null
         addButton = null
     }
@@ -91,12 +94,31 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 .build(
                     4,
                     8 + textRenderer.fontHeight * 4,
-                    textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray()
-                        .maxOf { textRenderer.getWidth(it.toString()) } + 16,
+                    textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) } + 16,
                     textRenderer.fontHeight + 8,
                     Text.translatable("actions.ui.addtask.type"))
 
             addDrawableChild(typeButton)
+        }
+
+        // Subtype Button
+        if (typeButton?.value == TriggerEnum.RECEIVE_MESSAGE) {
+            if (subtypeButton == null && action != null) {
+                subtypeButton = CyclingButtonWidget.builder { receiveMessageEnum: ReceiveMessageEnum -> Text.literal(receiveMessageEnum.name) }
+                    .values(ReceiveMessageEnum.entries)
+                    .initially(ReceiveMessageEnum.entries.first())
+                    .build(
+                        8 + textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) } + 16,
+                        8 + textRenderer.fontHeight * 4,
+                        textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.filter")) + ReceiveMessageEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) } + 16,
+                        textRenderer.fontHeight + 8,
+                        Text.translatable("actions.ui.addtask.filter"))
+
+                addDrawableChild(subtypeButton)
+            }
+        } else if (subtypeButton != null) {
+            remove(subtypeButton)
+            subtypeButton = null
         }
 
         // Value Textbox
@@ -128,12 +150,15 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.addtask.add")) {
                 val trigger = typeButton?.value ?: TriggerEnum.entries.first()
-                val value = valueField?.text ?: ""
+                var value = valueField?.text ?: ""
 
                 if (action == null) {
                     MessageUtil().printTranslatable("actions.action.not_found", "%Unknown%")
                     return@builder
                 }
+
+                if (trigger == TriggerEnum.RECEIVE_MESSAGE && subtypeButton != null)
+                    value = subtypeButton?.value?.name + "-" + value
 
                 when (ActionEditManager.instance.addTrigger(action!!, trigger)) {
                     1 -> {

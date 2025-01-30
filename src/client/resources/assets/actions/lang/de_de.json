@@ -150,6 +150,7 @@
 
   "actions.ui.addtask.title": "Aufgabe Hinzufügen",
   "actions.ui.addtask.type": "Typ",
+  "actions.ui.addtask.filter": "Filter",
   "actions.ui.addtask.value": "Wert",
   "actions.ui.addtask.add": "Hinzufügen",
 
