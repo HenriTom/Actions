@@ -16,7 +16,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
+class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
 
     private var valueField: TextFieldWidget? = null
     private var editButton: ButtonWidget? = null
@@ -26,6 +26,12 @@ class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
     fun asTask(task: Task): EditTaskScreen {
         this.task = task
         return this
+    }
+
+    override fun init() {
+        super.init()
+        valueField = null
+        editButton = null
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -82,30 +88,37 @@ class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
                 Text.translatable("actions.ui.addtask.value")
             )
             valueField?.text = task?.value.toString()
+
+            addDrawableChild(valueField)
         }
         valueField?.setMaxLength(8192)
         valueField?.width = width - 8
 
-        addDrawableChild(valueField)
-
         // Edit Button
-        editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
-            val value = valueField?.text ?: ""
+        if (editButton == null) {
+            editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
+                val value = valueField?.text ?: ""
 
-            if (task == null) {
-                MessageUtil().printTranslatable("actions.task.not_found", "%Unknown%")
-                return@builder
+                if (task == null) {
+                    MessageUtil().printTranslatable("actions.task.not_found", "%Unknown%")
+                    return@builder
+                }
+
+                task!!.value = value
+
+                MessageUtil().printTranslatable("actions.task.edited", task!!.type.name, task!!.id.toString(), value)
+                MinecraftClient.getInstance().setScreen(TasksScreen(this).asAction(task!!.action))
             }
+                .dimensions(
+                    4,
+                    5 + textRenderer.fontHeight * 7,
+                    textRenderer.getWidth(Text.translatable("actions.ui.edittask.edit")) + textRenderer.getWidth("  ") + 16,
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-            task!!.value = value
-
-            MessageUtil().printTranslatable("actions.task.edited", task!!.type.name, task!!.id.toString(), value)
-            MinecraftClient.getInstance().setScreen(TasksScreen().asAction(task!!.action))
+            addDrawableChild(editButton)
         }
-            .dimensions(4, 5 + textRenderer.fontHeight * 7, textRenderer.getWidth(Text.translatable("actions.ui.edittask.edit")) + textRenderer.getWidth("  ") + 16, textRenderer.fontHeight + 8)
-            .build()
-
-        addDrawableChild(editButton)
 
         // Drag and Drop
         context.drawText(
@@ -137,5 +150,9 @@ class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

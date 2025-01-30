@@ -16,13 +16,17 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class TriggersScreen : Screen(Text.translatable("actions.ui.tasks.title")) {
+class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.tasks.title")) {
 
     private var action: Action? = null
-
-    private var addButton: ButtonWidget? = null
-
     private var scroll = 0
+
+    private var addButton:ButtonWidget? = null
+
+    override fun init() {
+        super.init()
+        addButton = null
+    }
 
     fun asAction(action: Action): TriggersScreen {
         this.action = action
@@ -195,19 +199,23 @@ class TriggersScreen : Screen(Text.translatable("actions.ui.tasks.title")) {
         }
 
         // Add Button
-        addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
-            MinecraftClient.getInstance().setScreen(AddTriggerScreen().asAction(action!!))
-            return@builder;
-        }
-            .dimensions(
-                width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth("  ") + 8),
-                height - (textRenderer.fontHeight + 12),
-                textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth("  "),
-                textRenderer.fontHeight + 8
-            )
-            .build()
+        if (addButton == null) {
+            addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
+                MinecraftClient.getInstance().setScreen(AddTriggerScreen(this).asAction(action!!))
+                return@builder;
+            }
+                .dimensions(
+                    width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth(
+                        "  "
+                    ) + 8),
+                    height - (textRenderer.fontHeight + 12),
+                    textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth("  "),
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-        addDrawableChild(addButton)
+            addDrawableChild(addButton)
+        }
 
         // Drag and Drop
         context.drawText(
@@ -256,7 +264,7 @@ class TriggersScreen : Screen(Text.translatable("actions.ui.tasks.title")) {
                             MessageUtil().printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action!!.name)
                         }
                         "actions.ui.manage.top.edit" -> {
-                            MinecraftClient.getInstance().setScreen(EditTriggerScreen().asTrigger(trigger))
+                            MinecraftClient.getInstance().setScreen(EditTriggerScreen(this).asTrigger(trigger))
                         }
                     }
                     return true
@@ -298,5 +306,9 @@ class TriggersScreen : Screen(Text.translatable("actions.ui.tasks.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

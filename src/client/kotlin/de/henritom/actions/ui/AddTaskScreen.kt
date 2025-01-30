@@ -19,7 +19,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
+class AddTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
 
     private var typeButton: CyclingButtonWidget<TaskEnum>? = null
     private var valueField: TextFieldWidget? = null
@@ -30,6 +30,13 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
     fun asAction(action: Action): AddTaskScreen {
         this.action = action
         return this
+    }
+
+    override fun init() {
+        super.init()
+        typeButton = null
+        valueField = null
+        addButton = null
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -76,13 +83,20 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             true
         )
 
-        if (typeButton == null)
+        if (typeButton == null) {
             typeButton = CyclingButtonWidget.builder { taskEnum: TaskEnum -> Text.literal(taskEnum.name) }
                 .values(TaskEnum.entries)
                 .initially(TaskEnum.entries.first())
-                .build(4, 8 + textRenderer.fontHeight * 4, textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TaskEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) } + 16, textRenderer.fontHeight + 8, Text.translatable("actions.ui.addtask.type"))
+                .build(
+                    4,
+                    8 + textRenderer.fontHeight * 4,
+                    textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TaskEnum.entries.toTypedArray()
+                        .maxOf { textRenderer.getWidth(it.toString()) } + 16,
+                    textRenderer.fontHeight + 8,
+                    Text.translatable("actions.ui.addtask.type"))
 
-        addDrawableChild(typeButton)
+            addDrawableChild(typeButton)
+        }
 
         // Value Textbox
         context.drawText(
@@ -94,7 +108,7 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             true
         )
 
-        if (valueField == null)
+        if (valueField == null) {
             valueField = TextFieldWidget(
                 textRenderer,
                 4,
@@ -103,32 +117,40 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.addtask.value")
             )
-        valueField?.setMaxLength(8192)
-        valueField?.width = width - 8
+            valueField?.setMaxLength(8192)
+            valueField?.width = width - 8
 
-        addDrawableChild(valueField)
+            addDrawableChild(valueField)
+        }
 
         // Add Button
-        addButton = ButtonWidget.builder(Text.translatable("actions.ui.addtask.add")) {
-            val task = typeButton?.value ?: TaskEnum.entries.first()
-            val value = valueField?.text ?: ""
+        if (addButton == null) {
+            addButton = ButtonWidget.builder(Text.translatable("actions.ui.addtask.add")) {
+                val task = typeButton?.value ?: TaskEnum.entries.first()
+                val value = valueField?.text ?: ""
 
-            if (action == null) {
-                MessageUtil().printTranslatable("actions.action.not_found", "%Unknown%")
-                return@builder
+                if (action == null) {
+                    MessageUtil().printTranslatable("actions.action.not_found", "%Unknown%")
+                    return@builder
+                }
+
+                if (ActionEditManager.instance.addTask(action!!, task)) {
+                    action!!.tasks.last().value = value
+
+                    MessageUtil().printTranslatable("actions.task.added.initial_value", task.name, action!!.name, value)
+                    MinecraftClient.getInstance().setScreen(TasksScreen(this).asAction(action!!))
+                }
             }
+                .dimensions(
+                    4,
+                    5 + textRenderer.fontHeight * 11,
+                    textRenderer.getWidth(Text.translatable("actions.ui.addtask.add")) + textRenderer.getWidth("  ") + 16,
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-            if (ActionEditManager.instance.addTask(action!!, task)) {
-                action!!.tasks.last().value = value
-
-                MessageUtil().printTranslatable("actions.task.added.initial_value", task.name, action!!.name, value)
-                MinecraftClient.getInstance().setScreen(TasksScreen().asAction(action!!))
-            }
+            addDrawableChild(addButton)
         }
-            .dimensions(4, 5 + textRenderer.fontHeight * 11, textRenderer.getWidth(Text.translatable("actions.ui.addtask.add")) + textRenderer.getWidth("  ") + 16, textRenderer.fontHeight + 8)
-            .build()
-
-        addDrawableChild(addButton)
 
         // Drag and Drop
         context.drawText(
@@ -160,5 +182,9 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

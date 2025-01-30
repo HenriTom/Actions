@@ -16,12 +16,18 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class EditTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
+class EditTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
 
     private var valueField: TextFieldWidget? = null
     private var editButton: ButtonWidget? = null
 
     private var trigger: Trigger? = null
+
+    override fun init() {
+        super.init()
+        valueField = null
+        editButton = null
+    }
 
     fun asTrigger(trigger: Trigger): EditTriggerScreen {
         this.trigger = trigger
@@ -82,30 +88,42 @@ class EditTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
                 Text.translatable("actions.ui.addtask.value")
             )
             valueField?.text = trigger?.value.toString()
+
+            addDrawableChild(valueField)
         }
         valueField?.setMaxLength(8192)
         valueField?.width = width - 8
 
-        addDrawableChild(valueField)
-
         // Edit Button
-        editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
-            val value = valueField?.text ?: ""
+        if (editButton == null) {
+            editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
+                val value = valueField?.text ?: ""
 
-            if (trigger == null) {
-                MessageUtil().printTranslatable("actions.trigger.not_found", "%Unknown%")
-                return@builder
+                if (trigger == null) {
+                    MessageUtil().printTranslatable("actions.trigger.not_found", "%Unknown%")
+                    return@builder
+                }
+
+                trigger!!.value = value
+
+                MessageUtil().printTranslatable(
+                    "actions.trigger.edited",
+                    trigger!!.type.name,
+                    trigger!!.id.toString(),
+                    value
+                )
+                MinecraftClient.getInstance().setScreen(TriggersScreen(this).asAction(trigger!!.action))
             }
+                .dimensions(
+                    4,
+                    5 + textRenderer.fontHeight * 7,
+                    textRenderer.getWidth(Text.translatable("actions.ui.edittask.edit")) + textRenderer.getWidth("  ") + 16,
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-            trigger!!.value = value
-
-            MessageUtil().printTranslatable("actions.trigger.edited", trigger!!.type.name, trigger!!.id.toString(), value)
-            MinecraftClient.getInstance().setScreen(TriggersScreen().asAction(trigger!!.action))
+            addDrawableChild(editButton)
         }
-            .dimensions(4, 5 + textRenderer.fontHeight * 7, textRenderer.getWidth(Text.translatable("actions.ui.edittask.edit")) + textRenderer.getWidth("  ") + 16, textRenderer.fontHeight + 8)
-            .build()
-
-        addDrawableChild(editButton)
 
         // Drag and Drop
         context.drawText(
@@ -137,5 +155,9 @@ class EditTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

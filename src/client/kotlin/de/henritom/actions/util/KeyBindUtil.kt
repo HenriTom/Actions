@@ -33,7 +33,7 @@ class KeyBindUtil {
 
         ClientTickEvents.END_CLIENT_TICK.register { client ->
             if (openGUI.wasPressed())
-                client.setScreen(MainScreen())
+                client.setScreen(MainScreen(null))
         }
     }
 }

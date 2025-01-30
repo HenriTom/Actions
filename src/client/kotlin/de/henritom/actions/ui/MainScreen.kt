@@ -16,7 +16,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class MainScreen : Screen(Text.translatable("actions.ui.main.title")) {
+class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.main.title")) {
 
     private var scrollConsole = 0
     private var scrollRunning = 0
@@ -56,7 +56,7 @@ class MainScreen : Screen(Text.translatable("actions.ui.main.title")) {
             Text.translatable("actions.ui.main.drag_and_drop"),
             4,
             height - textRenderer.fontHeight - 4,
-            UIColors.BLUE.color.rgb,
+            UIColors.WHITE.color.rgb,
             true
         )
 
@@ -303,19 +303,19 @@ class MainScreen : Screen(Text.translatable("actions.ui.main.title")) {
 
         // Button 1 (Add Action)
         if (mouseX.toInt() in width / 24..(width / 24) * 8 && mouseY.toInt() in width / 24..(height / 24) * 6)
-            MinecraftClient.getInstance().setScreen(CreateScreen())
+            MinecraftClient.getInstance().setScreen(CreateScreen(this))
 
         // Button 2 (Edit Action)
         if (mouseX.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY.toInt() in width / 24..(height / 24) * 6)
-            MinecraftClient.getInstance().setScreen(ManageScreen())
+            MinecraftClient.getInstance().setScreen(ManageScreen(this))
 
-        // Button 3 (Coming Soon...)
+        // Button 3 (Disabled Actions)
         if (mouseX.toInt() in width / 24..(width / 24) * 8 && mouseY.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
-            MinecraftClient.getInstance().setScreen(ComingScreen())
+            MinecraftClient.getInstance().setScreen(DisabledActionsScreen(this))
 
         // Button 4 (Settings)
         if (mouseX.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
-            MinecraftClient.getInstance().setScreen(SettingsScreen())
+            MinecraftClient.getInstance().setScreen(SettingsScreen(this))
 
         return false
     }
@@ -390,5 +390,9 @@ class MainScreen : Screen(Text.translatable("actions.ui.main.title")) {
             context.drawText(textRenderer, line, x, currentY, color, shadow)
             currentY += textRenderer.fontHeight + 2
         }
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

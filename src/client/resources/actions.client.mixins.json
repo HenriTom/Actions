@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ClientPlayNetworkHandlerMixin",
-    "KeyboardMixin"
+    "KeyboardMixin",
+    "OptionsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

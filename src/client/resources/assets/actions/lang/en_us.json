@@ -75,6 +75,8 @@
   "actions.triggers.command.called": "§8» §7Action §f'%s'§7 called.",
   "actions.triggers.command.not_found": "§8» §7Command-Trigger §f'%s'§7 not found.",
 
+  "actions.ui.button": "Actions",
+
   "actions.ui.main.title": "Actions GUI",
   "actions.ui.main.version": "v%s",
   "actions.ui.main.drag_and_drop": "Drag and drop actions anywhere.",
@@ -89,16 +91,18 @@
 
   "actions.ui.main.button1.title": "Create a new Action",
   "actions.ui.main.button2.title": "Manage existing Actions",
-  "actions.ui.main.button3.title": "Coming Soon...",
+  "actions.ui.main.button3.title": "Manage disabled Actions",
   "actions.ui.main.button4.title": "Settings",
 
   "actions.ui.create.title": "Create",
   "actions.ui.manage.title": "Manage",
   "actions.ui.edit.title": "Edit",
-  "actions.ui.coming.title": "Coming",
+  "actions.ui.disabled.title": "Disabled",
   "actions.ui.settings.title": "Settings",
   "actions.ui.triggers.title": "Triggers",
   "actions.ui.tasks.title": "Tasks",
+  "actions.ui.addtrigger.title": "AddTrigger",
+  "actions.ui.edittrigger.title": "EditTrigger",
 
   "actions.ui.create.name": "Name:",
   "actions.ui.create.id": "Preferred Id:",
@@ -139,19 +143,17 @@
   "actions.ui.edit.triggers": "Triggers (%s)",
   "actions.ui.edit.tasks": "Tasks (%s)",
 
-  "actions.ui.addtrigger.title": "AddTrigger",
-
-  "actions.ui.edittrigger.title": "EditTrigger",
-
   "actions.ui.edittask.title": "EditTask",
   "actions.ui.edittask.edit": "Edit",
+
+  "actions.ui.disabled.top.enable": "Enable",
 
   "actions.ui.addtask.title": "AddTask",
   "actions.ui.addtask.type": "Type",
   "actions.ui.addtask.value": "Value",
   "actions.ui.addtask.add": "Add",
 
-  "actions.ui.coming.text": "This feature is not implemented yet. Please check back later.",
+  "actions.ui.settings.add_options_screen": "Add an Actions button to the Options screen",
 
   "actions.options.category": "Actions",
   "actions.options.open_gui": "Open GUI"

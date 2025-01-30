@@ -20,7 +20,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class AddTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
+class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
 
     private var typeButton: CyclingButtonWidget<TriggerEnum>? = null
     private var valueField: TextFieldWidget? = null
@@ -31,6 +31,13 @@ class AddTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
     fun asAction(action: Action): AddTriggerScreen {
         this.action = action
         return this
+    }
+
+    override fun init() {
+        super.init()
+        typeButton = null
+        valueField = null
+        addButton = null
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -77,13 +84,20 @@ class AddTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             true
         )
 
-        if (typeButton == null && action != null)
+        if (typeButton == null && action != null) {
             typeButton = CyclingButtonWidget.builder { triggerEnum: TriggerEnum -> Text.literal(triggerEnum.name) }
                 .values(ActionManager().getAvailableTriggersForAction(action!!))
                 .initially(TriggerEnum.entries.first())
-                .build(4, 8 + textRenderer.fontHeight * 4, textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) } + 16, textRenderer.fontHeight + 8, Text.translatable("actions.ui.addtask.type"))
+                .build(
+                    4,
+                    8 + textRenderer.fontHeight * 4,
+                    textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray()
+                        .maxOf { textRenderer.getWidth(it.toString()) } + 16,
+                    textRenderer.fontHeight + 8,
+                    Text.translatable("actions.ui.addtask.type"))
 
-        addDrawableChild(typeButton)
+            addDrawableChild(typeButton)
+        }
 
         // Value Textbox
         context.drawText(
@@ -95,7 +109,7 @@ class AddTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             true
         )
 
-        if (valueField == null)
+        if (valueField == null) {
             valueField = TextFieldWidget(
                 textRenderer,
                 4,
@@ -104,38 +118,52 @@ class AddTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.addtask.value")
             )
-        valueField?.setMaxLength(8192)
-        valueField?.width = width - 8
+            valueField?.setMaxLength(8192)
+            valueField?.width = width - 8
 
-        addDrawableChild(valueField)
+            addDrawableChild(valueField)
+        }
 
         // Add Button
-        addButton = ButtonWidget.builder(Text.translatable("actions.ui.addtask.add")) {
-            val trigger = typeButton?.value ?: TriggerEnum.entries.first()
-            val value = valueField?.text ?: ""
+        if (addButton == null) {
+            addButton = ButtonWidget.builder(Text.translatable("actions.ui.addtask.add")) {
+                val trigger = typeButton?.value ?: TriggerEnum.entries.first()
+                val value = valueField?.text ?: ""
 
-            if (action == null) {
-                MessageUtil().printTranslatable("actions.action.not_found", "%Unknown%")
-                return@builder
-            }
-
-            when (ActionEditManager.instance.addTrigger(action!!, trigger)) {
-                1 -> {
-                    action!!.triggers.last().value = value
-
-                    MessageUtil().printTranslatable("actions.trigger.added.initial_value", trigger.name, action!!.name, value)
-                    MinecraftClient.getInstance().setScreen(TriggersScreen().asAction(action!!))
-                }
-                2 -> {
-                    MessageUtil().printTranslatable("actions.trigger.multiple_triggers")
+                if (action == null) {
+                    MessageUtil().printTranslatable("actions.action.not_found", "%Unknown%")
                     return@builder
                 }
-            }
-        }
-            .dimensions(4, 5 + textRenderer.fontHeight * 11, textRenderer.getWidth(Text.translatable("actions.ui.addtask.add")) + textRenderer.getWidth("  ") + 16, textRenderer.fontHeight + 8)
-            .build()
 
-        addDrawableChild(addButton)
+                when (ActionEditManager.instance.addTrigger(action!!, trigger)) {
+                    1 -> {
+                        action!!.triggers.last().value = value
+
+                        MessageUtil().printTranslatable(
+                            "actions.trigger.added.initial_value",
+                            trigger.name,
+                            action!!.name,
+                            value
+                        )
+                        MinecraftClient.getInstance().setScreen(TriggersScreen(this).asAction(action!!))
+                    }
+
+                    2 -> {
+                        MessageUtil().printTranslatable("actions.trigger.multiple_triggers")
+                        return@builder
+                    }
+                }
+            }
+                .dimensions(
+                    4,
+                    5 + textRenderer.fontHeight * 11,
+                    textRenderer.getWidth(Text.translatable("actions.ui.addtask.add")) + textRenderer.getWidth("  ") + 16,
+                    textRenderer.fontHeight + 8
+                )
+                .build()
+
+            addDrawableChild(addButton)
+        }
 
         // Drag and Drop
         context.drawText(
@@ -167,5 +195,9 @@ class AddTriggerScreen : Screen(Text.translatable("actions.ui.coming.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

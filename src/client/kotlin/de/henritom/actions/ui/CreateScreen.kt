@@ -16,7 +16,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
+class CreateScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.create.title")) {
 
     private var nameField: TextFieldWidget? = null
     private var idField: TextFieldWidget? = null
@@ -24,6 +24,13 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
     private var callTrigger = true
 
     private var createText = "actions.ui.create.default";
+
+    override fun init() {
+        super.init()
+        nameField = null
+        idField = null
+        createButton = null
+    }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)
@@ -59,7 +66,7 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
             true
         )
 
-        if (nameField == null)
+        if (nameField == null) {
             nameField = TextFieldWidget(
                 textRenderer,
                 4,
@@ -68,9 +75,10 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.create.name")
             )
-        nameField?.setMaxLength(16)
+            nameField?.setMaxLength(16)
 
-        addDrawableChild(nameField)
+            addDrawableChild(nameField)
+        }
 
         // Preferred ID Textbox
         context.drawText(
@@ -82,7 +90,7 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
             true
         )
 
-        if (idField == null)
+        if (idField == null) {
             idField = TextFieldWidget(
                 textRenderer,
                 4,
@@ -91,13 +99,14 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.create.id")
             )
-        idField?.setMaxLength(10)
-        idField?.setChangedListener { newText ->
-            if (!newText.matches(Regex("\\d*")))
-                idField?.text = newText.filter { it.isDigit() }
-        }
+            idField?.setMaxLength(10)
+            idField?.setChangedListener { newText ->
+                if (!newText.matches(Regex("\\d*")))
+                    idField?.text = newText.filter { it.isDigit() }
+            }
 
-        addDrawableChild(idField)
+            addDrawableChild(idField)
+        }
 
         // Call Trigger Checkbox
         context.drawText(
@@ -119,36 +128,44 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
         )
 
         // Create Button
-        createButton = ButtonWidget.builder(Text.translatable("actions.ui.create.create")) {
-            val name = nameField?.text ?: ""
-            val preferredID = idField?.text?.toIntOrNull()?: 0
+        if (createButton == null) {
+            createButton = ButtonWidget.builder(Text.translatable("actions.ui.create.create")) {
+                val name = nameField?.text ?: ""
+                val preferredID = idField?.text?.toIntOrNull() ?: 0
 
-            when (ActionManager.instance.createAction(name, callTrigger)) {
-                1 -> {
-                    val action = ActionManager.instance.getActionByNameID(name)
+                when (ActionManager.instance.createAction(name, callTrigger)) {
+                    1 -> {
+                        val action = ActionManager.instance.getActionByNameID(name)
 
-                    if (action == null) {
-                        createText = "actions.ui.create.failed"
-                        return@builder
+                        if (action == null) {
+                            createText = "actions.ui.create.failed"
+                            return@builder
+                        }
+
+                        if (action.id != preferredID)
+                            action.id = if (ActionManager.instance.actions.none { it.id == preferredID })
+                                preferredID
+                            else
+                                ActionManager.instance.getNextAvailableID()
+
+                        MinecraftClient.getInstance().setScreen(ManageScreen(this))
                     }
 
-                    if (action.id != preferredID)
-                        action.id = if (ActionManager.instance.actions.none { it.id == preferredID })
-                            preferredID
-                        else
-                            ActionManager.instance.getNextAvailableID()
-
-                    MinecraftClient.getInstance().setScreen(ManageScreen())
+                    2 -> createText = "actions.ui.create.already_used"
+                    3 -> createText = "actions.ui.create.start_with_letter"
+                    4 -> createText = "actions.ui.create.min_length"
                 }
-                2 -> createText = "actions.ui.create.already_used"
-                3 -> createText = "actions.ui.create.start_with_letter"
-                4 -> createText = "actions.ui.create.min_length"
             }
-        }
-            .dimensions(4, 1 + textRenderer.fontHeight * 13, textRenderer.getWidth(Text.translatable("actions.ui.create.create")) + textRenderer.getWidth("  "), textRenderer.fontHeight + 8)
-            .build()
+                .dimensions(
+                    4,
+                    1 + textRenderer.fontHeight * 13,
+                    textRenderer.getWidth(Text.translatable("actions.ui.create.create")) + textRenderer.getWidth("  "),
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-        addDrawableChild(createButton)
+            addDrawableChild(createButton)
+        }
 
         context.drawText(
             textRenderer,
@@ -212,5 +229,9 @@ class CreateScreen : Screen(Text.translatable("actions.ui.create.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

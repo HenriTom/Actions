@@ -10,7 +10,9 @@ import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.Trigger
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.triggers.TriggerManager
+import de.henritom.actions.ui.SettingsScreen
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.item.Item.Settings
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -31,7 +33,10 @@ class ConfigManager {
         if (!configFile.exists())
             configFile.createNewFile()
 
-        val data = mapOf("command_prefix" to ActionManager.instance.commandPrefix)
+        val data = mapOf(
+            "command_prefix" to ActionManager.instance.commandPrefix,
+            "options_button" to SettingsScreen.addOptionsScreenButton
+        )
 
         configFile.writeText(gson.toJson(data))
     }
@@ -45,6 +50,7 @@ class ConfigManager {
 
         val data = Gson().fromJson(configFile.readText(), Map::class.java) as Map<*, *>
         ActionManager.instance.commandPrefix = data["command_prefix"] as? String ?: ""
+        SettingsScreen.addOptionsScreenButton = data["options_button"] as? Boolean ?: true
     }
 
     fun saveAction(action: Action, enabled: Boolean = true): File? {

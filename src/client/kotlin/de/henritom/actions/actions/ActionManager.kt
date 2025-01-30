@@ -7,6 +7,7 @@ import de.henritom.actions.scheduler.ActionScheduler
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import java.io.File
 import java.lang.Thread.sleep
@@ -119,5 +120,15 @@ class ActionManager {
 
     fun getAvailableTriggersForAction(action: Action): List<TriggerEnum> {
         return TriggerEnum.entries.filter { trigger -> action.triggers.none { it.type == trigger && trigger in listOf(TriggerEnum.CALL, TriggerEnum.JOIN, TriggerEnum.DISCONNECT, TriggerEnum.RESPAWN) } }
+    }
+
+    fun getDisabledActions(): List<File> {
+        val list = mutableListOf<File>()
+
+        for (file in FabricLoader.getInstance().configDir.resolve("actions").resolve("actions").toFile().listFiles() ?: emptyArray())
+            if (file.name.endsWith(".disabled"))
+                list.add(file)
+
+        return list
     }
 }

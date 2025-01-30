@@ -12,7 +12,12 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class SettingsScreen : Screen(Text.translatable("actions.ui.settings.title")) {
+class SettingsScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.settings.title")) {
+
+    companion object {
+        @kotlin.jvm.JvmField
+        var addOptionsScreenButton: Boolean = true
+    }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)
@@ -38,13 +43,22 @@ class SettingsScreen : Screen(Text.translatable("actions.ui.settings.title")) {
             true
         )
 
-        // Text
+        // x Checkbox
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.coming.text"),
-            width / 2 - textRenderer.getWidth(Text.translatable("actions.ui.coming.text")) / 2,
-            height / 2 - textRenderer.fontHeight / 2,
-            UIColors.WHITE.color.rgb,
+            Text.translatable("actions.ui.settings.add_options_screen"),
+            textRenderer.fontHeight + 8,
+            7 + textRenderer.fontHeight * 3,
+            UIColors.PURPLE.color.rgb,
+            true
+        )
+
+        context.drawText(
+            textRenderer,
+            Text.literal(if (addOptionsScreenButton) "☑" else "☐"),
+            4,
+            7 + textRenderer.fontHeight * 3,
+            if (mouseX in 4..4 + textRenderer.fontHeight && mouseY in 7 + textRenderer.fontHeight * 3..7 + textRenderer.fontHeight * 4) UIColors.PURPLE.color.rgb else UIColors.WHITE.color.rgb,
             true
         )
 
@@ -72,11 +86,11 @@ class SettingsScreen : Screen(Text.translatable("actions.ui.settings.title")) {
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         super.mouseClicked(mouseX, mouseY, button)
 
-        return true
-    }
+        if (button != 0)
+            return false
 
-    override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
-        super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
+        if (mouseX.toInt() in 4..4 + textRenderer.fontHeight && mouseY.toInt() in 7 + textRenderer.fontHeight * 3..7 + textRenderer.fontHeight * 4)
+            addOptionsScreenButton = !addOptionsScreenButton
 
         return true
     }
@@ -101,5 +115,9 @@ class SettingsScreen : Screen(Text.translatable("actions.ui.settings.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

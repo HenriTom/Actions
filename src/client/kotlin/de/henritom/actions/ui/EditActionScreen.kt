@@ -18,7 +18,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
+class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.edit.title")) {
 
     private var nameField: TextFieldWidget? = null
     private var idField: TextFieldWidget? = null
@@ -35,6 +35,18 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
     fun asAction(action: Action): EditActionScreen {
         this.action = action
         return this
+    }
+
+    override fun init() {
+        super.init()
+        nameField = null
+        idField = null
+        renameButton = null
+        reidButton = null
+        clearButton = null
+        disableButton = null
+        triggersButton = null
+        tasksButton = null
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -84,29 +96,36 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
                 Text.literal(action!!.name)
             )
             nameField?.text = action!!.name
+
+            addDrawableChild(nameField)
         }
         nameField?.setMaxLength(16)
 
-        addDrawableChild(nameField)
+        if (renameButton == null) {
+            renameButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.change")) {
+                val name = nameField?.text ?: ""
 
-        renameButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.change")) {
-            val name = nameField?.text ?: ""
-
-            if (name.isNotBlank() && name.length >= 3 && name.length <= 16 && name.first().isLetter()) {
-                val newAction = ActionEditManager.instance.renameAction(action!!, name)
-                if (newAction != null) {
-                    MessageUtil().printTranslatable("actions.ui.edit.changed_name", name)
-                    MinecraftClient.getInstance().setScreen(this.asAction(newAction))
-                    return@builder;
+                if (name.isNotBlank() && name.length >= 3 && name.length <= 16 && name.first().isLetter()) {
+                    val newAction = ActionEditManager.instance.renameAction(action!!, name)
+                    if (newAction != null) {
+                        MessageUtil().printTranslatable("actions.ui.edit.changed_name", name)
+                        MinecraftClient.getInstance().setScreen(this.asAction(newAction))
+                        return@builder;
+                    }
                 }
+
+                MessageUtil().printTranslatable("actions.ui.edit.invalid_name")
             }
+                .dimensions(
+                    textRenderer.getWidth(" ________________ ") + 8,
+                    4 + textRenderer.fontHeight * 4,
+                    textRenderer.getWidth(Text.translatable("actions.ui.edit.change")) + textRenderer.getWidth("  "),
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-            MessageUtil().printTranslatable("actions.ui.edit.invalid_name")
+            addDrawableChild(renameButton)
         }
-            .dimensions(textRenderer.getWidth(" ________________ ") + 8, 4 + textRenderer.fontHeight * 4, textRenderer.getWidth(Text.translatable("actions.ui.edit.change")) + textRenderer.getWidth("  "), textRenderer.fontHeight + 8)
-            .build()
-
-        addDrawableChild(renameButton)
 
         // Id Textbox
         context.drawText(
@@ -128,6 +147,8 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
                 Text.literal(action!!.id.toString())
             )
             idField?.text = action!!.id.toString()
+
+            addDrawableChild(idField)
         }
         idField?.setMaxLength(10)
         idField?.setChangedListener { newText ->
@@ -135,26 +156,31 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
                 idField?.text = newText.filter { it.isDigit() }
         }
 
-        addDrawableChild(idField)
+        if (reidButton == null) {
+            reidButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.change")) {
+                val name = idField?.text ?: ""
 
-        reidButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.change")) {
-            val name = idField?.text ?: ""
+                val id = name.toIntOrNull()
+                if (id == null || id < 0 || !ActionManager.instance.actions.none { it.id == id }) {
+                    MessageUtil().printTranslatable("actions.ui.edit.invalid_id")
+                    return@builder
+                }
 
-            val id = name.toIntOrNull()
-            if (id == null || id < 0 || !ActionManager.instance.actions.none { it.id == id }) {
-                MessageUtil().printTranslatable("actions.ui.edit.invalid_id")
+                action!!.id = name.toInt()
+                MessageUtil().printTranslatable("actions.ui.edit.changed_id", name)
+                ConfigManager().saveAction(action!!, true)
                 return@builder
             }
+                .dimensions(
+                    textRenderer.getWidth(" 2147483647 ") + 8,
+                    4 + textRenderer.fontHeight * 8,
+                    textRenderer.getWidth(Text.translatable("actions.ui.edit.change")) + textRenderer.getWidth("  "),
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-            action!!.id = name.toInt()
-            MessageUtil().printTranslatable("actions.ui.edit.changed_id", name)
-            ConfigManager().saveAction(action!!, true)
-            return@builder
+            addDrawableChild(reidButton)
         }
-            .dimensions(textRenderer.getWidth(" 2147483647 ") + 8, 4 + textRenderer.fontHeight * 8, textRenderer.getWidth(Text.translatable("actions.ui.edit.change")) + textRenderer.getWidth("  "), textRenderer.fontHeight + 8)
-            .build()
-
-        addDrawableChild(reidButton)
 
         // Author Text
         context.drawText(
@@ -175,7 +201,7 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
             true
         )
 
-        if (action!!.author != "%Unknown%") {
+        if (action!!.author != "%Unknown%" && clearButton == null) {
             clearButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.clear")) {
                 ActionEditManager.instance.removeAuthor(action!!)
                 MessageUtil().printTranslatable("actions.ui.edit.cleared_author")
@@ -194,51 +220,58 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
         }
 
         // Disable Button
-        disableButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.disable")) {
-            if (ActionEditManager.instance.disableAction(action!!)) {
-                MessageUtil().printTranslatable("actions.action.disabled", action!!.name)
-                ConfigManager().reloadActions()
-                MinecraftClient.getInstance().setScreen(ManageScreen())
-            } else
-                MessageUtil().printTranslatable("actions.action.not_disabled", action!!.name)
-        }
-            .dimensions(
-                4,
-                4 + textRenderer.fontHeight * 14,
-                textRenderer.getWidth(Text.translatable("actions.ui.edit.disable")) + textRenderer.getWidth("  "),
-                textRenderer.fontHeight + 8
-            )
-            .build()
+        if (disableButton == null) {
+            disableButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.disable")) {
+                if (ActionEditManager.instance.disableAction(action!!)) {
+                    MessageUtil().printTranslatable("actions.action.disabled", action!!.name)
+                    ConfigManager().reloadActions()
+                    MinecraftClient.getInstance().setScreen(ManageScreen(this))
+                } else
+                    MessageUtil().printTranslatable("actions.action.not_disabled", action!!.name)
+            }
+                .dimensions(
+                    4,
+                    4 + textRenderer.fontHeight * 14,
+                    textRenderer.getWidth(Text.translatable("actions.ui.edit.disable")) + textRenderer.getWidth("  "),
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-        addDrawableChild(disableButton)
+            addDrawableChild(disableButton)
+        }
 
         // Triggers Button
-        triggersButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.triggers", action!!.triggers.size)) {
-            MinecraftClient.getInstance().setScreen(TriggersScreen().asAction(action!!))
-        }
-            .dimensions(
-                4,
-                4 + textRenderer.fontHeight * 17,
-                textRenderer.getWidth(Text.translatable("actions.ui.edit.triggers")) + textRenderer.getWidth("  "),
-                textRenderer.fontHeight + 8
-            )
-            .build()
+        if (triggersButton == null) {
+            triggersButton =
+                ButtonWidget.builder(Text.translatable("actions.ui.edit.triggers", action!!.triggers.size)) {
+                    MinecraftClient.getInstance().setScreen(TriggersScreen(this).asAction(action!!))
+                }
+                    .dimensions(
+                        4,
+                        4 + textRenderer.fontHeight * 17,
+                        textRenderer.getWidth(Text.translatable("actions.ui.edit.triggers")) + textRenderer.getWidth("  "),
+                        textRenderer.fontHeight + 8
+                    )
+                    .build()
 
-        addDrawableChild(triggersButton)
+            addDrawableChild(triggersButton)
+        }
 
         // Tasks Button
-        tasksButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.tasks", action!!.tasks.size)) {
-            MinecraftClient.getInstance().setScreen(TasksScreen().asAction(action!!))
-        }
-            .dimensions(
-                4,
-                4 + textRenderer.fontHeight * 20,
-                textRenderer.getWidth(Text.translatable("actions.ui.edit.tasks")) + textRenderer.getWidth("  "),
-                textRenderer.fontHeight + 8
-            )
-            .build()
+        if (tasksButton == null) {
+            tasksButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.tasks", action!!.tasks.size)) {
+                MinecraftClient.getInstance().setScreen(TasksScreen(this).asAction(action!!))
+            }
+                .dimensions(
+                    4,
+                    4 + textRenderer.fontHeight * 20,
+                    textRenderer.getWidth(Text.translatable("actions.ui.edit.tasks")) + textRenderer.getWidth("  "),
+                    textRenderer.fontHeight + 8
+                )
+                .build()
 
-        addDrawableChild(tasksButton)
+            addDrawableChild(tasksButton)
+        }
 
         // Version
         context.drawText(
@@ -293,5 +326,9 @@ class EditActionScreen : Screen(Text.translatable("actions.ui.edit.title")) {
 
         ConfigManager().loadActions()
         MessageUtil().printTranslatable("actions.file.reloaded.actions")
+    }
+
+    override fun close() {
+        this.client?.setScreen(this.parent)
     }
 }

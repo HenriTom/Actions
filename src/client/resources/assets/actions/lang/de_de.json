@@ -146,12 +146,14 @@
   "actions.ui.edittask.title": "Aufgabe bearbeiten",
   "actions.ui.edittask.edit": "bearbeiten",
 
+  "actions.ui.disabled.top.enable": "Aktivieren",
+
   "actions.ui.addtask.title": "Aufgabe Hinzufügen",
   "actions.ui.addtask.type": "Typ",
   "actions.ui.addtask.value": "Wert",
   "actions.ui.addtask.add": "Hinzufügen",
 
-  "actions.ui.coming.text": "Diese Funktion ist noch nicht implementiert. Komme später wieder.",
+  "actions.ui.settings.add_options_screen": "Füge einen Actions Knopf zum Hauptmenü hinzu",
 
   "actions.options.category": "Actions",
   "actions.options.open_gui": "GUI öffnen"
