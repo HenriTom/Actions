@@ -67,7 +67,7 @@ object TriggerAddCommand {
 
                                 MessageUtil().printTranslatable("actions.trigger.added.initial_value", trigger.name, nameID, initValue)
                             } else if (ActionEditManager.instance.addTrigger(action, trigger) == 2)
-                                MessageUtil().printTranslatable("actions.trigger.multiple_calls")
+                                MessageUtil().printTranslatable("actions.trigger.multiple_triggers")
 
                             Command.SINGLE_SUCCESS
                         })
@@ -91,7 +91,7 @@ object TriggerAddCommand {
                     if (ActionEditManager.instance.addTrigger(action, trigger) == 1)
                         MessageUtil().printTranslatable("actions.trigger.added", trigger.name, nameID)
                     else if (ActionEditManager.instance.addTrigger(action, trigger) == 2)
-                        MessageUtil().printTranslatable("actions.trigger.multiple_calls")
+                        MessageUtil().printTranslatable("actions.trigger.multiple_triggers")
 
                     Command.SINGLE_SUCCESS
                 }

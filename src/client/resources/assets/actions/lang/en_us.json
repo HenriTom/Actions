@@ -17,7 +17,7 @@
 
   "actions.trigger.not_found": "§8» §7Trigger §f'%s'§7 not found.",
   "actions.trigger.added.initial_value": "§8» §7Trigger §f'%s'§7 added to action §f'%s'§7 with initial value: §f'%s'§7.",
-  "actions.trigger.multiple_calls": "§8» §7Can't add multiple call triggers.",
+  "actions.trigger.multiple_triggers": "§8» §7Can't add multiple triggers of that type.",
   "actions.trigger.added": "§8» §7Trigger §f'%s'§7 added to action §f'%s'§7.",
   "actions.trigger.removed": "§8» §7Trigger §f'%s[%s]'§7 removed from action §f'%s'§7.",
   "actions.trigger.not_found_in_action": "§8» §7Trigger §f'%s'§7 not found in action §f'%s'§7.",
@@ -138,6 +138,18 @@
   "actions.ui.edit.invalid_id": "§8» §7Failed to change the Id.",
   "actions.ui.edit.triggers": "Triggers (%s)",
   "actions.ui.edit.tasks": "Tasks (%s)",
+
+  "actions.ui.addtrigger.title": "AddTrigger",
+
+  "actions.ui.edittrigger.title": "EditTrigger",
+
+  "actions.ui.edittask.title": "EditTask",
+  "actions.ui.edittask.edit": "Edit",
+
+  "actions.ui.addtask.title": "AddTask",
+  "actions.ui.addtask.type": "Type",
+  "actions.ui.addtask.value": "Value",
+  "actions.ui.addtask.add": "Add",
 
   "actions.ui.coming.text": "This feature is not implemented yet. Please check back later.",
 

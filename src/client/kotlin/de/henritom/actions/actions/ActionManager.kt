@@ -116,4 +116,8 @@ class ActionManager {
 
         return -1
     }
+
+    fun getAvailableTriggersForAction(action: Action): List<TriggerEnum> {
+        return TriggerEnum.entries.filter { trigger -> action.triggers.none { it.type == trigger && trigger in listOf(TriggerEnum.CALL, TriggerEnum.JOIN, TriggerEnum.DISCONNECT, TriggerEnum.RESPAWN) } }
+    }
 }

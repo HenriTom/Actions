@@ -1,12 +1,17 @@
 package de.henritom.actions.ui
 
 import de.henritom.actions.actions.Action
+import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.config.ConfigManager
-import de.henritom.actions.triggers.Trigger
+import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
+import net.minecraft.client.gui.widget.CyclingButtonWidget
+import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import java.nio.file.Files
 import java.nio.file.Path
@@ -15,6 +20,10 @@ import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
 class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
+
+    private var typeButton: CyclingButtonWidget<TaskEnum>? = null
+    private var valueField: TextFieldWidget? = null
+    private var addButton: ButtonWidget? = null
 
     private var action: Action? = null
 
@@ -40,10 +49,10 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
 
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.coming.title"),
+            Text.translatable("actions.ui.addtask.title"),
             4 + textRenderer.getWidth(Text.translatable("actions.ui.main.title")) + textRenderer.getWidth(" "),
             4,
-            UIColors.RED.color.rgb,
+            UIColors.YELLOW.color.rgb,
             true
         )
 
@@ -53,19 +62,73 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
-            UIColors.RED.color.rgb,
+            UIColors.YELLOW.color.rgb,
             true
         )
 
-        // Text
+        // Type Button
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.coming.text"),
-            width / 2 - textRenderer.getWidth(Text.translatable("actions.ui.coming.text")) / 2,
-            height / 2 - textRenderer.fontHeight / 2,
-            UIColors.WHITE.color.rgb,
+            Text.translatable("actions.ui.addtask.type").append(":"),
+            4,
+            5 + textRenderer.fontHeight * 3,
+            UIColors.YELLOW.color.rgb,
             true
         )
+
+        if (typeButton == null)
+            typeButton = CyclingButtonWidget.builder { taskEnum: TaskEnum -> Text.literal(taskEnum.name) }
+                .values(TaskEnum.entries)
+                .initially(TaskEnum.entries.first())
+                .build(4, 8 + textRenderer.fontHeight * 4, textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TaskEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) } + 16, textRenderer.fontHeight + 8, Text.translatable("actions.ui.addtask.type"))
+
+        addDrawableChild(typeButton)
+
+        // Value Textbox
+        context.drawText(
+            textRenderer,
+            Text.translatable("actions.ui.addtask.value").append(":"),
+            4,
+            5 + textRenderer.fontHeight * 7,
+            UIColors.YELLOW.color.rgb,
+            true
+        )
+
+        if (valueField == null)
+            valueField = TextFieldWidget(
+                textRenderer,
+                4,
+                5 + textRenderer.fontHeight * 8,
+                width - 8,
+                textRenderer.fontHeight + 8,
+                Text.translatable("actions.ui.addtask.value")
+            )
+        valueField?.setMaxLength(8192)
+        valueField?.width = width - 8
+
+        addDrawableChild(valueField)
+
+        // Add Button
+        addButton = ButtonWidget.builder(Text.translatable("actions.ui.addtask.add")) {
+            val task = typeButton?.value ?: TaskEnum.entries.first()
+            val value = valueField?.text ?: ""
+
+            if (action == null) {
+                MessageUtil().printTranslatable("actions.action.not_found", "%Unknown%")
+                return@builder
+            }
+
+            if (ActionEditManager.instance.addTask(action!!, task)) {
+                action!!.tasks.last().value = value
+
+                MessageUtil().printTranslatable("actions.task.added.initial_value", task.name, action!!.name, value)
+                MinecraftClient.getInstance().setScreen(TasksScreen().asAction(action!!))
+            }
+        }
+            .dimensions(4, 5 + textRenderer.fontHeight * 11, textRenderer.getWidth(Text.translatable("actions.ui.addtask.add")) + textRenderer.getWidth("  ") + 16, textRenderer.fontHeight + 8)
+            .build()
+
+        addDrawableChild(addButton)
 
         // Drag and Drop
         context.drawText(
@@ -77,19 +140,6 @@ class AddTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             true
         )
     }
-
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
-
-        return true
-    }
-
-    override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
-        super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
-
-        return true
-    }
-
     override fun onFilesDropped(paths: MutableList<Path>?) {
         super.onFilesDropped(paths)
 

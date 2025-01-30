@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.text.Text
 import java.nio.file.Files
 import java.nio.file.Path
@@ -16,6 +17,7 @@ import kotlin.io.path.exists
 
 class ManageScreen : Screen(Text.translatable("actions.ui.manage.title")) {
 
+    private var addButton: ButtonWidget? = null
     private var scroll = 0
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -197,6 +199,21 @@ class ManageScreen : Screen(Text.translatable("actions.ui.manage.title")) {
                     xPos += separatorWidth
             }
         }
+
+        // Add Button
+        addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
+            MinecraftClient.getInstance().setScreen(CreateScreen())
+            return@builder;
+        }
+            .dimensions(
+                width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth("  ") + 8),
+                height - (textRenderer.fontHeight + 12),
+                textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth("  "),
+                textRenderer.fontHeight + 8
+            )
+            .build()
+
+        addDrawableChild(addButton)
 
         // Drag and Drop
         context.drawText(

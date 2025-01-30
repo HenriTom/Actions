@@ -4,8 +4,11 @@ import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.tasks.Task
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
+import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import java.nio.file.Files
 import java.nio.file.Path
@@ -14,6 +17,9 @@ import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
 class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
+
+    private var valueField: TextFieldWidget? = null
+    private var editButton: ButtonWidget? = null
 
     private var task: Task? = null
 
@@ -39,10 +45,10 @@ class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
 
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.coming.title"),
+            Text.translatable("actions.ui.edittask.title"),
             4 + textRenderer.getWidth(Text.translatable("actions.ui.main.title")) + textRenderer.getWidth(" "),
             4,
-            UIColors.RED.color.rgb,
+            UIColors.YELLOW.color.rgb,
             true
         )
 
@@ -52,19 +58,54 @@ class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
-            UIColors.RED.color.rgb,
+            UIColors.YELLOW.color.rgb,
             true
         )
 
-        // Text
+        // Value Textbox
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.coming.text"),
-            width / 2 - textRenderer.getWidth(Text.translatable("actions.ui.coming.text")) / 2,
-            height / 2 - textRenderer.fontHeight / 2,
-            UIColors.WHITE.color.rgb,
+            Text.translatable("actions.ui.addtask.value").append(":"),
+            4,
+            5 + textRenderer.fontHeight * 3,
+            UIColors.YELLOW.color.rgb,
             true
         )
+
+        if (valueField == null) {
+            valueField = TextFieldWidget(
+                textRenderer,
+                4,
+                5 + textRenderer.fontHeight * 4,
+                width - 8,
+                textRenderer.fontHeight + 8,
+                Text.translatable("actions.ui.addtask.value")
+            )
+            valueField?.text = task?.value.toString()
+        }
+        valueField?.setMaxLength(8192)
+        valueField?.width = width - 8
+
+        addDrawableChild(valueField)
+
+        // Edit Button
+        editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
+            val value = valueField?.text ?: ""
+
+            if (task == null) {
+                MessageUtil().printTranslatable("actions.task.not_found", "%Unknown%")
+                return@builder
+            }
+
+            task!!.value = value
+
+            MessageUtil().printTranslatable("actions.task.edited", task!!.type.name, task!!.id.toString(), value)
+            MinecraftClient.getInstance().setScreen(TasksScreen().asAction(task!!.action))
+        }
+            .dimensions(4, 5 + textRenderer.fontHeight * 7, textRenderer.getWidth(Text.translatable("actions.ui.edittask.edit")) + textRenderer.getWidth("  ") + 16, textRenderer.fontHeight + 8)
+            .build()
+
+        addDrawableChild(editButton)
 
         // Drag and Drop
         context.drawText(
@@ -76,19 +117,6 @@ class EditTaskScreen : Screen(Text.translatable("actions.ui.coming.title")) {
             true
         )
     }
-
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
-
-        return true
-    }
-
-    override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
-        super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
-
-        return true
-    }
-
     override fun onFilesDropped(paths: MutableList<Path>?) {
         super.onFilesDropped(paths)
 

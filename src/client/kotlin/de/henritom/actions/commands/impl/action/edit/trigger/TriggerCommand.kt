@@ -12,7 +12,7 @@ object TriggerCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("trigger")
             .then(TriggerAddCommand.register())
-            .then(TriggerEditCommand.register())
             .then(TriggerRemoveCommand.register())
+            .then(TriggerEditCommand.register())
     }
 }

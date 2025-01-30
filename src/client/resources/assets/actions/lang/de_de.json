@@ -17,7 +17,7 @@
 
   "actions.trigger.not_found": "§8» §7Trigger §f'%s'§7 nicht gefunden.",
   "actions.trigger.added.initial_value": "§8» §7Trigger §f'%s'§7 zur Aktion §f'%s'§7 mit Anfangswert: §f'%s'§7 hinzugefügt.",
-  "actions.trigger.multiple_calls": "§8» §7Es können keine mehrfachen Aufruf-Trigger hinzugefügt werden.",
+  "actions.trigger.multiple_triggers": "§8» §7Du kannst nicht mehrere Trigger dieses Typs hinzufügen.",
   "actions.trigger.added": "§8» §7Trigger §f'%s'§7 zur Aktion §f'%s'§7 hinzugefügt.",
   "actions.trigger.removed": "§8» §7Trigger §f'%s[%s]'§7 von der Aktion §f'%s'§7 entfernt.",
   "actions.trigger.not_found_in_action": "§8» §7Trigger §f'%s'§7 nicht in der Aktion §f'%s'§7 gefunden.",
@@ -138,6 +138,18 @@
   "actions.ui.edit.invalid_id": "§8» §7Ändern der Id fehlgeschlagen.",
   "actions.ui.edit.triggers": "Trigger (%s)",
   "actions.ui.edit.tasks": "Aufgaben (%s)",
+
+  "actions.ui.addtrigger.title": "Trigger hinzufügen",
+
+  "actions.ui.edittrigger.title": "Trigger bearbeiten",
+
+  "actions.ui.edittask.title": "Aufgabe bearbeiten",
+  "actions.ui.edittask.edit": "bearbeiten",
+
+  "actions.ui.addtask.title": "Aufgabe Hinzufügen",
+  "actions.ui.addtask.type": "Typ",
+  "actions.ui.addtask.value": "Wert",
+  "actions.ui.addtask.add": "Hinzufügen",
 
   "actions.ui.coming.text": "Diese Funktion ist noch nicht implementiert. Komme später wieder.",
 

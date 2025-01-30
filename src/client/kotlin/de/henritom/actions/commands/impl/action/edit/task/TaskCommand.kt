@@ -12,7 +12,7 @@ object TaskCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("task")
             .then(TaskAddCommand.register())
-            .then(TaskEditCommand.register())
             .then(TaskRemoveCommand.register())
+            .then(TaskEditCommand.register())
     }
 }

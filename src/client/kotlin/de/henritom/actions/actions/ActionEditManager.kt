@@ -19,18 +19,16 @@ class ActionEditManager {
     }
 
     fun addDirectTrigger(action: Action, trigger: Trigger): Boolean {
-        if (trigger.type == TriggerEnum.CALL)
-            if (action.triggers.any { it.type == TriggerEnum.CALL })
-                return false
+        if (!ActionManager().getAvailableTriggersForAction(action).contains(trigger.type))
+            return false
 
         return action.triggers.add(trigger)
     }
 
-    // 1 = success, 2 = can't add multiple call triggers
+    // 1 = success, 2 = can't add multiple triggers of that type
     fun addTrigger(action: Action, trigger: TriggerEnum): Int {
-        if (trigger == TriggerEnum.CALL)
-            if (action.triggers.any { it.type == TriggerEnum.CALL })
-                return 2
+        if (!ActionManager().getAvailableTriggersForAction(action).contains(trigger))
+            return 2
 
         action.triggers.add(Trigger(action, trigger))
         return 1

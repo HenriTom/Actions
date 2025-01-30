@@ -2,7 +2,7 @@ package de.henritom.actions.tasks
 
 import de.henritom.actions.actions.Action
 
-class Task(action: Action, typeDef: TaskEnum, valueDef: Any? = 0) {
+class Task(val action: Action, typeDef: TaskEnum, valueDef: Any? = 0) {
 
     var id = TaskManager.instance.getNextAvailableID(action)
     val type = typeDef

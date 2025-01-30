@@ -2,8 +2,8 @@ package de.henritom.actions.triggers
 
 enum class TriggerEnum {
 
-    CALL,
     KEYBIND,
+    CALL,
     COMMAND,
     DISCONNECT,
     JOIN,
