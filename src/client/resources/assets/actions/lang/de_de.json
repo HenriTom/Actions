@@ -75,6 +75,8 @@
   "actions.triggers.command.called": "§8» §7Aktion §f'%s'§7 aufgerufen.",
   "actions.triggers.command.not_found": "§8» §7Befehl-Trigger §f'%s'§7 nicht gefunden.",
 
+  "actions.ui.button": "Actions",
+
   "actions.ui.main.title": "Actions GUI",
   "actions.ui.main.version": "v%s",
   "actions.ui.main.drag_and_drop": "Aktionen per Drag-and-Drop einfügen.",
@@ -89,16 +91,18 @@
 
   "actions.ui.main.button1.title": "Erstelle eine neue Aktion",
   "actions.ui.main.button2.title": "Verwalte bestehende Aktionen",
-  "actions.ui.main.button3.title": "Kommt bald...",
+  "actions.ui.main.button3.title": "Verwalte deaktivierte Aktionen",
   "actions.ui.main.button4.title": "Einstellungen",
 
   "actions.ui.create.title": "Erstellen",
   "actions.ui.manage.title": "Verwalten",
   "actions.ui.edit.title": "Bearbeiten",
-  "actions.ui.coming.title": "Kommend",
+  "actions.ui.disabled.title": "Deaktivierte",
   "actions.ui.settings.title": "Einstellungen",
   "actions.ui.triggers.title": "Trigger",
   "actions.ui.tasks.title": "Aufgaben",
+  "actions.ui.addtrigger.title": "Trigger hinzufügen",
+  "actions.ui.edittrigger.title": "Trigger bearbeiten",
 
   "actions.ui.create.name": "Name:",
   "actions.ui.create.id": "Bevorzugte Id:",
@@ -139,10 +143,6 @@
   "actions.ui.edit.triggers": "Trigger (%s)",
   "actions.ui.edit.tasks": "Aufgaben (%s)",
 
-  "actions.ui.addtrigger.title": "Trigger hinzufügen",
-
-  "actions.ui.edittrigger.title": "Trigger bearbeiten",
-
   "actions.ui.edittask.title": "Aufgabe bearbeiten",
   "actions.ui.edittask.edit": "bearbeiten",
 
@@ -152,6 +152,7 @@
   "actions.ui.addtask.type": "Typ",
   "actions.ui.addtask.filter": "Filter",
   "actions.ui.addtask.value": "Wert",
+  "actions.ui.addtask.amount": "Menge",
   "actions.ui.addtask.add": "Hinzufügen",
 
   "actions.ui.settings.add_options_screen": "Füge einen Actions Knopf zum Hauptmenü hinzu",

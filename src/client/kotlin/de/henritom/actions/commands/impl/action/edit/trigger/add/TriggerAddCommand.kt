@@ -6,6 +6,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.triggers.settings.InvUpdateEnum
 import de.henritom.actions.triggers.settings.ReceiveMessageEnum
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
@@ -41,6 +42,13 @@ object TriggerAddCommand {
                                         builder.suggest("\"${receiveType.name}-")
                                     else
                                         builder.suggest(receiveType.name)
+
+                            if (trigger == TriggerEnum.INV_UPDATE)
+                                for (updateType in InvUpdateEnum.entries)
+                                    if (updateType != InvUpdateEnum.ANY)
+                                        builder.suggest("\"${updateType.name}-")
+                                    else
+                                        builder.suggest(updateType.name)
 
                             builder.buildFuture()
                         }

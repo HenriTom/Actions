@@ -152,6 +152,7 @@
   "actions.ui.addtask.type": "Type",
   "actions.ui.addtask.filter": "Filter",
   "actions.ui.addtask.value": "Value",
+  "actions.ui.addtask.amount": "Amount",
   "actions.ui.addtask.add": "Add",
 
   "actions.ui.settings.add_options_screen": "Add an Actions button to the Options screen",
