@@ -1,7 +1,9 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
+import de.henritom.actions.ui.GlobalUI
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -148,7 +150,7 @@ class CreateScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.c
                             else
                                 ActionManager.instance.getNextAvailableID()
 
-                        MinecraftClient.getInstance().setScreen(ManageScreen(this))
+                        MinecraftClient.getInstance().setScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent)))
                     }
 
                     2 -> createText = "actions.ui.create.already_used"

@@ -1,7 +1,10 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
-import de.henritom.actions.actions.ActionManager
+import de.henritom.actions.actions.Action
 import de.henritom.actions.config.ConfigManager
+import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.ui.GlobalUI
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -15,14 +18,21 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.manage.title")) {
+class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.tasks.title")) {
 
-    private var addButton: ButtonWidget? = null
+    private var action: Action? = null
     private var scroll = 0
+
+    private var addButton:ButtonWidget? = null
 
     override fun init() {
         super.init()
         addButton = null
+    }
+
+    fun asAction(action: Action): TriggersScreen {
+        this.action = action
+        return this
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -42,7 +52,7 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
 
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.manage.title"),
+            Text.translatable("actions.ui.triggers.title"),
             4 + textRenderer.getWidth(Text.translatable("actions.ui.main.title")) + textRenderer.getWidth(" "),
             4,
             UIColors.YELLOW.color.rgb,
@@ -61,18 +71,15 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
 
         // Top
         val separatorWidth = textRenderer.getWidth(Text.translatable("actions.ui.manage.top.separator"))
-        val textSize = textRenderer.getWidth(" ________________ ")
+        val textSize = TriggerEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) }
         val numberSize = textRenderer.getWidth(" 2147483647 ")
         val padding = 16
         val labels = listOf(
-            "actions.ui.manage.top.call",
-            "actions.ui.manage.top.delete",
+            "actions.ui.triggers.top.remove",
             "actions.ui.manage.top.edit",
-            "actions.ui.manage.top.name",
+            "actions.ui.triggers.top.type",
             "actions.ui.manage.top.id",
-            "actions.ui.manage.top.author",
-            "actions.ui.manage.top.triggers",
-            "actions.ui.manage.top.tasks"
+            "actions.ui.triggers.top.value"
         )
 
         var xPos = 4
@@ -90,8 +97,7 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
 
         // Labels
         for ((index, label) in labels.withIndex()) {
-            if (label == "actions.ui.manage.top.call" || label == "actions.ui.manage.top.delete" || label == "actions.ui.manage.top.edit") {
-
+            if (label == "actions.ui.triggers.top.remove" || label == "actions.ui.manage.top.edit") {
                 val width = textRenderer.getWidth(Text.translatable(label)) + padding
 
                 if (index > 0) {
@@ -117,8 +123,9 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
                 xPos += width
             } else {
                 val size = when (label) {
-                    "actions.ui.manage.top.name", "actions.ui.manage.top.author" -> textSize
-                    else -> numberSize
+                    "actions.ui.triggers.top.type" -> textSize + padding
+                    "actions.ui.manage.top.id" -> numberSize
+                    else -> 4 + separatorWidth + textRenderer.getWidth(Text.translatable("actions.ui.triggers.top.value"))
                 }
 
                 if (index > 0) {
@@ -145,18 +152,8 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
             }
         }
 
-        // Separator
-        context.drawText(
-            textRenderer,
-            Text.translatable("actions.ui.manage.top.separator"),
-            xPos,
-            4 + textRenderer.fontHeight * 3,
-            UIColors.WHITE.color.rgb,
-            true
-        )
-
-        // Actions
-        for ((index, action) in ActionManager.instance.actions.drop(scroll).withIndex()) {
+        // Triggers
+        for ((index, trigger) in action?.triggers?.drop(scroll)?.withIndex()!!) {
             val yPos = (textRenderer.fontHeight * 2 * (index + 2) + textRenderer.fontHeight + 8)
 
             if (yPos > height - (textRenderer.fontHeight - 4) * 6)
@@ -171,31 +168,29 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
             )
 
             val values = listOf(
-                "actions.ui.manage.top.call",
-                "actions.ui.manage.top.delete",
+                "actions.ui.triggers.top.remove",
                 "actions.ui.manage.top.edit",
-                action.name,
-                action.id.toString(),
-                action.author,
-                action.triggers.size.toString(),
-                action.tasks.size.toString()
+                trigger.type.toString(),
+                trigger.id.toString(),
+                trigger.value.toString()
             )
 
             xPos = 4 + separatorWidth
 
             for ((valueIndex, value) in values.withIndex()) {
                 val width = when (valueIndex) {
-                    0, 1, 2 -> textRenderer.getWidth(Text.translatable(value)) + padding
-                    3, 5 -> textSize
-                    else -> numberSize
+                    0, 1 -> textRenderer.getWidth(Text.translatable(value)) + padding
+                    2 -> textSize + padding
+                    3 -> numberSize
+                    else -> 4 + separatorWidth
                 }
 
                 context.drawText(
                     textRenderer,
                     Text.translatable(value),
-                    xPos + (width - textRenderer.getWidth(Text.translatable(value))) / 2,
+                    xPos + if (valueIndex != 4) (width - textRenderer.getWidth(Text.translatable(value))) / 2 else width,
                     yPos + 2,
-                    if (mouseX in xPos + 8..(xPos + width - 8) && mouseY in yPos..(yPos + textRenderer.fontHeight + 4) && valueIndex in 0..2) UIColors.YELLOW.color.rgb else UIColors.WHITE.color.rgb,
+                    if (mouseX in xPos + 8..(xPos + width - 8) && mouseY in yPos..(yPos + textRenderer.fontHeight + 4) && valueIndex in 0..1) UIColors.YELLOW.color.rgb else UIColors.WHITE.color.rgb,
                     true
                 )
                 xPos += width
@@ -208,8 +203,8 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
         // Add Button
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
-                MinecraftClient.getInstance().setScreen(CreateScreen(this))
-                return@builder
+                MinecraftClient.getInstance().setScreen(AddTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asAction(action!!))
+                return@builder;
             }
                 .dimensions(
                     width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth(
@@ -241,19 +236,18 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
         if (button != 0)
             return false
 
-        val actionList = ActionManager.instance.actions.drop(scroll)
+        val triggersList = action?.triggers?.drop(scroll) ?: return false
         val separatorWidth = textRenderer.getWidth(Text.translatable("actions.ui.manage.top.separator"))
         val padding = 16
 
-        for ((index, action) in actionList.withIndex()) {
+        for ((index, trigger) in triggersList.withIndex()) {
             val yPos = (textRenderer.fontHeight * 2 * (index + 2) + textRenderer.fontHeight + 8)
 
             if (yPos > height - (textRenderer.fontHeight - 4) * 6)
                 break
 
             val values = listOf(
-                "actions.ui.manage.top.call",
-                "actions.ui.manage.top.delete",
+                "actions.ui.triggers.top.remove",
                 "actions.ui.manage.top.edit"
             )
 
@@ -267,12 +261,13 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
 
                 if (mouseX.toInt() in xStart..xEnd && mouseY.toInt() in yPos..yEnd) {
                     when (value) {
-                        "actions.ui.manage.top.call" -> {
-                            action.call()
-                            MessageUtil().printTranslatable("actions.action.called", action.name)
+                        "actions.ui.triggers.top.remove" -> {
+                            action?.triggers?.remove(trigger)
+                            MessageUtil().printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action!!.name)
                         }
-                        "actions.ui.manage.top.delete" -> if (ActionManager.instance.deleteAction(action.name)) MessageUtil().printTranslatable("actions.action.deleted", action.name) else MessageUtil().printTranslatable("actions.action.not_found", action.name)
-                        "actions.ui.manage.top.edit" -> MinecraftClient.getInstance().setScreen(EditActionScreen(this).asAction(action))
+                        "actions.ui.manage.top.edit" -> {
+                            MinecraftClient.getInstance().setScreen(EditTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asTrigger(trigger))
+                        }
                     }
                     return true
                 }
@@ -288,7 +283,7 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
     override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
         super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
 
-        scroll = (scroll - verticalAmount.toInt()).coerceAtLeast(0).coerceAtMost(ActionManager.instance.actions.size - 1)
+        scroll = (scroll - verticalAmount.toInt()).coerceAtLeast(0).coerceAtMost((action?.triggers?.size ?: 1) - 1)
 
         return true
     }

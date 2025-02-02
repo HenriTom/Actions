@@ -1,8 +1,10 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.scheduler.ActionScheduler
 import de.henritom.actions.scheduler.SchedulerHelper
+import de.henritom.actions.ui.GlobalUI
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -22,6 +24,7 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
     private var scrollRunning = 0
 
     override fun init() {
+        GlobalUI.mainScreenParent = parent
         scrollConsole = (MessageUtil.consoleLog.size - (height - ((height / 24) * 6 + width / 24 + (height / 24) * 6 + 4 + width / 24)) / (textRenderer.fontHeight + 2)).coerceAtLeast(0) + 2
     }
 

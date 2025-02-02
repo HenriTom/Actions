@@ -1,8 +1,10 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
 import de.henritom.actions.actions.Action
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.tasks.TaskEnum
+import de.henritom.actions.ui.GlobalUI
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -202,7 +204,7 @@ class TasksScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ta
         // Add Button
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
-                MinecraftClient.getInstance().setScreen(AddTaskScreen(this).asAction(action!!))
+                MinecraftClient.getInstance().setScreen(AddTaskScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asAction(action!!))
                 return@builder;
             }
                 .dimensions(
@@ -265,7 +267,7 @@ class TasksScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ta
                             MessageUtil().printTranslatable("actions.trigger.removed", task.type.name, task.id.toString(), action!!.name)
                         }
                         "actions.ui.manage.top.edit" -> {
-                            MinecraftClient.getInstance().setScreen(EditTaskScreen(this).asTask(task))
+                            MinecraftClient.getInstance().setScreen(EditTaskScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asTask(task))
                         }
                     }
                     return true

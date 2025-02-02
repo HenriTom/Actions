@@ -1,7 +1,9 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
 import de.henritom.actions.config.ConfigManager
-import de.henritom.actions.tasks.Task
+import de.henritom.actions.triggers.Trigger
+import de.henritom.actions.ui.GlobalUI
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -16,22 +18,22 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
+class EditTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
 
     private var valueField: TextFieldWidget? = null
     private var editButton: ButtonWidget? = null
 
-    private var task: Task? = null
-
-    fun asTask(task: Task): EditTaskScreen {
-        this.task = task
-        return this
-    }
+    private var trigger: Trigger? = null
 
     override fun init() {
         super.init()
         valueField = null
         editButton = null
+    }
+
+    fun asTrigger(trigger: Trigger): EditTriggerScreen {
+        this.trigger = trigger
+        return this
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -51,7 +53,7 @@ class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
 
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.edittask.title"),
+            Text.translatable("actions.ui.edittrigger.title"),
             4 + textRenderer.getWidth(Text.translatable("actions.ui.main.title")) + textRenderer.getWidth(" "),
             4,
             UIColors.YELLOW.color.rgb,
@@ -87,7 +89,7 @@ class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.addtask.value")
             )
-            valueField?.text = task?.value.toString()
+            valueField?.text = trigger?.value.toString()
 
             addDrawableChild(valueField)
         }
@@ -99,15 +101,20 @@ class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
             editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
                 val value = valueField?.text ?: ""
 
-                if (task == null) {
-                    MessageUtil().printTranslatable("actions.task.not_found", "%Unknown%")
+                if (trigger == null) {
+                    MessageUtil().printTranslatable("actions.trigger.not_found", "%Unknown%")
                     return@builder
                 }
 
-                task!!.value = value
+                trigger!!.value = value
 
-                MessageUtil().printTranslatable("actions.task.edited", task!!.type.name, task!!.id.toString(), value)
-                MinecraftClient.getInstance().setScreen(TasksScreen(this).asAction(task!!.action))
+                MessageUtil().printTranslatable(
+                    "actions.trigger.edited",
+                    trigger!!.type.name,
+                    trigger!!.id.toString(),
+                    value
+                )
+                MinecraftClient.getInstance().setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(trigger!!.action)).asAction(trigger!!.action))
             }
                 .dimensions(
                     4,

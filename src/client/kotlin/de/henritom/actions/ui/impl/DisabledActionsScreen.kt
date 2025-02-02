@@ -1,14 +1,13 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
-import de.henritom.actions.actions.Action
+import de.henritom.actions.actions.ActionEditManager
+import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
-import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.text.Text
 import java.nio.file.Files
 import java.nio.file.Path
@@ -16,22 +15,9 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.tasks.title")) {
+class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.disable.title")) {
 
-    private var action: Action? = null
     private var scroll = 0
-
-    private var addButton:ButtonWidget? = null
-
-    override fun init() {
-        super.init()
-        addButton = null
-    }
-
-    fun asAction(action: Action): TriggersScreen {
-        this.action = action
-        return this
-    }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)
@@ -50,10 +36,10 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
 
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.triggers.title"),
+            Text.translatable("actions.ui.disabled.title"),
             4 + textRenderer.getWidth(Text.translatable("actions.ui.main.title")) + textRenderer.getWidth(" "),
             4,
-            UIColors.YELLOW.color.rgb,
+            UIColors.RED.color.rgb,
             true
         )
 
@@ -63,21 +49,17 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
             Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
-            UIColors.YELLOW.color.rgb,
+            UIColors.RED.color.rgb,
             true
         )
 
         // Top
         val separatorWidth = textRenderer.getWidth(Text.translatable("actions.ui.manage.top.separator"))
-        val textSize = TriggerEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) }
-        val numberSize = textRenderer.getWidth(" 2147483647 ")
+        val textSize = textRenderer.getWidth(" ________________ ")
         val padding = 16
         val labels = listOf(
-            "actions.ui.triggers.top.remove",
-            "actions.ui.manage.top.edit",
-            "actions.ui.triggers.top.type",
-            "actions.ui.manage.top.id",
-            "actions.ui.triggers.top.value"
+            "actions.ui.disabled.top.enable",
+            "actions.ui.manage.top.name"
         )
 
         var xPos = 4
@@ -95,7 +77,8 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
 
         // Labels
         for ((index, label) in labels.withIndex()) {
-            if (label == "actions.ui.triggers.top.remove" || label == "actions.ui.manage.top.edit") {
+            if (label == "actions.ui.disabled.top.enable") {
+
                 val width = textRenderer.getWidth(Text.translatable(label)) + padding
 
                 if (index > 0) {
@@ -120,12 +103,6 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 )
                 xPos += width
             } else {
-                val size = when (label) {
-                    "actions.ui.triggers.top.type" -> textSize + padding
-                    "actions.ui.manage.top.id" -> numberSize
-                    else -> 4 + separatorWidth + textRenderer.getWidth(Text.translatable("actions.ui.triggers.top.value"))
-                }
-
                 if (index > 0) {
                     context.drawText(
                         textRenderer,
@@ -141,17 +118,27 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 context.drawText(
                     textRenderer,
                     Text.translatable(label),
-                    xPos + (size - textRenderer.getWidth(Text.translatable(label))) / 2,
+                    xPos + (textSize - textRenderer.getWidth(Text.translatable(label))) / 2,
                     4 + textRenderer.fontHeight * 3,
                     UIColors.WHITE.color.rgb,
                     true
                 )
-                xPos += size
+                xPos += textSize
             }
         }
 
-        // Triggers
-        for ((index, trigger) in action?.triggers?.drop(scroll)?.withIndex()!!) {
+        // Separator
+        context.drawText(
+            textRenderer,
+            Text.translatable("actions.ui.manage.top.separator"),
+            xPos,
+            4 + textRenderer.fontHeight * 3,
+            UIColors.WHITE.color.rgb,
+            true
+        )
+
+        // Actions
+        for ((index, action) in ActionManager.instance.getDisabledActions().drop(scroll).withIndex()) {
             val yPos = (textRenderer.fontHeight * 2 * (index + 2) + textRenderer.fontHeight + 8)
 
             if (yPos > height - (textRenderer.fontHeight - 4) * 6)
@@ -166,29 +153,22 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
             )
 
             val values = listOf(
-                "actions.ui.triggers.top.remove",
-                "actions.ui.manage.top.edit",
-                trigger.type.toString(),
-                trigger.id.toString(),
-                trigger.value.toString()
+                "actions.ui.disabled.top.enable",
+                action.name
             )
 
             xPos = 4 + separatorWidth
 
             for ((valueIndex, value) in values.withIndex()) {
-                val width = when (valueIndex) {
-                    0, 1 -> textRenderer.getWidth(Text.translatable(value)) + padding
-                    2 -> textSize + padding
-                    3 -> numberSize
-                    else -> 4 + separatorWidth
-                }
+                val newValue = if (valueIndex == 0) value else value.replace(".disabled", "")
+                val width = if (valueIndex == 0) textRenderer.getWidth(Text.translatable(newValue)) + padding else textSize
 
                 context.drawText(
                     textRenderer,
-                    Text.translatable(value),
-                    xPos + if (valueIndex != 4) (width - textRenderer.getWidth(Text.translatable(value))) / 2 else width,
+                    Text.translatable(newValue),
+                    xPos + (width - textRenderer.getWidth(Text.translatable(newValue))) / 2,
                     yPos + 2,
-                    if (mouseX in xPos + 8..(xPos + width - 8) && mouseY in yPos..(yPos + textRenderer.fontHeight + 4) && valueIndex in 0..1) UIColors.YELLOW.color.rgb else UIColors.WHITE.color.rgb,
+                    if (mouseX in xPos + 8..(xPos + width - 8) && mouseY in yPos..(yPos + textRenderer.fontHeight + 4) && valueIndex == 0) UIColors.RED.color.rgb else UIColors.WHITE.color.rgb,
                     true
                 )
                 xPos += width
@@ -196,25 +176,6 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 if (valueIndex < values.size - 1)
                     xPos += separatorWidth
             }
-        }
-
-        // Add Button
-        if (addButton == null) {
-            addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
-                MinecraftClient.getInstance().setScreen(AddTriggerScreen(this).asAction(action!!))
-                return@builder;
-            }
-                .dimensions(
-                    width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth(
-                        "  "
-                    ) + 8),
-                    height - (textRenderer.fontHeight + 12),
-                    textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth("  "),
-                    textRenderer.fontHeight + 8
-                )
-                .build()
-
-            addDrawableChild(addButton)
         }
 
         // Drag and Drop
@@ -234,19 +195,18 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
         if (button != 0)
             return false
 
-        val triggersList = action?.triggers?.drop(scroll) ?: return false
+        val actionList = ActionManager.instance.getDisabledActions()
         val separatorWidth = textRenderer.getWidth(Text.translatable("actions.ui.manage.top.separator"))
         val padding = 16
 
-        for ((index, trigger) in triggersList.withIndex()) {
+        for ((index, action) in actionList.withIndex()) {
             val yPos = (textRenderer.fontHeight * 2 * (index + 2) + textRenderer.fontHeight + 8)
 
             if (yPos > height - (textRenderer.fontHeight - 4) * 6)
                 break
 
             val values = listOf(
-                "actions.ui.triggers.top.remove",
-                "actions.ui.manage.top.edit"
+                "actions.ui.disabled.top.enable",
             )
 
             var xPos = 4 + separatorWidth
@@ -258,15 +218,13 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 val yEnd = yPos + textRenderer.fontHeight + 4
 
                 if (mouseX.toInt() in xStart..xEnd && mouseY.toInt() in yPos..yEnd) {
-                    when (value) {
-                        "actions.ui.triggers.top.remove" -> {
-                            action?.triggers?.remove(trigger)
-                            MessageUtil().printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action!!.name)
-                        }
-                        "actions.ui.manage.top.edit" -> {
-                            MinecraftClient.getInstance().setScreen(EditTriggerScreen(this).asTrigger(trigger))
-                        }
-                    }
+                    if (value == "actions.ui.disabled.top.enable")
+                        if (ActionEditManager.instance.enableAction(action)) {
+                            MessageUtil().printTranslatable("actions.action.enabled", action.name)
+                            ConfigManager().reloadActions()
+                        } else
+                            MessageUtil().printTranslatable("actions.action.not_enabled", action.name)
+
                     return true
                 }
 
@@ -281,7 +239,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
     override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
         super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
 
-        scroll = (scroll - verticalAmount.toInt()).coerceAtLeast(0).coerceAtMost((action?.triggers?.size ?: 1) - 1)
+        scroll = (scroll - verticalAmount.toInt()).coerceAtLeast(0).coerceAtMost(ActionManager.instance.getDisabledActions().size - 1)
 
         return true
     }

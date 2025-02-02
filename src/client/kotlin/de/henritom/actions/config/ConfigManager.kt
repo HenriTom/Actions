@@ -10,9 +10,8 @@ import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.Trigger
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.triggers.TriggerManager
-import de.henritom.actions.ui.SettingsScreen
+import de.henritom.actions.ui.impl.SettingsScreen
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.item.Item.Settings
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File

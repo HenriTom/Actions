@@ -1,7 +1,7 @@
 package de.henritom.actions.mixin.client;
 
-import de.henritom.actions.ui.MainScreen;
-import de.henritom.actions.ui.SettingsScreen;
+import de.henritom.actions.ui.impl.MainScreen;
+import de.henritom.actions.ui.impl.SettingsScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;

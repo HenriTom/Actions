@@ -1,9 +1,11 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
 import de.henritom.actions.actions.Action
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
+import de.henritom.actions.ui.GlobalUI
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -225,7 +227,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 if (ActionEditManager.instance.disableAction(action!!)) {
                     MessageUtil().printTranslatable("actions.action.disabled", action!!.name)
                     ConfigManager().reloadActions()
-                    MinecraftClient.getInstance().setScreen(ManageScreen(this))
+                    MinecraftClient.getInstance().setScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent)))
                 } else
                     MessageUtil().printTranslatable("actions.action.not_disabled", action!!.name)
             }
@@ -244,7 +246,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         if (triggersButton == null) {
             triggersButton =
                 ButtonWidget.builder(Text.translatable("actions.ui.edit.triggers", action!!.triggers.size)) {
-                    MinecraftClient.getInstance().setScreen(TriggersScreen(this).asAction(action!!))
+                    MinecraftClient.getInstance().setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
                 }
                     .dimensions(
                         4,
@@ -260,7 +262,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         // Tasks Button
         if (tasksButton == null) {
             tasksButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.tasks", action!!.tasks.size)) {
-                MinecraftClient.getInstance().setScreen(TasksScreen(this).asAction(action!!))
+                MinecraftClient.getInstance().setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
             }
                 .dimensions(
                     4,

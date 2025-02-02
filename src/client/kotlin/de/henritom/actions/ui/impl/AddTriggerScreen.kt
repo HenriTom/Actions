@@ -1,4 +1,4 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
 import de.henritom.actions.actions.Action
 import de.henritom.actions.actions.ActionEditManager
@@ -7,6 +7,8 @@ import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.triggers.settings.InvUpdateEnum
 import de.henritom.actions.triggers.settings.ReceiveMessageEnum
+import de.henritom.actions.ui.GlobalUI
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -271,7 +273,7 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                             action!!.name,
                             value
                         )
-                        MinecraftClient.getInstance().setScreen(TriggersScreen(this).asAction(action!!))
+                        MinecraftClient.getInstance().setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
                     }
 
                     2 -> {

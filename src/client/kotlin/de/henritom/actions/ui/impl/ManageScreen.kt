@@ -1,12 +1,14 @@
-package de.henritom.actions.ui
+package de.henritom.actions.ui.impl
 
-import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
 import de.henritom.actions.config.ConfigManager
+import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.text.Text
 import java.nio.file.Files
 import java.nio.file.Path
@@ -14,9 +16,15 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.disable.title")) {
+class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.manage.title")) {
 
+    private var addButton: ButtonWidget? = null
     private var scroll = 0
+
+    override fun init() {
+        super.init()
+        addButton = null
+    }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)
@@ -35,10 +43,10 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
 
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.disabled.title"),
+            Text.translatable("actions.ui.manage.title"),
             4 + textRenderer.getWidth(Text.translatable("actions.ui.main.title")) + textRenderer.getWidth(" "),
             4,
-            UIColors.RED.color.rgb,
+            UIColors.YELLOW.color.rgb,
             true
         )
 
@@ -48,17 +56,24 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
             Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
-            UIColors.RED.color.rgb,
+            UIColors.YELLOW.color.rgb,
             true
         )
 
         // Top
         val separatorWidth = textRenderer.getWidth(Text.translatable("actions.ui.manage.top.separator"))
         val textSize = textRenderer.getWidth(" ________________ ")
+        val numberSize = textRenderer.getWidth(" 2147483647 ")
         val padding = 16
         val labels = listOf(
-            "actions.ui.disabled.top.enable",
-            "actions.ui.manage.top.name"
+            "actions.ui.manage.top.call",
+            "actions.ui.manage.top.delete",
+            "actions.ui.manage.top.edit",
+            "actions.ui.manage.top.name",
+            "actions.ui.manage.top.id",
+            "actions.ui.manage.top.author",
+            "actions.ui.manage.top.triggers",
+            "actions.ui.manage.top.tasks"
         )
 
         var xPos = 4
@@ -76,7 +91,7 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
 
         // Labels
         for ((index, label) in labels.withIndex()) {
-            if (label == "actions.ui.disabled.top.enable") {
+            if (label == "actions.ui.manage.top.call" || label == "actions.ui.manage.top.delete" || label == "actions.ui.manage.top.edit") {
 
                 val width = textRenderer.getWidth(Text.translatable(label)) + padding
 
@@ -102,6 +117,11 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
                 )
                 xPos += width
             } else {
+                val size = when (label) {
+                    "actions.ui.manage.top.name", "actions.ui.manage.top.author" -> textSize
+                    else -> numberSize
+                }
+
                 if (index > 0) {
                     context.drawText(
                         textRenderer,
@@ -117,12 +137,12 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
                 context.drawText(
                     textRenderer,
                     Text.translatable(label),
-                    xPos + (textSize - textRenderer.getWidth(Text.translatable(label))) / 2,
+                    xPos + (size - textRenderer.getWidth(Text.translatable(label))) / 2,
                     4 + textRenderer.fontHeight * 3,
                     UIColors.WHITE.color.rgb,
                     true
                 )
-                xPos += textSize
+                xPos += size
             }
         }
 
@@ -137,7 +157,7 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
         )
 
         // Actions
-        for ((index, action) in ActionManager.instance.getDisabledActions().drop(scroll).withIndex()) {
+        for ((index, action) in ActionManager.instance.actions.drop(scroll).withIndex()) {
             val yPos = (textRenderer.fontHeight * 2 * (index + 2) + textRenderer.fontHeight + 8)
 
             if (yPos > height - (textRenderer.fontHeight - 4) * 6)
@@ -152,22 +172,31 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
             )
 
             val values = listOf(
-                "actions.ui.disabled.top.enable",
-                action.name
+                "actions.ui.manage.top.call",
+                "actions.ui.manage.top.delete",
+                "actions.ui.manage.top.edit",
+                action.name,
+                action.id.toString(),
+                action.author,
+                action.triggers.size.toString(),
+                action.tasks.size.toString()
             )
 
             xPos = 4 + separatorWidth
 
             for ((valueIndex, value) in values.withIndex()) {
-                val newValue = if (valueIndex == 0) value else value.replace(".disabled", "")
-                val width = if (valueIndex == 0) textRenderer.getWidth(Text.translatable(newValue)) + padding else textSize
+                val width = when (valueIndex) {
+                    0, 1, 2 -> textRenderer.getWidth(Text.translatable(value)) + padding
+                    3, 5 -> textSize
+                    else -> numberSize
+                }
 
                 context.drawText(
                     textRenderer,
-                    Text.translatable(newValue),
-                    xPos + (width - textRenderer.getWidth(Text.translatable(newValue))) / 2,
+                    Text.translatable(value),
+                    xPos + (width - textRenderer.getWidth(Text.translatable(value))) / 2,
                     yPos + 2,
-                    if (mouseX in xPos + 8..(xPos + width - 8) && mouseY in yPos..(yPos + textRenderer.fontHeight + 4) && valueIndex == 0) UIColors.RED.color.rgb else UIColors.WHITE.color.rgb,
+                    if (mouseX in xPos + 8..(xPos + width - 8) && mouseY in yPos..(yPos + textRenderer.fontHeight + 4) && valueIndex in 0..2) UIColors.YELLOW.color.rgb else UIColors.WHITE.color.rgb,
                     true
                 )
                 xPos += width
@@ -175,6 +204,25 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
                 if (valueIndex < values.size - 1)
                     xPos += separatorWidth
             }
+        }
+
+        // Add Button
+        if (addButton == null) {
+            addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
+                MinecraftClient.getInstance().setScreen(CreateScreen(this))
+                return@builder
+            }
+                .dimensions(
+                    width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth(
+                        "  "
+                    ) + 8),
+                    height - (textRenderer.fontHeight + 12),
+                    textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth("  "),
+                    textRenderer.fontHeight + 8
+                )
+                .build()
+
+            addDrawableChild(addButton)
         }
 
         // Drag and Drop
@@ -194,7 +242,7 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
         if (button != 0)
             return false
 
-        val actionList = ActionManager.instance.getDisabledActions()
+        val actionList = ActionManager.instance.actions.drop(scroll)
         val separatorWidth = textRenderer.getWidth(Text.translatable("actions.ui.manage.top.separator"))
         val padding = 16
 
@@ -205,7 +253,9 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
                 break
 
             val values = listOf(
-                "actions.ui.disabled.top.enable",
+                "actions.ui.manage.top.call",
+                "actions.ui.manage.top.delete",
+                "actions.ui.manage.top.edit"
             )
 
             var xPos = 4 + separatorWidth
@@ -217,13 +267,14 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
                 val yEnd = yPos + textRenderer.fontHeight + 4
 
                 if (mouseX.toInt() in xStart..xEnd && mouseY.toInt() in yPos..yEnd) {
-                    if (value == "actions.ui.disabled.top.enable")
-                        if (ActionEditManager.instance.enableAction(action)) {
-                            MessageUtil().printTranslatable("actions.action.enabled", action.name)
-                            ConfigManager().reloadActions()
-                        } else
-                            MessageUtil().printTranslatable("actions.action.not_enabled", action.name)
-
+                    when (value) {
+                        "actions.ui.manage.top.call" -> {
+                            action.call()
+                            MessageUtil().printTranslatable("actions.action.called", action.name)
+                        }
+                        "actions.ui.manage.top.delete" -> if (ActionManager.instance.deleteAction(action.name)) MessageUtil().printTranslatable("actions.action.deleted", action.name) else MessageUtil().printTranslatable("actions.action.not_found", action.name)
+                        "actions.ui.manage.top.edit" -> MinecraftClient.getInstance().setScreen(EditActionScreen(this).asAction(action))
+                    }
                     return true
                 }
 
@@ -238,7 +289,7 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
     override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
         super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount)
 
-        scroll = (scroll - verticalAmount.toInt()).coerceAtLeast(0).coerceAtMost(ActionManager.instance.getDisabledActions().size - 1)
+        scroll = (scroll - verticalAmount.toInt()).coerceAtLeast(0).coerceAtMost(ActionManager.instance.actions.size - 1)
 
         return true
     }

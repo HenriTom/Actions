@@ -1,11 +1,11 @@
 package de.henritom.actions.util
 
+import de.henritom.actions.ui.impl.MainScreen
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import org.lwjgl.glfw.GLFW
-import de.henritom.actions.ui.MainScreen
 import java.awt.event.KeyEvent
 import java.util.*
 
