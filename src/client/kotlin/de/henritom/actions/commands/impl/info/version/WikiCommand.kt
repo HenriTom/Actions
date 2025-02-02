@@ -1,18 +1,17 @@
-package de.henritom.actions.commands.impl.version
+package de.henritom.actions.commands.impl.info.version
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
-import net.fabricmc.loader.api.FabricLoader
 
-object VersionCommand {
+object WikiCommand {
 
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
-        return ClientCommandManager.literal("version")
+        return ClientCommandManager.literal("wiki")
             .executes {
-                MessageUtil().printTranslatable("actions.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString())
+                MessageUtil().printTranslatableClickable("actions.wiki", "https://github.com/HenriTom/Actions/wiki")
 
                 Command.SINGLE_SUCCESS
             }

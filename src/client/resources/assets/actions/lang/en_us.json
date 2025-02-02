@@ -63,6 +63,10 @@
   "actions.list.it": "§8» §f%s§8[§f%s§8]",
 
   "actions.version": "§8» §7Actions v%s",
+  "actions.wiki": "§8» §7Actions Wiki: §fhttps://github.com/HenriTom/Actions/wiki",
+  "actions.discord": "§8» §7Actions Discord: §fhttps://discord.gg/XdHBJKTvxJ",
+  "actions.modrinth": "§8» §7Actions Modrinth: §fhttps://modrinth.com/mod/actions",
+  "actions.feedback": "§8» §7Report Issues or Suggest features on §fhttps://github.com/HenriTom/Actions/issues/new/choose",
 
   "actions.file.reloaded.config": "§8» §7Config reloaded.",
   "actions.file.reloaded.actions": "§8» §7Actions reloaded.",
