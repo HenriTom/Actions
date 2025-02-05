@@ -24,7 +24,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
+class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.addtrigger.title")) {
 
     private var typeButton: CyclingButtonWidget<TriggerEnum>? = null
     private var subtypeButton: CyclingButtonWidget<Enum<*>>? = null

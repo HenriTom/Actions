@@ -6,7 +6,7 @@ import de.henritom.actions.commands.impl.info.InfoCommand
 import de.henritom.actions.commands.impl.list.ListCommand
 import de.henritom.actions.commands.impl.prefix.PrefixCommand
 import de.henritom.actions.commands.impl.scheduler.SchedulerCommand
-import de.henritom.actions.commands.impl.info.version.VersionCommand
+import de.henritom.actions.commands.impl.region.RegionsCommand
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 
@@ -21,6 +21,7 @@ class ActionsCommand {
                         .then(InfoCommand.register())
                         .then(ListCommand.register())
                         .then(PrefixCommand.register())
+                        .then(RegionsCommand.register())
                         .then(SchedulerCommand.register())
                 )
             }

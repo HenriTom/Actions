@@ -62,6 +62,13 @@
   "actions.list.title": "§8» §7Aktionen§8[§f%s§8]:",
   "actions.list.it": "§8» §7%s§8[§f%s§8]",
 
+  "actions.region.list.title": "§8» §7Regionen§8[§f%s§8]:",
+  "actions.region.list.it": "§8» §f%s§8[§f%s, %s§8]",
+  "actions.region.removed": "§8» §7Region §f'%s'§7 entfernt.",
+  "actions.region.not_found": "§8» §7Region §f'%s'§7 nicht gefunden.",
+  "actions.region.added": "§8» §7Region §f'%s'§7 hinzugefügt.",
+  "actions.region.already_used": "§8» §7Name §f'%s'§7 bereits benutzt.",
+
   "actions.version": "§8» §7Actions v%s",
   "actions.wiki": "§8» §7Actions Wiki: §fhttps://github.com/HenriTom/Actions/wiki",
   "actions.discord": "§8» §7Actions Discord: §fhttps://discord.gg/XdHBJKTvxJ",
@@ -107,6 +114,15 @@
   "actions.ui.tasks.title": "Aufgaben",
   "actions.ui.addtrigger.title": "Trigger hinzufügen",
   "actions.ui.edittrigger.title": "Trigger bearbeiten",
+  "actions.ui.other.title": "Anderes",
+  "actions.ui.sharing.title": "Teilen",
+  "actions.ui.regions.title": "Regionen",
+  "actions.ui.addregion.title": "Region hinzufügen",
+  "actions.ui.editregion.title": "Region bearbeiten",
+
+  "actions.ui.editregion.update": "Aktualisieren",
+
+  "actions.ui.sharing.text": "Actions teilen ist gerade in Entwicklung.",
 
   "actions.ui.create.name": "Name:",
   "actions.ui.create.id": "Bevorzugte Id:",
@@ -158,6 +174,19 @@
   "actions.ui.addtask.value": "Wert",
   "actions.ui.addtask.amount": "Menge",
   "actions.ui.addtask.add": "Hinzufügen",
+
+  "actions.ui.regions.pos1": "Pos1",
+  "actions.ui.regions.pos2": "Pos2",
+
+  "actions.ui.addregion.pos1": "Position 1",
+  "actions.ui.addregion.pos1.x": "X",
+  "actions.ui.addregion.pos1.y": "Y",
+  "actions.ui.addregion.pos1.z": "Z",
+  "actions.ui.addregion.pos2": "Position 2",
+  "actions.ui.addregion.pos2.x": "X",
+  "actions.ui.addregion.pos2.y": "Y",
+  "actions.ui.addregion.pos2.z": "Z",
+  "actions.ui.addregion.name": "Name",
 
   "actions.ui.settings.add_options_screen": "Füge einen Actions Knopf zum Hauptmenü hinzu",
 

@@ -9,6 +9,8 @@ enum class TriggerEnum {
     INV_UPDATE,
     JOIN,
     RECEIVE_MESSAGE,
+    REGION_ENTER,
+    REGION_LEAVE,
     RESPAWN
 
 }

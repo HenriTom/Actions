@@ -21,7 +21,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
-class AddTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.coming.title")) {
+class AddTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.addtask.title")) {
 
     private var typeButton: CyclingButtonWidget<TaskEnum>? = null
     private var valueField: TextFieldWidget? = null

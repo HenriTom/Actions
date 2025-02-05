@@ -6,6 +6,7 @@ import de.henritom.actions.scheduler.SchedulerHelper
 import de.henritom.actions.ui.GlobalUI
 import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
+import de.henritom.actions.util.RenderUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
@@ -74,7 +75,7 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
             if (mouseX in width / 24..(width / 24) * 8 && mouseY in width / 24..(height / 24) * 6) UIColors.BLUE.color.rgb else UIColors.BLUE.color.darker().rgb,
         )
 
-        drawTextWithWrap(
+        RenderUtil.drawTextWithWrap(
             context,
             textRenderer,
             Text.translatable("actions.ui.main.button1.title"),
@@ -95,7 +96,7 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
             if (mouseX in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY in width / 24..(height / 24) * 6) UIColors.YELLOW.color.rgb else UIColors.YELLOW.color.darker().rgb
         )
 
-        drawTextWithWrap(
+        RenderUtil.drawTextWithWrap(
             context,
             textRenderer,
             Text.translatable("actions.ui.main.button2.title"),
@@ -116,7 +117,7 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
             if (mouseX in width / 24..(width / 24) * 8 && mouseY in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24) UIColors.RED.color.rgb else UIColors.RED.color.darker().rgb
         )
 
-        drawTextWithWrap(
+        RenderUtil.drawTextWithWrap(
             context,
             textRenderer,
             Text.translatable("actions.ui.main.button3.title"),
@@ -137,7 +138,7 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
             if (mouseX in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24) UIColors.PURPLE.color.rgb else UIColors.PURPLE.color.darker().rgb
         )
 
-        drawTextWithWrap(
+        RenderUtil.drawTextWithWrap(
             context,
             textRenderer,
             Text.translatable("actions.ui.main.button4.title"),
@@ -316,9 +317,9 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
         if (mouseX.toInt() in width / 24..(width / 24) * 8 && mouseY.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
             MinecraftClient.getInstance().setScreen(DisabledActionsScreen(this))
 
-        // Button 4 (Settings)
+        // Button 4 (Other)
         if (mouseX.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
-            MinecraftClient.getInstance().setScreen(SettingsScreen(this))
+            MinecraftClient.getInstance().setScreen(OtherScreen(this))
 
         return false
     }
@@ -368,31 +369,6 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
         val buttonY2 = width / 24 + (i + 3) * (textRenderer.fontHeight + 2) - 1
 
         return mouseX in buttonX1..buttonX2 && mouseY in buttonY1..buttonY2
-    }
-
-    private fun drawTextWithWrap(context: DrawContext, textRenderer: TextRenderer, text: Text, x: Int, y: Int, maxWidth: Int, color: Int, shadow: Boolean) {
-        val words = text.string.split(" ")
-        val lines = mutableListOf<String>()
-        var currentLine = ""
-
-        for (word in words) {
-            val testLine = if (currentLine.isEmpty()) word else "$currentLine $word"
-
-            if (textRenderer.getWidth(testLine) <= maxWidth)
-                currentLine = testLine
-            else {
-                lines.add(currentLine)
-                currentLine = word
-            }
-        }
-
-        if (currentLine.isNotEmpty()) lines.add(currentLine)
-
-        var currentY = y
-        for (line in lines) {
-            context.drawText(textRenderer, line, x, currentY, color, shadow)
-            currentY += textRenderer.fontHeight + 2
-        }
     }
 
     override fun close() {

@@ -62,6 +62,13 @@
   "actions.list.title": "§8» §7Actions§8[§f%s§8]:",
   "actions.list.it": "§8» §f%s§8[§f%s§8]",
 
+  "actions.region.list.title": "§8» §7Regions§8[§f%s§8]:",
+  "actions.region.list.it": "§8» §f%s§8[§f%s, %s§8]",
+  "actions.region.removed": "§8» §7Region §f'%s'§7 removed.",
+  "actions.region.not_found": "§8» §7Region §f'%s'§7 not found.",
+  "actions.region.added": "§8» §7Region §f'%s'§7 added.",
+  "actions.region.already_used": "§8» §7Name §f'%s'§7 already used.",
+
   "actions.version": "§8» §7Actions v%s",
   "actions.wiki": "§8» §7Actions Wiki: §fhttps://github.com/HenriTom/Actions/wiki",
   "actions.discord": "§8» §7Actions Discord: §fhttps://discord.gg/XdHBJKTvxJ",
@@ -96,7 +103,7 @@
   "actions.ui.main.button1.title": "Create a new Action",
   "actions.ui.main.button2.title": "Manage existing Actions",
   "actions.ui.main.button3.title": "Manage disabled Actions",
-  "actions.ui.main.button4.title": "Settings",
+  "actions.ui.main.button4.title": "Other",
 
   "actions.ui.create.title": "Create",
   "actions.ui.manage.title": "Manage",
@@ -107,6 +114,15 @@
   "actions.ui.tasks.title": "Tasks",
   "actions.ui.addtrigger.title": "AddTrigger",
   "actions.ui.edittrigger.title": "EditTrigger",
+  "actions.ui.other.title": "Other",
+  "actions.ui.sharing.title": "Sharing",
+  "actions.ui.regions.title": "Regions",
+  "actions.ui.addregion.title": "AddRegion",
+  "actions.ui.editregion.title": "EditRegion",
+
+  "actions.ui.editregion.update": "Update",
+
+  "actions.ui.sharing.text": "Action Sharing is currently under development.",
 
   "actions.ui.create.name": "Name:",
   "actions.ui.create.id": "Preferred Id:",
@@ -158,6 +174,19 @@
   "actions.ui.addtask.value": "Value",
   "actions.ui.addtask.amount": "Amount",
   "actions.ui.addtask.add": "Add",
+
+  "actions.ui.regions.pos1": "Pos1",
+  "actions.ui.regions.pos2": "Pos2",
+
+  "actions.ui.addregion.pos1": "Position 1",
+  "actions.ui.addregion.pos1.x": "X",
+  "actions.ui.addregion.pos1.y": "Y",
+  "actions.ui.addregion.pos1.z": "Z",
+  "actions.ui.addregion.pos2": "Position 2",
+  "actions.ui.addregion.pos2.x": "X",
+  "actions.ui.addregion.pos2.y": "Y",
+  "actions.ui.addregion.pos2.z": "Z",
+  "actions.ui.addregion.name": "Name",
 
   "actions.ui.settings.add_options_screen": "Add an Actions button to the Options screen",
 

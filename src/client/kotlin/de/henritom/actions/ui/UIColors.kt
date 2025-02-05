@@ -9,6 +9,8 @@ enum class UIColors(val color: Color) {
     BLUE(Color(115, 206, 245)),
     PURPLE(Color(97, 53, 190)),
     YELLOW(Color(173, 255, 101)),
-    RED(Color(233, 80, 140))
+    RED(Color(233, 80, 140)),
+
+    DISCORD_BLURPLE(Color(88, 101, 242))
 
 }
