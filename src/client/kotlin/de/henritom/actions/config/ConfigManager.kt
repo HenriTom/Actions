@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder
 import de.henritom.actions.actions.Action
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
+import de.henritom.actions.region.Region
+import de.henritom.actions.region.RegionManager
 import de.henritom.actions.tasks.Task
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.Trigger
@@ -12,6 +14,8 @@ import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.triggers.TriggerManager
 import de.henritom.actions.ui.impl.SettingsScreen
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.util.math.Vec3d
+import org.apache.logging.log4j.core.util.Integers
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -50,6 +54,62 @@ class ConfigManager {
         val data = Gson().fromJson(configFile.readText(), Map::class.java) as Map<*, *>
         ActionManager.instance.commandPrefix = data["command_prefix"] as? String ?: ""
         SettingsScreen.addOptionsScreenButton = data["options_button"] as? Boolean ?: true
+    }
+
+    fun saveRegions() {
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val configDir = FabricLoader.getInstance().configDir.toFile()
+
+        for (region in RegionManager.instance.regions) {
+            val configFile = configDir.resolve("actions/regions/${region.name}.json")
+
+            if (!configFile.parentFile.exists())
+                configFile.parentFile.mkdirs()
+
+            if (!configFile.exists())
+                configFile.createNewFile()
+
+            val data = mapOf(
+                "name" to region.name,
+                "x1" to region.pos1.x,
+                "y1" to region.pos1.y,
+                "z1" to region.pos1.z,
+                "x2" to region.pos2.x,
+                "y2" to region.pos2.y,
+                "z2" to region.pos2.z
+            )
+
+            configFile.writeText(gson.toJson(data))
+        }
+    }
+
+    fun loadRegions() {
+        val configDir = FabricLoader.getInstance().configDir.toFile().resolve("actions/regions")
+
+        if (configDir.listFiles() == null)
+            return
+
+        for (file in configDir.listFiles()!!) {
+            if (!file.exists() || file.isDirectory)
+                return
+
+            println(file)
+
+            val data = Gson().fromJson(file.readText(), Map::class.java) as Map<*, *>
+            val name = data["name"] as String
+            val x1 = data["x1"] as? Double ?: 0.0
+            val y1 = data["y1"] as? Double ?: 0.0
+            val z1 = data["z1"] as? Double ?: 0.0
+            val x2 = data["x2"] as? Double ?: 0.0
+            val y2 = data["y2"] as? Double ?: 0.0
+            val z2 = data["z2"] as? Double ?: 0.0
+
+            RegionManager.instance.addRegion(Region(name, Vec3d(x1, y1, z1), Vec3d(x2, y2, z2)))
+        }
+    }
+
+    fun removeRegion(name: String): Boolean {
+        return FabricLoader.getInstance().configDir.toFile().resolve("actions/regions/$name.json").delete()
     }
 
     fun saveAction(action: Action, enabled: Boolean = true): File? {

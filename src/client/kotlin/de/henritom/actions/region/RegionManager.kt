@@ -1,5 +1,6 @@
 package de.henritom.actions.region
 
+import de.henritom.actions.config.ConfigManager
 import net.minecraft.util.math.BlockPos
 
 class RegionManager {
@@ -16,6 +17,7 @@ class RegionManager {
     }
 
     fun removeRegion(region: Region): Boolean {
+        ConfigManager().removeRegion(region.name)
         return regions.remove(region)
     }
 

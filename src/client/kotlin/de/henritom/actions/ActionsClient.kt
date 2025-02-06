@@ -11,6 +11,8 @@ import net.fabricmc.api.ClientModInitializer
 
 object ActionsClient : ClientModInitializer {
 
+	private val configManager = ConfigManager()
+
 	override fun onInitializeClient() {
 		ActionsCommand.register()
 
@@ -20,12 +22,14 @@ object ActionsClient : ClientModInitializer {
 		RegionTriggers.register()
 
 		Runtime.getRuntime().addShutdownHook(Thread {
-			ConfigManager().saveConfig()
-			ConfigManager().saveAllActions()
+			configManager.saveConfig()
+			configManager.saveAllActions()
+			configManager.saveRegions()
 		})
 
-		ConfigManager().loadConfig()
-		ConfigManager().loadActions()
+		configManager.loadConfig()
+		configManager.loadActions()
+		configManager.loadRegions()
 
 		KeyBindUtil().registerKeyBinds()
 	}
