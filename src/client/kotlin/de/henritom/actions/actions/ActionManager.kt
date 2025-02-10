@@ -47,7 +47,9 @@ class ActionManager {
             return 2
 
         object : Action(name) {
-            override fun call() {
+            override fun call(vararg callArgs: Any) {
+                super.call(*callArgs)
+
                 Thread {
                     val actionScheduler = ActionScheduler(this).start()
 

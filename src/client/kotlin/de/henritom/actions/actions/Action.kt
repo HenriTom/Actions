@@ -6,12 +6,14 @@ import java.io.File
 
 abstract class Action(val name: String) {
 
+    val callArgs: MutableList<Any> = mutableListOf()
     var id: Int = ActionManager.instance.getNextAvailableID()
     val triggers = mutableListOf<Trigger>()
     val tasks = mutableListOf<Task>()
     var author = "%Unknown%"
     var file: File? = null
 
-    abstract fun call()
-
+    open fun call(vararg callArgs: Any) {
+        this.callArgs.addAll(callArgs)
+    }
 }
