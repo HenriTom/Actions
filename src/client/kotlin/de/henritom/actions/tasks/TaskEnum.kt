@@ -2,14 +2,14 @@ package de.henritom.actions.tasks
 
 enum class TaskEnum {
 
-    SAY,
-    PRINT,
     COMMAND,
+    COMMENT,
     CONSOLE,
-    WAIT,
-    MOVE,
     MINE,
+    MOVE,
+    PRINT,
+    SAY,
     USE,
-    COMMENT
+    WAIT
 
 }

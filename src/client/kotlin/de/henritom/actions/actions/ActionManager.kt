@@ -63,15 +63,15 @@ class ActionManager {
                             return@Thread
 
                         when (task.type) {
-                            TaskEnum.SAY -> MessageUtil().sayChat(task.value.toString())
-                            TaskEnum.PRINT -> MessageUtil().printChat(task.value.toString())
                             TaskEnum.COMMAND -> MessageUtil().sendCommand(task.value.toString())
-                            TaskEnum.CONSOLE -> MessageUtil().printConsole(task.value.toString(), actionScheduler)
-                            TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
-                            TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
-                            TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
-                            TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
                             TaskEnum.COMMENT -> {}
+                            TaskEnum.CONSOLE -> MessageUtil().printConsole(task.value.toString(), actionScheduler)
+                            TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
+                            TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
+                            TaskEnum.PRINT -> MessageUtil().printChat(task.value.toString())
+                            TaskEnum.SAY -> MessageUtil().sayChat(task.value.toString())
+                            TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
+                            TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
                         }
 
                         if (task == tasks.last())

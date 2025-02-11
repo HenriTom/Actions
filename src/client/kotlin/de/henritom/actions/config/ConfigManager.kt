@@ -15,7 +15,6 @@ import de.henritom.actions.triggers.TriggerManager
 import de.henritom.actions.ui.impl.SettingsScreen
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.util.math.Vec3d
-import org.apache.logging.log4j.core.util.Integers
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File

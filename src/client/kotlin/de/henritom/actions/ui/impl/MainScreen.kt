@@ -9,7 +9,6 @@ import de.henritom.actions.util.MessageUtil
 import de.henritom.actions.util.RenderUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
