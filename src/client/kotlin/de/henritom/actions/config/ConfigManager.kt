@@ -149,7 +149,7 @@ class ConfigManager {
             logger.error("Failed to save action ${action.name}!", e)
         }
 
-        return null;
+        return null
     }
 
     fun saveAllActions() {
