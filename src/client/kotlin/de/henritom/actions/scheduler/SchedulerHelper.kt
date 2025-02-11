@@ -11,7 +11,7 @@ class SchedulerHelper {
     }
 
     fun endAllActions(): Int {
-        ArrayList(ActionScheduler.runningActions).forEach { it.end() }
+        ArrayList(ActionScheduler.runningActions).forEach { it?.end() }
         return 0
     }
 

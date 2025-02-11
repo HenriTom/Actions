@@ -242,6 +242,9 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
         // Running Actions List
         for (i in scrollRunning until ActionScheduler.runningActions.size)
             if (ActionScheduler.runningActions.size > i) { // Needed to fix crash, when resizing
+                if (ActionScheduler.runningActions[i] == null) // Needed to fix crash, when action has no tasks
+                    continue
+
                 // Action
                 if (width / 24 + (i - scrollRunning + 4) * (textRenderer.fontHeight + 2) + 1 in width / 24..height - width / 24) {
                     context.drawText(
