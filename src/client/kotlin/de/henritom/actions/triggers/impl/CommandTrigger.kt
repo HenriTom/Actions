@@ -9,15 +9,17 @@ class CommandTrigger {
     fun trigger(message: String) {
         val nameID = message.removePrefix(ActionManager.instance.commandPrefix)
 
+        val messageUtil = MessageUtil(null)
+
         for (action in ActionManager.instance.actions)
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.COMMAND && trigger.value == nameID) {
                     action.call()
-                    MessageUtil().printTranslatable("actions.triggers.command.called", nameID)
+                    messageUtil.printTranslatable("actions.triggers.command.called", nameID)
                     return
                 }
 
         if (nameID.isNotEmpty())
-            MessageUtil().printTranslatable("actions.triggers.command.not_found", nameID)
+            messageUtil.printTranslatable("actions.triggers.command.not_found", nameID)
     }
 }

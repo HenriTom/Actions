@@ -17,17 +17,19 @@ object TasksCommand {
                 val nameID = StringArgumentType.getString(context, "name/id")
                 val action = ActionManager.instance.getActionByNameID(nameID)
 
+                val messageUtil = MessageUtil(action)
+
                 if (action != null) {
-                    MessageUtil().printTranslatable("actions.action.tasks.title", action.tasks.size.toString())
-                    MessageUtil().printTranslatable("actions.action.tasks.it.first")
+                    messageUtil.printTranslatable("actions.action.tasks.title", action.tasks.size.toString())
+                    messageUtil.printTranslatable("actions.action.tasks.it.first")
 
                     for (task in action.tasks)
                         if (task.type == TaskEnum.COMMENT)
-                            MessageUtil().printTranslatable("actions.action.tasks.it.comment", task.value.toString(), task.id.toString())
+                            messageUtil.printTranslatable("actions.action.tasks.it.comment", task.value.toString(), task.id.toString())
                         else
-                            MessageUtil().printTranslatable("actions.action.tasks.it.other", task.type.name, task.value.toString(), task.id.toString())
+                            messageUtil.printTranslatable("actions.action.tasks.it.other", task.type.name, task.value.toString(), task.id.toString())
 
-                    MessageUtil().printTranslatable("actions.action.tasks.it.last")
+                    messageUtil.printTranslatable("actions.action.tasks.it.last")
                 }
 
                 Command.SINGLE_SUCCESS

@@ -3,7 +3,6 @@ package de.henritom.actions.ui.impl
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.ui.GlobalUI
 import de.henritom.actions.ui.UIColors
-import de.henritom.actions.ui.impl.SettingsScreen.Companion.addOptionsScreenButton
 import de.henritom.actions.util.MessageUtil
 import de.henritom.actions.util.RenderUtil
 import net.fabricmc.loader.api.FabricLoader
@@ -11,11 +10,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.ConfirmLinkScreen
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.screen.ingame.HandledScreens
-import net.minecraft.client.render.OverlayTexture
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import java.net.URI
 import java.nio.file.Files
@@ -23,7 +18,6 @@ import java.nio.file.Path
 import kotlin.io.path.createDirectory
 import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
-
 
 class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.other.title")) {
 
@@ -197,7 +191,7 @@ class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ot
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

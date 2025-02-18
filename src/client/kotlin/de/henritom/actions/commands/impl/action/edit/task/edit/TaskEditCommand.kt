@@ -29,20 +29,22 @@ object TaskEditCommand {
                             val taskValue = StringArgumentType.getString(context, "taskValue")
                             val action = ActionManager.instance.getActionByNameID(nameID)
 
+                            val messageUtil = MessageUtil(action)
+
                             if (action == null) {
-                                MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                                messageUtil.printTranslatable("actions.action.not_found", nameID)
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             val task = action.tasks.find { it.id == taskID }
 
                             if (task == null) {
-                                MessageUtil().printTranslatable("actions.task.not_found", taskID.toString())
+                                messageUtil.printTranslatable("actions.task.not_found", taskID.toString())
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             task.value = taskValue
-                            MessageUtil().printTranslatable("actions.task.edited", task.type.name, task.id.toString(), taskValue)
+                            messageUtil.printTranslatable("actions.task.edited", task.type.name, task.id.toString(), taskValue)
 
                             Command.SINGLE_SUCCESS
                         }

@@ -13,7 +13,7 @@ object SaveConfigCommand {
         return ClientCommandManager.literal("config")
             .executes {
                 ConfigManager().saveConfig()
-                MessageUtil().printTranslatable("actions.file.save.config")
+                MessageUtil(null).printTranslatable("actions.file.save.config")
                 Command.SINGLE_SUCCESS
             }
     }

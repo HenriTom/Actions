@@ -25,15 +25,17 @@ object InfoCommand {
                     val nameID = StringArgumentType.getString(context, "name/id")
                     val action = ActionManager.instance.getActionByNameID(nameID)
 
+                    val messageUtil = MessageUtil(action)
+
                     if (action != null) {
-                        MessageUtil().printTranslatable("actions.action.info.title")
-                        MessageUtil().printTranslatable("actions.action.info.name", action.name)
-                        MessageUtil().printTranslatable("actions.action.info.id", action.id.toString())
-                        MessageUtil().printTranslatable("actions.action.info.author", action.author)
-                        MessageUtil().printTranslatable("actions.action.info.triggers", action.triggers.size.toString())
-                        MessageUtil().printTranslatable("actions.action.info.tasks", action.tasks.size.toString())
+                        messageUtil.printTranslatable("actions.action.info.title")
+                        messageUtil.printTranslatable("actions.action.info.name", action.name)
+                        messageUtil.printTranslatable("actions.action.info.id", action.id.toString())
+                        messageUtil.printTranslatable("actions.action.info.author", action.author)
+                        messageUtil.printTranslatable("actions.action.info.triggers", action.triggers.size.toString())
+                        messageUtil.printTranslatable("actions.action.info.tasks", action.tasks.size.toString())
                     } else
-                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                        messageUtil.printTranslatable("actions.action.not_found", nameID)
 
                     Command.SINGLE_SUCCESS
                 }

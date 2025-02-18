@@ -101,14 +101,16 @@ class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
             editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
                 val value = valueField?.text ?: ""
 
+                val messageUtil = MessageUtil(null)
+
                 if (task == null) {
-                    MessageUtil().printTranslatable("actions.task.not_found", "%Unknown%")
+                    messageUtil.printTranslatable("actions.task.not_found", "%Unknown%")
                     return@builder
                 }
 
                 task!!.value = value
 
-                MessageUtil().printTranslatable("actions.task.edited", task!!.type.name, task!!.id.toString(), value)
+                messageUtil.printTranslatable("actions.task.edited", task!!.type.name, task!!.id.toString(), value)
                 MinecraftClient.getInstance().setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(task!!.action)).asAction(task!!.action))
             }
                 .dimensions(
@@ -151,7 +153,7 @@ class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

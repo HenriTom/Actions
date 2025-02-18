@@ -13,7 +13,7 @@ object ClearCommand {
         return ClientCommandManager.literal("clear")
             .executes {
                 ActionManager.instance.commandPrefix = ""
-                MessageUtil().printTranslatable("actions.prefix.clear")
+                MessageUtil(null).printTranslatable("actions.prefix.clear")
                 Command.SINGLE_SUCCESS
             }
     }

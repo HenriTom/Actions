@@ -46,22 +46,24 @@ object TaskAddCommand {
                             val initValue = StringArgumentType.getString(context, "initValue")
                             val action = ActionManager.instance.getActionByNameID(nameID)
 
+                            val messageUtil = MessageUtil(null)
+
                             if (action == null) {
-                                MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                                messageUtil.printTranslatable("actions.action.not_found", nameID)
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             val task = try {
                                 TaskEnum.valueOf(taskName)
                             } catch (e: IllegalArgumentException) {
-                                MessageUtil().printTranslatable("actions.task.not_found", taskName)
+                                messageUtil.printTranslatable("actions.task.not_found", taskName)
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             if (ActionEditManager.instance.addTask(action, task)) {
                                 action.tasks.last().value = initValue
 
-                                MessageUtil().printTranslatable("actions.task.added.initial_value", task.name, nameID, initValue)
+                                messageUtil.printTranslatable("actions.task.added.initial_value", task.name, nameID, initValue)
                             }
 
                             Command.SINGLE_SUCCESS
@@ -71,20 +73,22 @@ object TaskAddCommand {
                     val taskName = StringArgumentType.getString(context, "task")
                     val action = ActionManager.instance.getActionByNameID(nameID)
 
+                    val messageUtil = MessageUtil(null)
+
                     if (action == null) {
-                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                        messageUtil.printTranslatable("actions.action.not_found", nameID)
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     val task = try {
                         TaskEnum.valueOf(taskName)
                     } catch (e: IllegalArgumentException) {
-                        MessageUtil().printTranslatable("actions.task.not_found", taskName)
+                        messageUtil.printTranslatable("actions.task.not_found", taskName)
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     if (ActionEditManager.instance.addTask(action, task))
-                        MessageUtil().printTranslatable("actions.task.added", task.name, nameID)
+                        messageUtil.printTranslatable("actions.task.added", task.name, nameID)
 
                     Command.SINGLE_SUCCESS
                 }

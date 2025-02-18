@@ -12,10 +12,12 @@ object SchListCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("list")
             .executes {
-                MessageUtil().printTranslatable("actions.scheduler.list.title", ActionScheduler.runningActions.size.toString())
+                val messageUtil = MessageUtil(null)
+
+                messageUtil.printTranslatable("actions.scheduler.list.title", ActionScheduler.runningActions.size.toString())
 
                 for (scheduler in ActionScheduler.runningActions)
-                    MessageUtil().printTranslatable("actions.list.it", scheduler.action.name, scheduler.runID.toString())
+                    messageUtil.printTranslatable("actions.list.it", scheduler.action.name, scheduler.runID.toString())
 
                 Command.SINGLE_SUCCESS
             }

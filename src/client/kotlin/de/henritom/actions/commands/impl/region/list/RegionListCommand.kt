@@ -12,10 +12,12 @@ object RegionListCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("list")
             .executes {
-                MessageUtil().printTranslatable("actions.region.list.title", RegionManager.instance.regions.size.toString())
+                val messageUtil = MessageUtil(null)
+
+                messageUtil.printTranslatable("actions.region.list.title", RegionManager.instance.regions.size.toString())
 
                 for (region in RegionManager.instance.regions)
-                    MessageUtil().printTranslatable("actions.region.list.it", region.name, region.pos1.toString(), region.pos2.toString())
+                    messageUtil.printTranslatable("actions.region.list.it", region.name, region.pos1.toString(), region.pos2.toString())
 
                 Command.SINGLE_SUCCESS
             }

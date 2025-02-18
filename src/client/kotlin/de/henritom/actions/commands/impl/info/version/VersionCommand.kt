@@ -12,7 +12,7 @@ object VersionCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("version")
             .executes {
-                MessageUtil().printTranslatable("actions.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString())
+                MessageUtil(null).printTranslatable("actions.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString())
 
                 Command.SINGLE_SUCCESS
             }

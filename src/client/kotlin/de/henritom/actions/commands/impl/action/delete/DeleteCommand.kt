@@ -24,11 +24,13 @@ object DeleteCommand {
 
                     val actionName = ActionManager.instance.getActionByNameID(nameID)?.name ?: nameID
 
+                    val messageUtil = MessageUtil(null)
+
                     if (ActionManager.instance.deleteAction(nameID))
-                        MessageUtil().printTranslatable("actions.action.deleted", actionName)
+                        messageUtil.printTranslatable("actions.action.deleted", actionName)
 
                     else
-                        MessageUtil().printTranslatable("actions.action.not_found", actionName)
+                        messageUtil.printTranslatable("actions.action.not_found", actionName)
 
                     Command.SINGLE_SUCCESS
                 }

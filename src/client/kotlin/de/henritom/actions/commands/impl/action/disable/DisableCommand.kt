@@ -25,16 +25,18 @@ object DisableCommand {
                     val nameID = StringArgumentType.getString(context, "name/id")
                     val action = ActionManager.instance.getActionByNameID(nameID)
 
+                    val messageUtil = MessageUtil(null)
+
                     if (action == null) {
-                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                        messageUtil.printTranslatable("actions.action.not_found", nameID)
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     if (ActionEditManager.instance.disableAction(action)) {
-                        MessageUtil().printTranslatable("actions.action.disabled", action.name)
+                        messageUtil.printTranslatable("actions.action.disabled", action.name)
                         ConfigManager().reloadActions()
                     } else
-                        MessageUtil().printTranslatable("actions.action.not_disabled", action.name)
+                        messageUtil.printTranslatable("actions.action.not_disabled", action.name)
 
                     Command.SINGLE_SUCCESS
                 }

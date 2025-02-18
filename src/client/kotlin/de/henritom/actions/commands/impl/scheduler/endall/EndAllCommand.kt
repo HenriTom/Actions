@@ -13,7 +13,7 @@ object EndAllCommand {
         return ClientCommandManager.literal("endall")
             .executes {
                 SchedulerHelper().endAllActions()
-                MessageUtil().printTranslatable("actions.scheduler.end_all")
+                MessageUtil(null).printTranslatable("actions.scheduler.end_all")
 
                 Command.SINGLE_SUCCESS
             }

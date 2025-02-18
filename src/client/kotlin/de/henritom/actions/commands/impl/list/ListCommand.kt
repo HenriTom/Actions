@@ -12,10 +12,12 @@ object ListCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("list")
             .executes {
-                MessageUtil().printTranslatable("actions.list.title", ActionManager.instance.actions.size.toString())
+                val messageUtil = MessageUtil(null)
+
+                messageUtil.printTranslatable("actions.list.title", ActionManager.instance.actions.size.toString())
 
                 for (action in ActionManager.instance.actions)
-                    MessageUtil().printTranslatable("actions.list.it", action.name, action.id.toString())
+                    messageUtil.printTranslatable("actions.list.it", action.name, action.id.toString())
 
                 Command.SINGLE_SUCCESS
             }

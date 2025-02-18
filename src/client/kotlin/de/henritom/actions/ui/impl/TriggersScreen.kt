@@ -263,7 +263,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                     when (value) {
                         "actions.ui.triggers.top.remove" -> {
                             action?.triggers?.remove(trigger)
-                            MessageUtil().printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action!!.name)
+                            MessageUtil(null).printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action!!.name)
                         }
                         "actions.ui.manage.top.edit" -> {
                             MinecraftClient.getInstance().setScreen(EditTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asTrigger(trigger))
@@ -307,7 +307,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

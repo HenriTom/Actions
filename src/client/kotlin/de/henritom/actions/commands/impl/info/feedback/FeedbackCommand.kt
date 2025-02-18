@@ -11,7 +11,7 @@ object FeedbackCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("feedback")
             .executes {
-                MessageUtil().printTranslatableClickable("actions.feedback", "https://github.com/HenriTom/Actions/issues/new/choose")
+                MessageUtil(null).printTranslatableClickable("actions.feedback", "https://github.com/HenriTom/Actions/issues/new/choose")
 
                 Command.SINGLE_SUCCESS
             }

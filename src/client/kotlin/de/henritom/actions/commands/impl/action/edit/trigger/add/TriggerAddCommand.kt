@@ -58,24 +58,26 @@ object TriggerAddCommand {
                             val initValue = StringArgumentType.getString(context, "initValue")
                             val action = ActionManager.instance.getActionByNameID(nameID)
 
+                            val messageUtil = MessageUtil(action)
+
                             if (action == null) {
-                                MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                                messageUtil.printTranslatable("actions.action.not_found", nameID)
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             val trigger = try {
                                 TriggerEnum.valueOf(triggerName)
                             } catch (e: IllegalArgumentException) {
-                                MessageUtil().printTranslatable("actions.trigger.not_found", triggerName)
+                                messageUtil.printTranslatable("actions.trigger.not_found", triggerName)
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             if (ActionEditManager.instance.addTrigger(action, trigger) == 1) {
                                 action.triggers.last().value = initValue
 
-                                MessageUtil().printTranslatable("actions.trigger.added.initial_value", trigger.name, nameID, initValue)
+                                messageUtil.printTranslatable("actions.trigger.added.initial_value", trigger.name, nameID, initValue)
                             } else if (ActionEditManager.instance.addTrigger(action, trigger) == 2)
-                                MessageUtil().printTranslatable("actions.trigger.multiple_triggers")
+                                messageUtil.printTranslatable("actions.trigger.multiple_triggers")
 
                             Command.SINGLE_SUCCESS
                         })
@@ -84,22 +86,24 @@ object TriggerAddCommand {
                     val triggerName = StringArgumentType.getString(context, "trigger")
                     val action = ActionManager.instance.getActionByNameID(nameID)
 
+                    val messageUtil = MessageUtil(action)
+
                     if (action == null) {
-                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                        messageUtil.printTranslatable("actions.action.not_found", nameID)
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     val trigger = try {
                         TriggerEnum.valueOf(triggerName)
                     } catch (e: IllegalArgumentException) {
-                        MessageUtil().printTranslatable("actions.trigger.not_found", triggerName)
+                        messageUtil.printTranslatable("actions.trigger.not_found", triggerName)
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     if (ActionEditManager.instance.addTrigger(action, trigger) == 1)
-                        MessageUtil().printTranslatable("actions.trigger.added", trigger.name, nameID)
+                        messageUtil.printTranslatable("actions.trigger.added", trigger.name, nameID)
                     else if (ActionEditManager.instance.addTrigger(action, trigger) == 2)
-                        MessageUtil().printTranslatable("actions.trigger.multiple_triggers")
+                        messageUtil.printTranslatable("actions.trigger.multiple_triggers")
 
                     Command.SINGLE_SUCCESS
                 }

@@ -11,7 +11,7 @@ object WikiCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("wiki")
             .executes {
-                MessageUtil().printTranslatableClickable("actions.wiki", "https://github.com/HenriTom/Actions/wiki")
+                MessageUtil(null).printTranslatableClickable("actions.wiki", "https://github.com/HenriTom/Actions/wiki")
 
                 Command.SINGLE_SUCCESS
             }

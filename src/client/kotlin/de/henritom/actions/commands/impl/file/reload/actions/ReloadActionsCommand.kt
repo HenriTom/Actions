@@ -13,7 +13,7 @@ object ReloadActionsCommand {
         return ClientCommandManager.literal("actions")
             .executes {
                 ConfigManager().reloadActions()
-                MessageUtil().printTranslatable("actions.file.reloaded.actions")
+                MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
                 Command.SINGLE_SUCCESS
             }
     }

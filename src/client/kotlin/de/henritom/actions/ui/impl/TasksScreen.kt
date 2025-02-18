@@ -264,7 +264,7 @@ class TasksScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ta
                     when (value) {
                         "actions.ui.triggers.top.remove" -> {
                             action?.tasks?.remove(task)
-                            MessageUtil().printTranslatable("actions.trigger.removed", task.type.name, task.id.toString(), action!!.name)
+                            MessageUtil(null).printTranslatable("actions.trigger.removed", task.type.name, task.id.toString(), action!!.name)
                         }
                         "actions.ui.manage.top.edit" -> {
                             MinecraftClient.getInstance().setScreen(EditTaskScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asTask(task))
@@ -308,7 +308,7 @@ class TasksScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ta
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

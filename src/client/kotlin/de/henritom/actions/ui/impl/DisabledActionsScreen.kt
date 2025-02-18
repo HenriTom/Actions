@@ -218,12 +218,14 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
                 val yEnd = yPos + textRenderer.fontHeight + 4
 
                 if (mouseX.toInt() in xStart..xEnd && mouseY.toInt() in yPos..yEnd) {
+                    val messageUtil = MessageUtil(null)
+
                     if (value == "actions.ui.disabled.top.enable")
                         if (ActionEditManager.instance.enableAction(action)) {
-                            MessageUtil().printTranslatable("actions.action.enabled", action.name)
+                            messageUtil.printTranslatable("actions.action.enabled", action.name)
                             ConfigManager().reloadActions()
                         } else
-                            MessageUtil().printTranslatable("actions.action.not_enabled", action.name)
+                            messageUtil.printTranslatable("actions.action.not_enabled", action.name)
 
                     return true
                 }
@@ -263,7 +265,7 @@ class DisabledActionsScreen(val parent: Screen?) : Screen(Text.translatable("act
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

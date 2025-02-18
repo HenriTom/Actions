@@ -24,11 +24,13 @@ object EndCommand {
                     val runID = IntegerArgumentType.getInteger(context, "runID")
                     val scheduler = SchedulerHelper().getSchedulerByRunID(runID)
 
+                    val messageUtil = MessageUtil(null)
+
                     SchedulerHelper().getSchedulerByRunID(runID)?.end()
                     if (scheduler != null)
-                        MessageUtil().printTranslatable("actions.scheduler.ended", scheduler.action.name, scheduler.runID.toString())
+                        messageUtil.printTranslatable("actions.scheduler.ended", scheduler.action.name, scheduler.runID.toString())
                     else
-                        MessageUtil().printTranslatable("actions.scheduler.not_ended", runID.toString())
+                        messageUtil.printTranslatable("actions.scheduler.not_ended", runID.toString())
 
                     Command.SINGLE_SUCCESS
                 })

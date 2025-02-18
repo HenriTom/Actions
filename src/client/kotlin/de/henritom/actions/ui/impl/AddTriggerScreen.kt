@@ -246,8 +246,10 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 val trigger = typeButton?.value ?: TriggerEnum.entries.first()
                 var value = valueField?.text ?: ""
 
+                val messageUtil = MessageUtil(action)
+
                 if (action == null) {
-                    MessageUtil().printTranslatable("actions.action.not_found", "%Unknown%")
+                    messageUtil.printTranslatable("actions.action.not_found", "%Unknown%")
                     return@builder
                 }
 
@@ -267,7 +269,7 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                     1 -> {
                         action!!.triggers.last().value = value
 
-                        MessageUtil().printTranslatable(
+                        messageUtil.printTranslatable(
                             "actions.trigger.added.initial_value",
                             trigger.name,
                             action!!.name,
@@ -277,7 +279,7 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                     }
 
                     2 -> {
-                        MessageUtil().printTranslatable("actions.trigger.multiple_triggers")
+                        messageUtil.printTranslatable("actions.trigger.multiple_triggers")
                         return@builder
                     }
 
@@ -324,7 +326,7 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

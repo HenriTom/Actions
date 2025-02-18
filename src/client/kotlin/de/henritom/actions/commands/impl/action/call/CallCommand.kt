@@ -29,10 +29,12 @@ object CallCommand {
                     val nameID = StringArgumentType.getString(context, "name/id")
                     val actionName = ActionManager.instance.getActionByNameID(nameID)?.name ?: nameID
 
+                    val messageUtil = MessageUtil(null)
+
                     when (ActionManager.instance.callAction(nameID)) {
-                        1 -> MessageUtil().printTranslatable("actions.action.called", actionName)
-                        2 -> MessageUtil().printTranslatable("actions.action.not_found", nameID)
-                        3 -> MessageUtil().printTranslatable("actions.action.not_callable", actionName)
+                        1 -> messageUtil.printTranslatable("actions.action.called", actionName)
+                        2 -> messageUtil.printTranslatable("actions.action.not_found", nameID)
+                        3 -> messageUtil.printTranslatable("actions.action.not_callable", actionName)
                     }
 
                     Command.SINGLE_SUCCESS

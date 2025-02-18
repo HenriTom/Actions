@@ -23,16 +23,18 @@ object RegionRemoveCommand {
                     val name = StringArgumentType.getString(context, "name")
                     val region = RegionManager.instance.regionByName(name)
 
+                    val messageUtil = MessageUtil(null)
+
                     if (region == null) {
-                        MessageUtil().printTranslatable("actions.region.not_found", name)
+                        messageUtil.printTranslatable("actions.region.not_found", name)
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     if (RegionManager.instance.removeRegion(region))
-                        MessageUtil().printTranslatable("actions.region.removed", region.name)
+                        messageUtil.printTranslatable("actions.region.removed", region.name)
 
                     else
-                        MessageUtil().printTranslatable("actions.action.not_found", name)
+                        messageUtil.printTranslatable("actions.action.not_found", name)
 
                     Command.SINGLE_SUCCESS
                 })

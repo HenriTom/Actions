@@ -34,8 +34,10 @@ object CloneCommand {
 
                         val action = ActionManager.instance.getActionByNameID(name)
 
+                        val messageUtil = MessageUtil(action)
+
                         if (action?.file == null) {
-                            MessageUtil().printTranslatable("actions.action.not_found", name)
+                            messageUtil.printTranslatable("actions.action.not_found", name)
                             return@executes Command.SINGLE_SUCCESS
                         }
 
@@ -44,7 +46,7 @@ object CloneCommand {
 
                         ConfigManager().reloadActions()
 
-                        MessageUtil().printTranslatable("actions.action.cloned", name, newName)
+                        messageUtil.printTranslatable("actions.action.cloned", name, newName)
 
                         Command.SINGLE_SUCCESS
                     }

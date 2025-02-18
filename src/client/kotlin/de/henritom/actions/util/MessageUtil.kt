@@ -1,6 +1,7 @@
 package de.henritom.actions.util
 
 import de.henritom.actions.ActionsClient
+import de.henritom.actions.actions.Action
 import de.henritom.actions.scheduler.ActionScheduler
 import net.minecraft.client.MinecraftClient
 import net.minecraft.text.ClickEvent
@@ -8,7 +9,7 @@ import net.minecraft.text.Text
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class MessageUtil {
+class MessageUtil(action: Action?) {
 
     companion object {
         val consoleLog = mutableListOf<String>()

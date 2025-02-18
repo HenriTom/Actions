@@ -17,15 +17,17 @@ object RemoveAuthorCommand {
                 val nameID = StringArgumentType.getString(context, "name/id")
                 val action = ActionManager.instance.getActionByNameID(nameID)
 
+                val messageUtil = MessageUtil(action)
+
                 if (action == null) {
-                    MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                    messageUtil.printTranslatable("actions.action.not_found", nameID)
                     return@executes Command.SINGLE_SUCCESS
                 }
 
                 if (ActionEditManager.instance.removeAuthor(action))
-                    MessageUtil().printTranslatable("actions.author.removed", action.name)
+                    messageUtil.printTranslatable("actions.author.removed", action.name)
                 else
-                    MessageUtil().printTranslatable("actions.author.not_found", action.name)
+                    messageUtil.printTranslatable("actions.author.not_found", action.name)
 
                 Command.SINGLE_SUCCESS
             }

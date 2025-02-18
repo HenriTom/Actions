@@ -38,15 +38,17 @@ object RegionAddCommand {
                                             val y2 = IntegerArgumentType.getInteger(context, "y2")
                                             val z2 = IntegerArgumentType.getInteger(context, "z2")
 
+                                            val messageUtil = MessageUtil(null)
+
                                             if (!RegionManager.instance.regions.none { it.name == name }) {
-                                                MessageUtil().printTranslatable("actions.region.already_used", name)
+                                                messageUtil.printTranslatable("actions.region.already_used", name)
                                                 return@executes Command.SINGLE_SUCCESS
                                             }
 
                                             val region = Region(name, Vec3d(x1.toDouble(), y1.toDouble(), z1.toDouble()), Vec3d(x2.toDouble(), y2.toDouble(), z2.toDouble()))
 
                                             RegionManager.instance.addRegion(region)
-                                            MessageUtil().printTranslatable("actions.region.added", region.name)
+                                            messageUtil.printTranslatable("actions.region.added", region.name)
 
                                             Command.SINGLE_SUCCESS
                                         }

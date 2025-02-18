@@ -11,7 +11,7 @@ object ModrinthCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("modrinth")
             .executes {
-                MessageUtil().printTranslatableClickable("actions.modrinth", "https://modrinth.com/mod/actions")
+                MessageUtil(null).printTranslatableClickable("actions.modrinth", "https://modrinth.com/mod/actions")
 
                 Command.SINGLE_SUCCESS
             }

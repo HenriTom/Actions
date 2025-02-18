@@ -101,14 +101,16 @@ class EditTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions
             editButton = ButtonWidget.builder(Text.translatable("actions.ui.edittask.edit")) {
                 val value = valueField?.text ?: ""
 
+                val messageUtil = MessageUtil(null)
+
                 if (trigger == null) {
-                    MessageUtil().printTranslatable("actions.trigger.not_found", "%Unknown%")
+                    messageUtil.printTranslatable("actions.trigger.not_found", "%Unknown%")
                     return@builder
                 }
 
                 trigger!!.value = value
 
-                MessageUtil().printTranslatable(
+                messageUtil.printTranslatable(
                     "actions.trigger.edited",
                     trigger!!.type.name,
                     trigger!!.id.toString(),
@@ -156,7 +158,7 @@ class EditTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

@@ -13,7 +13,7 @@ object ReloadConfigCommand {
         return ClientCommandManager.literal("config")
             .executes {
                 ConfigManager().loadConfig()
-                MessageUtil().printTranslatable("actions.file.reloaded.config")
+                MessageUtil(null).printTranslatable("actions.file.reloaded.config")
                 Command.SINGLE_SUCCESS
             }
     }

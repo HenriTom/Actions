@@ -17,14 +17,16 @@ object TriggersCommand {
                 val nameID = StringArgumentType.getString(context, "name/id")
                 val action = ActionManager.instance.getActionByNameID(nameID)
 
+                val messageUtil = MessageUtil(action)
+
                 if (action != null) {
-                    MessageUtil().printTranslatable("actions.action.triggers.title", action.triggers.size.toString())
+                    messageUtil.printTranslatable("actions.action.triggers.title", action.triggers.size.toString())
 
                     for (trigger in action.triggers)
                         if (trigger.type == TriggerEnum.CALL)
-                            MessageUtil().printTranslatable("actions.action.triggers.it.call", trigger.type.name, trigger.id.toString())
+                            messageUtil.printTranslatable("actions.action.triggers.it.call", trigger.type.name, trigger.id.toString())
                         else
-                            MessageUtil().printTranslatable("actions.action.triggers.it.other", trigger.type.name, trigger.value.toString(), trigger.id.toString())
+                            messageUtil.printTranslatable("actions.action.triggers.it.other", trigger.type.name, trigger.value.toString(), trigger.id.toString())
                 }
 
                 Command.SINGLE_SUCCESS

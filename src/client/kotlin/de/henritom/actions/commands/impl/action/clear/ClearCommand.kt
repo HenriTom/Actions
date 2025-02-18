@@ -30,14 +30,16 @@ object ClearCommand {
                     val nameID = StringArgumentType.getString(context, "name/id")
                     val action = ActionManager.instance.getActionByNameID(nameID)
 
+                    val messageUtil = MessageUtil(null)
+
                     if (action != null) {
                         action.tasks.clear()
                         action.triggers.clear()
                         ConfigManager().saveAction(action)
 
-                        MessageUtil().printTranslatable("actions.action.cleared", nameID)
+                        messageUtil.printTranslatable("actions.action.cleared", nameID)
                     } else
-                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                        messageUtil.printTranslatable("actions.action.not_found", nameID)
 
                     Command.SINGLE_SUCCESS
                 }

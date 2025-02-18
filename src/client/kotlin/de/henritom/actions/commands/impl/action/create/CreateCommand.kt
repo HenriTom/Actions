@@ -16,11 +16,13 @@ object CreateCommand {
                 .executes { context ->
                     val name = StringArgumentType.getString(context, "name")
 
+                    val messageUtil = MessageUtil(null)
+
                     when (ActionManager.instance.createAction(name)) {
-                        1 -> MessageUtil().printTranslatable("actions.action.created", name)
-                        2 -> MessageUtil().printTranslatable("actions.action.already_used", name)
-                        3 -> MessageUtil().printTranslatable("actions.action.start_with_letter")
-                        4 -> MessageUtil().printTranslatable("actions.action.min_length")
+                        1 -> messageUtil.printTranslatable("actions.action.created", name)
+                        2 -> messageUtil.printTranslatable("actions.action.already_used", name)
+                        3 -> messageUtil.printTranslatable("actions.action.start_with_letter")
+                        4 -> messageUtil.printTranslatable("actions.action.min_length")
                     }
 
                     Command.SINGLE_SUCCESS

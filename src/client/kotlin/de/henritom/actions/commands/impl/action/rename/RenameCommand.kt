@@ -28,14 +28,16 @@ object RenameCommand {
 
                         val action = ActionManager.instance.getActionByNameID(name)
 
+                        val messageUtil = MessageUtil(action)
+
                         if (action?.file == null) {
-                            MessageUtil().printTranslatable("actions.action.not_found", name)
+                            messageUtil.printTranslatable("actions.action.not_found", name)
                             return@executes Command.SINGLE_SUCCESS
                         }
 
                         ActionEditManager.instance.renameAction(action, newName)
 
-                        MessageUtil().printTranslatable("actions.action.renamed", name, newName)
+                        messageUtil.printTranslatable("actions.action.renamed", name, newName)
 
                         Command.SINGLE_SUCCESS
                     }

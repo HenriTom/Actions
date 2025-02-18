@@ -305,7 +305,7 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
 
         // Clear Console Button
         if (mouseX.toInt() in width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY.toInt() in height - width / 24 - textRenderer.fontHeight - 1..height - width / 24)
-            scrollConsole = MessageUtil().clearConsole()
+            scrollConsole = MessageUtil(null).clearConsole()
 
         // Button 1 (Add Action)
         if (mouseX.toInt() in width / 24..(width / 24) * 8 && mouseY.toInt() in width / 24..(height / 24) * 6)
@@ -345,7 +345,7 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {

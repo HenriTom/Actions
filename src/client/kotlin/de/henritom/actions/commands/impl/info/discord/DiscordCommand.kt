@@ -11,7 +11,7 @@ object DiscordCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("discord")
             .executes {
-                MessageUtil().printTranslatableClickable("actions.discord", "https://discord.gg/XdHBJKTvxJ")
+                MessageUtil(null).printTranslatableClickable("actions.discord", "https://discord.gg/XdHBJKTvxJ")
 
                 Command.SINGLE_SUCCESS
             }

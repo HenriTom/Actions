@@ -27,22 +27,24 @@ object TriggerRemoveCommand {
                     val triggerID = IntegerArgumentType.getInteger(context, "triggerID")
                     val action = ActionManager.instance.getActionByNameID(nameID)
 
+                    val messageUtil = MessageUtil(action)
+
                     if (action == null) {
-                        MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                        messageUtil.printTranslatable("actions.action.not_found", nameID)
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     val trigger = action.triggers.find { it.id == triggerID }
 
                     if (trigger == null) {
-                        MessageUtil().printTranslatable("actions.trigger.not_found", triggerID.toString())
+                        messageUtil.printTranslatable("actions.trigger.not_found", triggerID.toString())
                         return@executes Command.SINGLE_SUCCESS
                     }
 
                     if (ActionEditManager.instance.removeTrigger(action, trigger))
-                        MessageUtil().printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action.name)
+                        messageUtil.printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action.name)
                     else
-                        MessageUtil().printTranslatable("actions.trigger.not_found_in_action", trigger.type.name, action.name)
+                        messageUtil.printTranslatable("actions.trigger.not_found_in_action", trigger.type.name, action.name)
 
                     Command.SINGLE_SUCCESS
                 }

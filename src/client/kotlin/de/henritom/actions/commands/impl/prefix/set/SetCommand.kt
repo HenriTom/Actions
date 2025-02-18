@@ -17,7 +17,7 @@ object SetCommand {
                     .executes { context ->
                         val prefix = StringArgumentType.getString(context, "prefix")
                         ActionManager.instance.commandPrefix = prefix
-                        MessageUtil().printTranslatable("actions.prefix.set", prefix)
+                        MessageUtil(null).printTranslatable("actions.prefix.set", prefix)
                         Command.SINGLE_SUCCESS
                     }
             )

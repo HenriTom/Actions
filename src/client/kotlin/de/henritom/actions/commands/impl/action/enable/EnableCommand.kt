@@ -26,11 +26,13 @@ object EnableCommand {
 
                     val file = FabricLoader.getInstance().configDir.toFile().resolve("actions/actions/$name.disabled")
 
+                    val messageUtil = MessageUtil(null)
+
                     if (ActionEditManager.instance.enableAction(file)) {
-                        MessageUtil().printTranslatable("actions.action.enabled", name)
+                        messageUtil.printTranslatable("actions.action.enabled", name)
                         ConfigManager().reloadActions()
                     } else
-                        MessageUtil().printTranslatable("actions.action.not_enabled", name)
+                        messageUtil.printTranslatable("actions.action.not_enabled", name)
 
                     Command.SINGLE_SUCCESS
                 }

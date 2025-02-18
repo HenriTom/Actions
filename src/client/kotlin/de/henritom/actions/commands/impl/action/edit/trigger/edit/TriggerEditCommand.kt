@@ -31,25 +31,27 @@ object TriggerEditCommand {
                             val triggerValue = StringArgumentType.getString(context, "triggerValue")
                             val action = ActionManager.instance.getActionByNameID(nameID)
 
+                            val messageUtil = MessageUtil(action)
+
                             if (action == null) {
-                                MessageUtil().printTranslatable("actions.action.not_found", nameID)
+                                messageUtil.printTranslatable("actions.action.not_found", nameID)
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             val trigger = action.triggers.find { it.id == triggerID }
 
                             if (trigger == null) {
-                                MessageUtil().printTranslatable("actions.trigger.not_found", triggerID.toString())
+                                messageUtil.printTranslatable("actions.trigger.not_found", triggerID.toString())
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             if (trigger.type == TriggerEnum.CALL) {
-                                MessageUtil().printTranslatable("actions.trigger.not_editable")
+                                messageUtil.printTranslatable("actions.trigger.not_editable")
                                 return@executes Command.SINGLE_SUCCESS
                             }
 
                             trigger.value = triggerValue
-                            MessageUtil().printTranslatable("actions.trigger.edited", trigger.type.name, trigger.id.toString(), triggerValue)
+                            messageUtil.printTranslatable("actions.trigger.edited", trigger.type.name, trigger.id.toString(), triggerValue)
 
                             Command.SINGLE_SUCCESS
                         }

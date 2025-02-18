@@ -266,13 +266,15 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
                 val xEnd = xPos + width - 8
                 val yEnd = yPos + textRenderer.fontHeight + 4
 
+                val messageUtil = MessageUtil(null)
+
                 if (mouseX.toInt() in xStart..xEnd && mouseY.toInt() in yPos..yEnd) {
                     when (value) {
                         "actions.ui.manage.top.call" -> {
                             action.call()
-                            MessageUtil().printTranslatable("actions.action.called", action.name)
+                            messageUtil.printTranslatable("actions.action.called", action.name)
                         }
-                        "actions.ui.manage.top.delete" -> if (ActionManager.instance.deleteAction(action.name)) MessageUtil().printTranslatable("actions.action.deleted", action.name) else MessageUtil().printTranslatable("actions.action.not_found", action.name)
+                        "actions.ui.manage.top.delete" -> if (ActionManager.instance.deleteAction(action.name)) messageUtil.printTranslatable("actions.action.deleted", action.name) else messageUtil.printTranslatable("actions.action.not_found", action.name)
                         "actions.ui.manage.top.edit" -> MinecraftClient.getInstance().setScreen(EditActionScreen(this).asAction(action))
                     }
                     return true
@@ -313,7 +315,7 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

@@ -56,6 +56,8 @@ class ActionManager {
                     if (tasks.isEmpty())
                         actionScheduler.end()
 
+                    val messageUtil = MessageUtil(this)
+
                     for (task in tasks) {
                         actionScheduler.currentTask++
 
@@ -63,13 +65,13 @@ class ActionManager {
                             return@Thread
 
                         when (task.type) {
-                            TaskEnum.COMMAND -> MessageUtil().sendCommand(task.value.toString())
+                            TaskEnum.COMMAND -> messageUtil.sendCommand(task.value.toString())
                             TaskEnum.COMMENT -> {}
-                            TaskEnum.CONSOLE -> MessageUtil().printConsole(task.value.toString(), actionScheduler)
+                            TaskEnum.CONSOLE -> messageUtil.printConsole(task.value.toString(), actionScheduler)
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
-                            TaskEnum.PRINT -> MessageUtil().printChat(task.value.toString())
-                            TaskEnum.SAY -> MessageUtil().sayChat(task.value.toString())
+                            TaskEnum.PRINT -> messageUtil.printChat(task.value.toString())
+                            TaskEnum.SAY -> messageUtil.sayChat(task.value.toString())
                             TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
                         }

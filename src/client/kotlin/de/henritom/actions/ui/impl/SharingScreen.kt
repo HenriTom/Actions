@@ -89,7 +89,7 @@ class SharingScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {

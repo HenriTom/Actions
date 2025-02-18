@@ -383,7 +383,7 @@ class EditRegionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
             }
 
         ConfigManager().loadActions()
-        MessageUtil().printTranslatable("actions.file.reloaded.actions")
+        MessageUtil(null).printTranslatable("actions.file.reloaded.actions")
     }
 
     override fun close() {
