@@ -1,4 +1,4 @@
-package de.henritom.actions.commands.impl.info.version
+package de.henritom.actions.commands.impl.info.wiki
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
@@ -6,12 +6,12 @@ import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 
-object DiscordCommand {
+object WikiCommand {
 
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
-        return ClientCommandManager.literal("discord")
+        return ClientCommandManager.literal("wiki")
             .executes {
-                MessageUtil().printTranslatableClickable("actions.discord", "https://discord.gg/XdHBJKTvxJ")
+                MessageUtil().printTranslatableClickable("actions.wiki", "https://github.com/HenriTom/Actions/wiki")
 
                 Command.SINGLE_SUCCESS
             }
