@@ -6,12 +6,14 @@ import de.henritom.actions.event.impl.ChatEvent
 import de.henritom.actions.triggers.impl.*
 import de.henritom.actions.util.KeyBindUtil
 import de.henritom.actions.variables.GlobalVariableStorage
+import de.henritom.actions.variables.LocalVariableStorage
 import net.fabricmc.api.ClientModInitializer
 
 object ActionsClient : ClientModInitializer {
 
 	private val configManager = ConfigManager()
 	val globalVariableStorage = GlobalVariableStorage()
+	val localVariableStorage = LocalVariableStorage()
 
 	override fun onInitializeClient() {
 		ActionsCommand.register()

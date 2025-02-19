@@ -88,6 +88,18 @@ class MessageUtil(var action: Action?) {
             return result
         }
 
+        if (message.contains("%lvar.")) {
+            var result = message
+            val regex = Regex("""%lvar\.(\w+)""")
+
+            regex.findAll(message).forEach { matchResult ->
+                val variableName = matchResult.groupValues[1]
+                result = result.replace("%lvar.$variableName", ActionsClient.localVariableStorage.getVariable(variableName).toString())
+            }
+
+            return result
+        }
+
         return message
     }
 }
