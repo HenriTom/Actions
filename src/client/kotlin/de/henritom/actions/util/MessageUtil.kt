@@ -9,7 +9,7 @@ import net.minecraft.text.Text
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class MessageUtil(action: Action?) {
+class MessageUtil(var action: Action?) {
 
     companion object {
         val consoleLog = mutableListOf<String>()
@@ -63,6 +63,26 @@ class MessageUtil(action: Action?) {
             regex.findAll(message).forEach { matchResult ->
                 val variableName = matchResult.groupValues[1]
                 result = result.replace("%gvar.$variableName", ActionsClient.globalVariableStorage.update().getVariable(variableName).toString())
+            }
+
+            return result
+        }
+
+        if (message.contains("%cvar.") && action != null) {
+            var result = message
+            val regex = Regex("""%cvar\.(\w+)""")
+
+            regex.findAll(message).forEach { matchResult ->
+                val index = matchResult.groupValues[1]
+                val numberIndex = index.toIntOrNull()
+
+                result = if (numberIndex == null || index == "all")
+                    result.replace("%cvar.$index", action!!.callArgs.toString())
+                else
+                    if (action!!.callArgs.size > numberIndex) {
+                        result.replace("%cvar.$index", action!!.callArgs[numberIndex].toString())
+                    } else
+                        result.replace("%cvar.$index", "null")
             }
 
             return result

@@ -14,6 +14,7 @@ abstract class Action(val name: String) {
     var file: File? = null
 
     open fun call(vararg callArgs: Any) {
+        this.callArgs.clear()
         this.callArgs.addAll(callArgs)
     }
 }
