@@ -1,5 +1,6 @@
 package de.henritom.actions.actions
 
+import de.henritom.actions.conditions.ConditionHelper
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.motion.MoveEnum
 import de.henritom.actions.motion.MoveManager
@@ -72,6 +73,7 @@ class ActionManager {
                             TaskEnum.COMMENT -> {}
                             TaskEnum.CONSOLE -> messageUtil.printConsole(task.value.toString(), actionScheduler)
                             TaskEnum.END -> actionScheduler.end()
+                            TaskEnum.IF -> ConditionHelper.checkIf(task.value.toString()).let { if (!it) index++ }
                             TaskEnum.JUMP -> index = (task.value.toString().toIntOrNull()?.takeIf { it in tasks.indices }?.minus(1) ?: index) - 1
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))

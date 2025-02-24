@@ -53,7 +53,7 @@ class MessageUtil(var action: Action?) {
         return 0
     }
 
-    private fun translateVariables(message: String): String {
+    fun translateVariables(message: String): String {
         if (message.contains("%gvar.")) {
             var result = message
             val regex = Regex("""%gvar\.(\w+)""")
