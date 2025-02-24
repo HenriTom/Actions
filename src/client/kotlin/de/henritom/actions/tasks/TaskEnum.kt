@@ -5,6 +5,7 @@ enum class TaskEnum {
     COMMAND,
     COMMENT,
     CONSOLE,
+    END,
     JUMP,
     MINE,
     MOVE,

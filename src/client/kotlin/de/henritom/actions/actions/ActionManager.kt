@@ -71,6 +71,7 @@ class ActionManager {
                             TaskEnum.COMMAND -> messageUtil.sendCommand(task.value.toString())
                             TaskEnum.COMMENT -> {}
                             TaskEnum.CONSOLE -> messageUtil.printConsole(task.value.toString(), actionScheduler)
+                            TaskEnum.END -> actionScheduler.end()
                             TaskEnum.JUMP -> index = (task.value.toString().toIntOrNull()?.takeIf { it in tasks.indices }?.minus(1) ?: index) - 1
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
