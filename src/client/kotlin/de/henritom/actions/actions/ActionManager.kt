@@ -58,8 +58,10 @@ class ActionManager {
 
                     val messageUtil = MessageUtil(this)
 
-                    for (task in tasks) {
-                        actionScheduler.currentTask++
+                    var index = 0
+                    while (index < tasks.size) {
+                        val task = tasks[index]
+                        actionScheduler.currentTask = index
 
                         if (actionScheduler.cancelled)
                             return@Thread
@@ -68,6 +70,7 @@ class ActionManager {
                             TaskEnum.COMMAND -> messageUtil.sendCommand(task.value.toString())
                             TaskEnum.COMMENT -> {}
                             TaskEnum.CONSOLE -> messageUtil.printConsole(task.value.toString(), actionScheduler)
+                            TaskEnum.JUMP -> index = (task.value.toString().toIntOrNull()?.takeIf { it in tasks.indices }?.minus(1) ?: index) - 1
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
                             TaskEnum.PRINT -> messageUtil.printChat(task.value.toString())
@@ -76,7 +79,9 @@ class ActionManager {
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
                         }
 
-                        if (task == tasks.last())
+                        index++
+
+                        if (index >= tasks.size)
                             actionScheduler.end()
                     }
                 }.start()
