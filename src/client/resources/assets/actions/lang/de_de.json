@@ -59,8 +59,15 @@
   "actions.scheduler.ended": "§8» §7Aktion §f'%s§7[§f%s§7]'§7 beendet.",
   "actions.scheduler.not_ended": "§8» §7Beenden der Aktion fehlgeschlagen.",
 
+  "actions.variables.added": "§8» §7Variable §f'%s'§7 mit Wert §f'%s'§7 hinzugefügt.",
+  "actions.variables.removed": "§8» §7Variable §f'%s'§7 entfernt.",
+
   "actions.list.title": "§8» §7Aktionen§8[§f%s§8]:",
-  "actions.list.it": "§8» §7%s§8[§f%s§8]",
+  "actions.list.it": "§8» §f%s§8[§f%s§8]",
+
+  "actions.variables.list.local.title": "§8» §7Lokale Variablen§8[§f%s§8]:",
+  "actions.variables.list.global.title": "§8» §7Globale Variablen§8[§f%s§8]:",
+  "actions.variables.list.it": "§8» §f%s§8[§f%s§8]",
 
   "actions.region.list.title": "§8» §7Regionen§8[§f%s§8]:",
   "actions.region.list.it": "§8» §f%s§8[§f%s, %s§8]",

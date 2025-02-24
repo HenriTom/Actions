@@ -16,12 +16,6 @@ object RegionAddCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("add")
             .then(ClientCommandManager.argument("name", StringArgumentType.string())
-                .suggests { _, builder ->
-                    RegionManager.instance.regions.forEach { action ->
-                        builder.suggest(action.name)
-                    }
-                    builder.buildFuture()
-                }
                 .then(ClientCommandManager.argument("x1", IntegerArgumentType.integer())
                     .then(ClientCommandManager.argument("y1", IntegerArgumentType.integer())
                         .then(ClientCommandManager.argument("z1", IntegerArgumentType.integer())

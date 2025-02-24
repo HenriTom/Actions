@@ -5,7 +5,7 @@ import kotlin.math.sqrt
 
 class GlobalVariableStorage {
 
-    private val variables = mutableMapOf<String, Any>()
+    val variables = mutableMapOf<String, Any>()
 
     init {
         update()

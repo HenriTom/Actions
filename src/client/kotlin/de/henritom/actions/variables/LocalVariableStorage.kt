@@ -2,7 +2,7 @@ package de.henritom.actions.variables
 
 class LocalVariableStorage {
 
-    private val variables = mutableMapOf<String, Any>()
+    val variables = mutableMapOf<String, Any>()
 
     fun addVariable(name: String, value: Any) {
         variables[name] = value
