@@ -28,7 +28,8 @@ class GlobalVariableStorage {
         variables["math_tau"] = Math.TAU
         variables["math_e"] = Math.E
         variables["math_sqrt2"] = sqrt(2.0)
-        variables["math_random"] = Math.random()
+        variables["math_random"] = Math.random() * 2 - 1
+        variables["math_random_int"] = (Math.random() * Int.MAX_VALUE * 2 - Int.MAX_VALUE).toInt()
 
         // Player
         variables["player_air"] = client.player?.air ?: "Unknown"
