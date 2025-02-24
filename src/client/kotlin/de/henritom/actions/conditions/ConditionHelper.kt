@@ -7,7 +7,8 @@ class ConditionHelper {
         fun checkIf(condition: String): Boolean {
             val conditionParts = MessageUtil(null).translateVariables(condition).split(" ")
 
-            if (conditionParts.size != 3) return false
+            if (conditionParts.size != 3)
+                return false
 
             fun parseValue(value: String): Any = when {
                 value.equals("true", ignoreCase = true) -> true

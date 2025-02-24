@@ -8,6 +8,7 @@ import de.henritom.actions.scheduler.ActionScheduler
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.util.MessageUtil
+import de.henritom.actions.util.PlayerUtil
 import de.henritom.actions.util.SoundUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
@@ -79,6 +80,7 @@ class ActionManager {
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
                             TaskEnum.PRINT -> messageUtil.printChat(task.value.toString())
                             TaskEnum.SAY -> messageUtil.sayChat(task.value.toString())
+                            TaskEnum.SET_SLOT -> PlayerUtil.setHotbarSlot(task.value.toString().toIntOrNull() ?: 10)
                             TaskEnum.SOUND -> SoundUtil.playSound(task.value.toString())
                             TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)

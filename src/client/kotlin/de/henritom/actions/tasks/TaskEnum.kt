@@ -12,6 +12,7 @@ enum class TaskEnum {
     MOVE,
     PRINT,
     SAY,
+    SET_SLOT,
     SOUND,
     USE,
     WAIT
