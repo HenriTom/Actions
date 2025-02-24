@@ -1,4 +1,4 @@
-package de.henritom.actions.commands.impl.file.reload.actions
+package de.henritom.actions.commands.impl.file.save.actions
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.builder.LiteralArgumentBuilder

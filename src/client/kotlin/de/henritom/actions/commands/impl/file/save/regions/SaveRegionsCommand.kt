@@ -1,4 +1,4 @@
-package de.henritom.actions.commands.impl.file.save.config
+package de.henritom.actions.commands.impl.file.save.regions
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
@@ -7,13 +7,13 @@ import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 
-object SaveConfigCommand {
+object SaveRegionsCommand {
 
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
-        return ClientCommandManager.literal("config")
+        return ClientCommandManager.literal("regions")
             .executes {
-                ConfigManager().saveConfig()
-                MessageUtil(null).printTranslatable("actions.file.save.config")
+                ConfigManager().saveRegions()
+                MessageUtil(null).printTranslatable("actions.file.save.regions")
                 Command.SINGLE_SUCCESS
             }
     }

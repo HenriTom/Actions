@@ -278,4 +278,9 @@ class ConfigManager {
 
         return actionsDir.listFiles { _, name -> name.endsWith(".disabled") }?.toList() ?: emptyList()
     }
+
+    fun reloadRegions() {
+        RegionManager.instance.regions.clear()
+        loadRegions()
+    }
 }
