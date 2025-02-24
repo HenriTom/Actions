@@ -92,8 +92,6 @@ class ConfigManager {
             if (!file.exists() || file.isDirectory)
                 return
 
-            println(file)
-
             val data = Gson().fromJson(file.readText(), Map::class.java) as Map<*, *>
             val name = data["name"] as String
             val x1 = data["x1"] as? Double ?: 0.0

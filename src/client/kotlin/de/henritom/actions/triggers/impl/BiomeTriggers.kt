@@ -20,12 +20,9 @@ class BiomeTriggers {
                             TriggerEnum.BIOME_ENTER -> {
                                 val biome = client.player?.world?.getBiome(client.player?.blockPos)
 
-                                if (biome != lastBiomeEnter && biome != null) {
-                                    println("if (${biome.key.get().value} contains ${trigger.value})")
-
+                                if (biome != lastBiomeEnter && biome != null)
                                     if (biome.key.get().value.toString().contains(trigger.value.toString()))
                                         action.call()
-                                }
 
                                 lastBiomeEnter = biome
                             }

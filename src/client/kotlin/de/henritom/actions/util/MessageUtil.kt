@@ -22,8 +22,6 @@ class MessageUtil(var action: Action?) {
     fun printConsole(message: String, scheduler: ActionScheduler? = null) {
         if (scheduler != null)
             consoleLog.add("[${LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))}] (${scheduler.action.name})[${scheduler.runID}]: ${translateVariables(message)}")
-
-        println(translateVariables(message))
     }
 
     fun printTranslatable(key: String, vararg vars: String) {
