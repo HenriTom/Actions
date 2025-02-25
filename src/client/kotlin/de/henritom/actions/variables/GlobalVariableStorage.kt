@@ -24,6 +24,43 @@ class GlobalVariableStorage {
         variables["true"] = true
         variables["false"] = false
 
+        // Colors
+        variables["color_0"] = "§0"
+        variables["color_1"] = "§1"
+        variables["color_2"] = "§2"
+        variables["color_3"] = "§3"
+        variables["color_4"] = "§4"
+        variables["color_5"] = "§5"
+        variables["color_6"] = "§6"
+        variables["color_7"] = "§7"
+        variables["color_8"] = "§8"
+        variables["color_9"] = "§9"
+
+        variables["color_a"] = "§a"
+        variables["color_b"] = "§b"
+        variables["color_c"] = "§c"
+        variables["color_d"] = "§d"
+        variables["color_e"] = "§e"
+        variables["color_f"] = "§f"
+
+        variables["color_black"] = "§0"
+        variables["color_dark_blue"] = "§1"
+        variables["color_dark_green"] = "§2"
+        variables["color_dark_turquoise"] = "§3"
+        variables["color_dark_red"] = "§4"
+        variables["color_purple"] = "§5"
+        variables["color_dark_yellow"] = "§6"
+        variables["color_light_gray"] = "§7"
+        variables["color_dark_gray"] = "§8"
+        variables["color_light_blue"] = "§9"
+
+        variables["color_light_green"] = "§a"
+        variables["color_light_turquoise"] = "§b"
+        variables["color_light_red"] = "§c"
+        variables["color_magenta"] = "§d"
+        variables["color_light_yellow"] = "§e"
+        variables["color_white"] = "§f"
+
         // Math
         variables["math_pi"] = Math.PI
         variables["math_tau"] = Math.TAU
