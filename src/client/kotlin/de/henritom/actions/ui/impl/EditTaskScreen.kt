@@ -89,11 +89,11 @@ class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.addtask.value")
             )
+            valueField?.setMaxLength(8192)
             valueField?.text = task?.value.toString()
 
             addDrawableChild(valueField)
         }
-        valueField?.setMaxLength(8192)
         valueField?.width = width - 8
 
         // Edit Button

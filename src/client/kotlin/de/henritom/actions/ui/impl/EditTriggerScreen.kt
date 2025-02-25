@@ -89,11 +89,11 @@ class EditTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions
                 textRenderer.fontHeight + 8,
                 Text.translatable("actions.ui.addtask.value")
             )
+            valueField?.setMaxLength(8192)
             valueField?.text = trigger?.value.toString()
 
             addDrawableChild(valueField)
         }
-        valueField?.setMaxLength(8192)
         valueField?.width = width - 8
 
         // Edit Button

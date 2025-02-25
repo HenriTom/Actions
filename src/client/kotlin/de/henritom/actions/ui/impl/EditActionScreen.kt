@@ -98,11 +98,11 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 textRenderer.fontHeight + 8,
                 Text.literal(action!!.name)
             )
+            nameField?.setMaxLength(16)
             nameField?.text = action!!.name
 
             addDrawableChild(nameField)
         }
-        nameField?.setMaxLength(16)
 
         if (renameButton == null) {
             renameButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.change")) {
