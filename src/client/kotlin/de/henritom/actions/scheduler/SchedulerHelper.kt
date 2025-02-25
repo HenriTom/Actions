@@ -4,7 +4,7 @@ class SchedulerHelper {
 
     fun getNextAvailableID(runningActions: List<ActionScheduler>): Int {
         for (runID in 1..Int.MAX_VALUE)
-            if (runningActions.none { it.runID == runID })
+            if (runningActions.none { it == null || it.runID == runID }) // Nullcheck is needed for crash fix
                 return runID
 
         return -1

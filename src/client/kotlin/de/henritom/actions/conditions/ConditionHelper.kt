@@ -21,26 +21,41 @@ class ConditionHelper {
             val operator = conditionParts[1]
             val varB = parseValue(conditionParts[2])
 
+            return if (operator.startsWith("!"))
+                !checkCondition(varA, operator.substring(1), varB)
+            else
+                checkCondition(varA, operator, varB)
+        }
+
+        private fun checkCondition(varA: Any, operator: String, varB: Any): Boolean {
             return when {
-                varA is Double && varB is Double -> when (operator) {
+                varA is Double && varB is Double -> when (operator.lowercase()) {
                     "<" -> varA < varB
                     ">" -> varA > varB
                     "<=" -> varA <= varB
                     ">=" -> varA >= varB
                     "==" -> varA == varB
-                    "!=" -> varA != varB
                     else -> false
                 }
 
-                varA is Boolean && varB is Boolean -> when (operator) {
+                varA is Boolean && varB is Boolean -> when (operator.lowercase()) {
                     "==" -> varA == varB
-                    "!=" -> varA != varB
                     else -> false
                 }
 
-                varA is String && varB is String -> when (operator) {
+                varA is String && varB is String -> when (operator.lowercase()) {
                     "==" -> varA == varB
-                    "!=" -> varA != varB
+
+                    "equals" -> varA == varB
+                    "contains" -> varA.contains(varB.toString())
+                    "startswith" -> varA.startsWith(varB.toString())
+                    "endswith" -> varA.endsWith(varB.toString())
+
+                    "equalsignorecase" -> varA.equals(varB.toString(), ignoreCase = true)
+                    "containsignorecase" -> varA.contains(varB.toString(), ignoreCase = true)
+                    "startswithignorecase" -> varA.startsWith(varB.toString(), ignoreCase = true)
+                    "endswithignorecase" -> varA.endsWith(varB.toString(), ignoreCase = true)
+
                     else -> false
                 }
 
