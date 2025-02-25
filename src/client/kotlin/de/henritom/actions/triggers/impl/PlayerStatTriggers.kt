@@ -20,6 +20,8 @@ class PlayerStatTriggers {
                 if (this.client == null)
                     this.client = client
 
+                onTick()
+
                 if (lastHealth != client.player?.health) {
                     onHealthChange()
                     lastHealth = client.player?.health
@@ -83,6 +85,14 @@ class PlayerStatTriggers {
             ActionManager.instance.actions.forEach { action ->
                 action.triggers.filter { it.type == TriggerEnum.LEVEL_UPDATE }.forEach { _ ->
                     client.player?.experienceLevel?.let { action.call(it) }
+                }
+            }
+        }
+
+        private fun onTick() {
+            ActionManager.instance.actions.forEach { action ->
+                action.triggers.filter { it.type == TriggerEnum.TICK }.forEach { _ ->
+                    action.call(0)
                 }
             }
         }

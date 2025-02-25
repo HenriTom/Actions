@@ -18,6 +18,7 @@ enum class TriggerEnum {
     REGION_ENTER,
     REGION_LEAVE,
     RESPAWN,
+    TICK,
     XP_UPDATE
 
 }
