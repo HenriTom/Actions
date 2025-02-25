@@ -18,6 +18,7 @@ object VariablesSetCommand {
                             .executes { context ->
                                 val name = StringArgumentType.getString(context, "name")
                                 val value = StringArgumentType.getString(context, "value")
+
                                 ActionsClient.localVariableStorage.setVariable(name, value)
 
                                 MessageUtil(null).printTranslatable("actions.variables.added", name, value)

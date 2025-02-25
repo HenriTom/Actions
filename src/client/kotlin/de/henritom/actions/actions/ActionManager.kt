@@ -71,16 +71,16 @@ class ActionManager {
                             return@Thread
 
                         when (task.type) {
-                            TaskEnum.COMMAND -> messageUtil.sendCommand(task.value.toString())
+                            TaskEnum.COMMAND -> messageUtil.sendCommandByAction(task.value.toString())
                             TaskEnum.COMMENT -> {}
-                            TaskEnum.CONSOLE -> messageUtil.printConsole(task.value.toString(), actionScheduler)
+                            TaskEnum.CONSOLE -> messageUtil.printConsoleByAction(task.value.toString(), actionScheduler)
                             TaskEnum.END -> actionScheduler.end()
                             TaskEnum.IF -> ConditionHelper.checkIf(task.value.toString()).let { if (!it) index++ }
-                            TaskEnum.JUMP -> index = (task.value.toString().toIntOrNull()?.takeIf { it in tasks.indices }?.minus(1) ?: index) - 1
+                            TaskEnum.JUMP_TASK -> index = (task.value.toString().toIntOrNull()?.takeIf { it in tasks.indices }?.minus(1) ?: index) - 1
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
-                            TaskEnum.PRINT -> messageUtil.printChat(task.value.toString())
-                            TaskEnum.SAY -> messageUtil.sayChat(task.value.toString())
+                            TaskEnum.PRINT -> messageUtil.printChatByAction(task.value.toString())
+                            TaskEnum.SAY -> messageUtil.sayChatByAction(task.value.toString())
                             TaskEnum.SET_SLOT -> PlayerUtil.setHotbarSlot(task.value.toString().toIntOrNull() ?: 10)
                             TaskEnum.SOUND -> SoundUtil.playSound(task.value.toString())
                             TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())

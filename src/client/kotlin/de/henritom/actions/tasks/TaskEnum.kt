@@ -7,7 +7,7 @@ enum class TaskEnum {
     CONSOLE,
     END,
     IF,
-    JUMP,
+    JUMP_TASK,
     MINE,
     MOVE,
     PRINT,

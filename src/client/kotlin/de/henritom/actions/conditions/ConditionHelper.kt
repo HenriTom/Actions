@@ -35,16 +35,19 @@ class ConditionHelper {
                     "<=" -> varA <= varB
                     ">=" -> varA >= varB
                     "==" -> varA == varB
+                    "=" -> varA == varB
                     else -> false
                 }
 
                 varA is Boolean && varB is Boolean -> when (operator.lowercase()) {
                     "==" -> varA == varB
+                    "=" -> varA == varB
                     else -> false
                 }
 
                 varA is String && varB is String -> when (operator.lowercase()) {
                     "==" -> varA == varB
+                    "=" -> varA == varB
 
                     "equals" -> varA == varB
                     "contains" -> varA.contains(varB.toString())

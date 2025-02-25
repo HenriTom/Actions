@@ -1,6 +1,8 @@
 package de.henritom.actions.variables
 
 import net.minecraft.client.MinecraftClient
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.sqrt
 
 class GlobalVariableStorage {
@@ -17,7 +19,6 @@ class GlobalVariableStorage {
 
     fun update(): GlobalVariableStorage {
         val client = MinecraftClient.getInstance()
-        variables.clear()
 
         // Boolean
         variables["true"] = true
@@ -97,6 +98,11 @@ class GlobalVariableStorage {
         variables["world_dimension_details"] = client.world?.dimension ?: "Unknown"
 
         variables["world_time"] = client.world?.time ?: "Unknown"
+        variables["world_time_string"] = client.world?.timeOfDay?.let { "%02d:%02d".format(((it / 1000) + 6) % 24, (it / 50) * 3 % 60) } ?: "Unknown"
+        variables["world_time_day"] = client.world?.timeOfDay?.div(24000) ?: "Unknown"
+        variables["world_time_hour"] = (client.world?.timeOfDay?.div(1000)?.plus(6))?.rem(24) ?: "Unknown"
+        variables["world_time_minute"] = client.world?.timeOfDay?.div(50)?.times(3)?.rem(60) ?: "Unknown"
+
         variables["world_rain"] = client.world?.isRaining ?: "Unknown"
         variables["world_thunder"] = client.world?.isThundering ?: "Unknown"
 
@@ -115,6 +121,18 @@ class GlobalVariableStorage {
         variables["window_width"] = client.window?.width ?: "Unknown"
         variables["window_height"] = client.window?.height ?: "Unknown"
         variables["window_fullscreen"] = client.window?.isFullscreen ?: "Unknown"
+
+        // Time
+        variables["time_millis"] = System.currentTimeMillis()
+        variables["time_nanos"] = System.nanoTime()
+
+        variables["time_date"] = SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date())
+        variables["time_date_year"] = SimpleDateFormat("yyyy").format(Date())
+        variables["time_date_month"] = SimpleDateFormat("MM").format(Date())
+        variables["time_date_day"] = SimpleDateFormat("dd").format(Date())
+        variables["time_date_hour"] = SimpleDateFormat("HH").format(Date())
+        variables["time_date_minute"] = SimpleDateFormat("mm").format(Date())
+        variables["time_date_second"] = SimpleDateFormat("ss").format(Date())
 
         return this
     }
