@@ -17,4 +17,9 @@ class LocalVariableStorage {
     fun getVariable(name: String): Any? {
         return variables[name]
     }
+
+    fun incrementVariable(name: String, value: Double) {
+        val variable = getVariable(name).toString().toDoubleOrNull() ?: 0.0
+        setVariable(name, variable + value)
+    }
 }

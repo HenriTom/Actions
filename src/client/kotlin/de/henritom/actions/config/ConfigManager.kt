@@ -2,6 +2,7 @@ package de.henritom.actions.config
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import de.henritom.actions.ActionsClient
 import de.henritom.actions.actions.Action
 import de.henritom.actions.actions.ActionEditManager
 import de.henritom.actions.actions.ActionManager
@@ -282,5 +283,37 @@ class ConfigManager {
     fun reloadRegions() {
         RegionManager.instance.regions.clear()
         loadRegions()
+    }
+
+    fun saveLocalVariables() {
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val configDir = FabricLoader.getInstance().configDir.toFile()
+        val localVariablesFile = configDir.resolve("actions/local_variables.json")
+
+        if (!localVariablesFile.parentFile.exists())
+            localVariablesFile.parentFile.mkdirs()
+
+        if (!localVariablesFile.exists())
+            localVariablesFile.createNewFile()
+
+        val data = mapOf(
+            "variables" to ActionsClient.localVariableStorage.variables
+        )
+
+        localVariablesFile.writeText(gson.toJson(data))
+    }
+
+    fun loadLocalVariables() {
+        val configDir = FabricLoader.getInstance().configDir.toFile()
+        val localVariablesFile = configDir.resolve("actions/local_variables.json")
+
+        if (!localVariablesFile.exists() || localVariablesFile.isDirectory)
+            return
+
+        val data = Gson().fromJson(localVariablesFile.readText(), Map::class.java) as Map<*, *>
+        val variables = data["variables"] as? Map<String, Any> ?: emptyMap()
+
+        ActionsClient.localVariableStorage.variables.clear()
+        ActionsClient.localVariableStorage.variables.putAll(variables)
     }
 }

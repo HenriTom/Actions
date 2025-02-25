@@ -84,8 +84,9 @@ class ActionManager {
                             TaskEnum.SET_SLOT -> PlayerUtil.setHotbarSlot(task.value.toString().toIntOrNull() ?: 10)
                             TaskEnum.SOUND -> SoundUtil.playSound(task.value.toString())
                             TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
-                            TaskEnum.VARIABLE_SET -> ActionsClient.localVariableStorage.setVariable(task.value.toString().split(" ")[0].ifEmpty { "null" }, if (task.value.toString().split(" ").size < 2) "null" else task.value.toString().split(" ")[1])
+                            TaskEnum.VARIABLE_INCREMENT -> ActionsClient.localVariableStorage.incrementVariable(task.value.toString().split(" ")[0].ifEmpty { "null" }, if (task.value.toString().split(" ").size < 2) 0.0 else task.value.toString().split(" ")[1].toDoubleOrNull() ?: 0.0)
                             TaskEnum.VARIABLE_REMOVE -> ActionsClient.localVariableStorage.removeVariable(task.value.toString())
+                            TaskEnum.VARIABLE_SET -> ActionsClient.localVariableStorage.setVariable(task.value.toString().split(" ")[0].ifEmpty { "null" }, if (task.value.toString().split(" ").size < 2) "null" else task.value.toString().split(" ")[1])
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
                         }
 

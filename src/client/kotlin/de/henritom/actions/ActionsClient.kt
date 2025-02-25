@@ -29,11 +29,13 @@ object ActionsClient : ClientModInitializer {
 			configManager.saveConfig()
 			configManager.saveAllActions()
 			configManager.saveRegions()
+			configManager.saveLocalVariables()
 		})
 
 		configManager.loadConfig()
 		configManager.loadActions()
 		configManager.loadRegions()
+		configManager.loadLocalVariables()
 
 		KeyBindUtil().registerKeyBinds()
 	}
