@@ -113,7 +113,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                     if (newAction != null) {
                         messageUtil.printTranslatable("actions.ui.edit.changed_name", name)
                         MinecraftClient.getInstance().setScreen(this.asAction(newAction))
-                        return@builder;
+                        return@builder
                     }
                 }
 
@@ -209,7 +209,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 ActionEditManager.instance.removeAuthor(action!!)
                 messageUtil.printTranslatable("actions.ui.edit.cleared_author")
                 MinecraftClient.getInstance().setScreen(this.asAction(action!!))
-                return@builder;
+                return@builder
             }
                 .dimensions(
                     textRenderer.getWidth(Text.literal(action!!.author)) + 8,

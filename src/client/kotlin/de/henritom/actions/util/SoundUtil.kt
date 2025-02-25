@@ -2,7 +2,6 @@ package de.henritom.actions.util
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.registry.Registries
-import net.minecraft.sound.SoundCategory
 import net.minecraft.util.Identifier
 
 class SoundUtil {
