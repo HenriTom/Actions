@@ -1,5 +1,6 @@
 package de.henritom.actions.actions
 
+import de.henritom.actions.ActionsClient
 import de.henritom.actions.conditions.ConditionHelper
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.motion.MoveEnum
@@ -83,6 +84,8 @@ class ActionManager {
                             TaskEnum.SET_SLOT -> PlayerUtil.setHotbarSlot(task.value.toString().toIntOrNull() ?: 10)
                             TaskEnum.SOUND -> SoundUtil.playSound(task.value.toString())
                             TaskEnum.USE -> MoveManager().setUse(task.value.toString().toBoolean())
+                            TaskEnum.VARIABLE_SET -> ActionsClient.localVariableStorage.setVariable(task.value.toString().split(" ")[0].ifEmpty { "null" }, if (task.value.toString().split(" ").size < 2) "null" else task.value.toString().split(" ")[1])
+                            TaskEnum.VARIABLE_REMOVE -> ActionsClient.localVariableStorage.removeVariable(task.value.toString())
                             TaskEnum.WAIT -> sleep(task.value.toString().toLongOrNull() ?: 0)
                         }
 

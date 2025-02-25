@@ -4,7 +4,7 @@ class LocalVariableStorage {
 
     val variables = mutableMapOf<String, Any>()
 
-    fun addVariable(name: String, value: Any) {
+    fun setVariable(name: String, value: Any) {
         variables[name] = value
     }
 

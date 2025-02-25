@@ -1,4 +1,4 @@
-package de.henritom.actions.commands.impl.variables.add
+package de.henritom.actions.commands.impl.variables.set
 
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
@@ -7,10 +7,10 @@ import de.henritom.actions.util.MessageUtil
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 
-object VariablesAddCommand {
+object VariablesSetCommand {
 
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
-        return ClientCommandManager.literal("add")
+        return ClientCommandManager.literal("set")
             .then(
                 ClientCommandManager.argument("name", StringArgumentType.string())
                     .then(
@@ -18,7 +18,7 @@ object VariablesAddCommand {
                             .executes { context ->
                                 val name = StringArgumentType.getString(context, "name")
                                 val value = StringArgumentType.getString(context, "value")
-                                ActionsClient.localVariableStorage.addVariable(name, value)
+                                ActionsClient.localVariableStorage.setVariable(name, value)
 
                                 MessageUtil(null).printTranslatable("actions.variables.added", name, value)
 

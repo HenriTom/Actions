@@ -15,6 +15,8 @@ enum class TaskEnum {
     SET_SLOT,
     SOUND,
     USE,
+    VARIABLE_SET,
+    VARIABLE_REMOVE,
     WAIT
 
 }

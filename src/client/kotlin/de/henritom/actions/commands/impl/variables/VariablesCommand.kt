@@ -1,7 +1,7 @@
 package de.henritom.actions.commands.impl.variables
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
-import de.henritom.actions.commands.impl.variables.add.VariablesAddCommand
+import de.henritom.actions.commands.impl.variables.set.VariablesSetCommand
 import de.henritom.actions.commands.impl.variables.globallist.VariablesGlobalListCommand
 import de.henritom.actions.commands.impl.variables.list.VariablesListCommand
 import de.henritom.actions.commands.impl.variables.remove.VariablesRemoveCommand
@@ -12,7 +12,7 @@ object VariablesCommand {
 
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("variables")
-            .then(VariablesAddCommand.register())
+            .then(VariablesSetCommand.register())
             .then(VariablesGlobalListCommand.register())
             .then(VariablesListCommand.register())
             .then(VariablesRemoveCommand.register())
