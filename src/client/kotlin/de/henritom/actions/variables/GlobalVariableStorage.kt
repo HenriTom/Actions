@@ -115,7 +115,7 @@ class GlobalVariableStorage {
         variables["player_in_lava"] = client.player?.isInLava ?: "Unknown"
         variables["player_in_rain"] = client.player?.isWet ?: "Unknown"
 
-        client.player?.statusEffects?.map { it.effectType.type.name } ?: "None"
+        variables["player_effects"] = client.player?.statusEffects?.map { it.effectType.key.get().value.toString() } ?: "None"
 
         variables["player_main_hand"] = client.player?.mainHandStack ?: "Unknown"
         variables["player_off_hand"] = client.player?.offHandStack ?: "Unknown"

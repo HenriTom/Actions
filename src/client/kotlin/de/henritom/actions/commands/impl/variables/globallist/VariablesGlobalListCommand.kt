@@ -25,7 +25,7 @@ object VariablesGlobalListCommand {
                     messageUtil.printTranslatable("actions.variables.list.global.page", page.toString(), maxPage.toString())
 
                     if (page > maxPage) {
-                        messageUtil.printTranslatable("actions.variables.list.page_not_found", maxPage.toString())
+                        messageUtil.printTranslatable("actions.variables.list.page_not_found", page.toString())
                         return@executes Command.SINGLE_SUCCESS
                     }
 

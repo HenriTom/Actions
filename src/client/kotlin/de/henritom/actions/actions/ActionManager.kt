@@ -8,6 +8,7 @@ import de.henritom.actions.motion.MoveManager
 import de.henritom.actions.scheduler.ActionScheduler
 import de.henritom.actions.tasks.TaskEnum
 import de.henritom.actions.triggers.TriggerEnum
+import de.henritom.actions.util.KeyBindUtil
 import de.henritom.actions.util.MessageUtil
 import de.henritom.actions.util.PlayerUtil
 import de.henritom.actions.util.SoundUtil
@@ -77,6 +78,9 @@ class ActionManager {
                             TaskEnum.END -> actionScheduler.end()
                             TaskEnum.IF -> ConditionHelper.checkIf(task.value.toString()).let { if (!it) index++ }
                             TaskEnum.JUMP_TASK -> index = (task.value.toString().toIntOrNull()?.takeIf { it in tasks.indices }?.minus(1) ?: index) - 1
+                            TaskEnum.KEY_CLICK -> KeyBindUtil().simulateKeyClick(task.value.toString().split(" ")[0], if (task.value.toString().split(" ").size < 2) 0 else task.value.toString().split(" ")[1].toLongOrNull() ?: 0)
+                            TaskEnum.KEY_PRESS -> KeyBindUtil().simulateKeyPress(task.value.toString())
+                            TaskEnum.KEY_RELEASE -> KeyBindUtil().simulateKeyRelease(task.value.toString())
                             TaskEnum.MINE -> MoveManager().setMining(task.value.toString().toBoolean())
                             TaskEnum.MOVE -> MoveManager().setMovement(MoveEnum.valueOf(task.value.toString()))
                             TaskEnum.PRINT -> messageUtil.printChatByAction(task.value.toString())

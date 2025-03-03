@@ -3,6 +3,7 @@ package de.henritom.actions.util
 import de.henritom.actions.ui.impl.MainScreen
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import org.lwjgl.glfw.GLFW
@@ -35,5 +36,19 @@ class KeyBindUtil {
             if (openGUI.wasPressed())
                 client.setScreen(MainScreen(null))
         }
+    }
+
+    fun simulateKeyPress(s: String) {
+        MinecraftClient.getInstance().keyboard.onKey(MinecraftClient.getInstance().window.handle, getKeyCodeByString(s), 0, GLFW.GLFW_PRESS, 0)
+    }
+
+    fun simulateKeyRelease(s: String) {
+        MinecraftClient.getInstance().keyboard.onKey(MinecraftClient.getInstance().window.handle, getKeyCodeByString(s), 0, GLFW.GLFW_RELEASE, 0)
+    }
+
+    fun simulateKeyClick(s: String, delay: Long) {
+        simulateKeyPress(s)
+        Thread.sleep(delay)
+        simulateKeyRelease(s)
     }
 }
