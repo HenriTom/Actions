@@ -8,6 +8,10 @@
   "actions.action.start_with_letter": "§8» §7Name must start with a letter.",
   "actions.action.min_length": "§8» §7Name must be between 3 and 16 characters.",
 
+  "actions.action.shared": "§8» §7Action §f'%s'§7 shared with code §f'%s'§7.",
+  "actions.action.downloaded": "§8» §7Action §f'%s'§7 downloaded from ShareId §f'%s'§7.",
+  "actions.shareid.not_found": "§8» §7ShareId §f'%s'§7 not found.",
+
   "actions.action.info.title": "§8» §7Action Info§8:",
   "actions.action.info.name": "§8» §7Name§8: §f'%s'§7",
   "actions.action.info.id": "§8» §7Id§8: §f'%s'§7",
@@ -131,7 +135,10 @@
 
   "actions.ui.editregion.update": "Update",
 
-  "actions.ui.sharing.text": "Action Sharing is currently under development.",
+  "actions.ui.sharing.text": "Action Sharing is currently only available as command ('/actions share').",
+  "actions.ui.sharing.status": "The API is currently %s§r.",
+  "actions.ui.sharing.status.online": "§a§lONLINE",
+  "actions.ui.sharing.status.offline": "§c§lOFFLINE",
 
   "actions.ui.create.name": "Name:",
   "actions.ui.create.id": "Preferred Id:",

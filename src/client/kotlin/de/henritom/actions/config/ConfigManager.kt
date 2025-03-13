@@ -160,6 +160,16 @@ class ConfigManager {
         logger.info("Saved all actions!")
     }
 
+    fun copyFileToFolder(file: File, fileName: String) {
+        val configDir = FabricLoader.getInstance().configDir.toFile()
+        val actionsDir = configDir.resolve("actions/actions")
+
+        if (!actionsDir.exists())
+            actionsDir.mkdirs()
+
+        file.copyTo(actionsDir.resolve(fileName), true)
+    }
+
     fun reloadActions() {
         ActionManager.instance.actions.clear()
         loadActions()

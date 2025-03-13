@@ -1,5 +1,6 @@
 package de.henritom.actions.ui.impl
 
+import de.henritom.actions.ActionsClient
 import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
@@ -14,6 +15,13 @@ import kotlin.io.path.deleteExisting
 import kotlin.io.path.exists
 
 class SharingScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.sharing.title")) {
+
+    private var status: Text = Text.translatable("actions.ui.sharing.status.offline")
+
+    override fun init() {
+        status = Text.translatable(ActionsClient.sharingAPI?.getStatus() ?: "actions.ui.sharing.status.offline")
+        super.init()
+    }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)
@@ -52,9 +60,18 @@ class SharingScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.
         // Mid
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.sharing.text", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
+            Text.translatable("actions.ui.sharing.text"),
             width / 2 - textRenderer.getWidth(Text.translatable("actions.ui.sharing.text")) / 2,
-            height / 2 - textRenderer.fontHeight / 2,
+            (height / 2 - textRenderer.fontHeight / 2) - 10,
+            UIColors.BLUE.color.rgb,
+            true
+        )
+
+        context.drawText(
+            textRenderer,
+            Text.translatable("actions.ui.sharing.status", status),
+            width / 2 - textRenderer.getWidth(Text.translatable("actions.ui.sharing.status", status)) / 2,
+            (height / 2 - textRenderer.fontHeight / 2) + 10,
             UIColors.BLUE.color.rgb,
             true
         )
