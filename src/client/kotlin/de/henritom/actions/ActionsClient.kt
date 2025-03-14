@@ -32,8 +32,6 @@ object ActionsClient : ClientModInitializer {
 		sharingAPI = SharingAPI("http://api.henritom.me:8080/actions")
 
 		Runtime.getRuntime().addShutdownHook(Thread {
-			sharingAPI?.shutdown()
-
 			configManager.saveConfig()
 			configManager.saveAllActions()
 			configManager.saveRegions()
