@@ -5,7 +5,6 @@ import de.henritom.actions.triggers.TriggerEnum
 import de.henritom.actions.triggers.settings.InvUpdateEnum
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.item.Item
-import java.util.*
 
 class InvUpdateTrigger {
 
@@ -14,7 +13,7 @@ class InvUpdateTrigger {
 
         fun reg() {
             ClientTickEvents.END_CLIENT_TICK.register { client ->
-                val inv = (client.player ?: return@register).inventory.main
+                val inv = (client.player ?: return@register).inventory
                     .groupingBy { it.item }
                     .fold(0) { sum, stack -> sum + stack.count }
 

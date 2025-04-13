@@ -6,6 +6,7 @@ import de.henritom.actions.scheduler.ActionScheduler
 import net.minecraft.client.MinecraftClient
 import net.minecraft.text.ClickEvent
 import net.minecraft.text.Text
+import java.net.URI
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -29,15 +30,15 @@ class MessageUtil(var action: Action?) {
     }
 
     fun printTranslatableClickable(key: String, urlString: String, vararg vars: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.translatable(key, *vars.map { Text.literal(it) }.toTypedArray()).styled { style -> style.withClickEvent(ClickEvent(ClickEvent.Action.OPEN_URL, urlString)) })
+        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.translatable(key, *vars.map { Text.literal(it) }.toTypedArray()).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
     }
 
     fun printTranslatableClickable(message: String, urlString: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.translatable(message).styled { style -> style.withClickEvent(ClickEvent(ClickEvent.Action.OPEN_URL, urlString)) })
+        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.translatable(message).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
     }
 
     fun printClickable(message: String, urlString: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.literal(message).styled { style -> style.withClickEvent(ClickEvent(ClickEvent.Action.OPEN_URL, urlString)) })
+        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.literal(message).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
     }
 
     fun sendCommand(command: String) {

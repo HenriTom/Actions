@@ -4,7 +4,6 @@ import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.ui.GlobalUI
 import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
-import de.henritom.actions.util.RenderUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
@@ -67,13 +66,7 @@ class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ot
             if (hover1) UIColors.BLUE.color.darker().rgb else UIColors.BLUE.color.darker().darker().rgb
         )
 
-        RenderUtil.drawIcon(
-            context, "sharing_white",
-            12 + (width / 3 - 16 - minOf(width / 3 - 16, (textRenderer.fontHeight * 5 - 16) * 2473 / 470)) / 2,
-            4 + textRenderer.fontHeight * 3 + 8 + (textRenderer.fontHeight * 5 - 16 - minOf(textRenderer.fontHeight * 5 - 16, (width / 3 - 16) * 470 / 2473)) / 2,
-            minOf(width / 3 - 16, (textRenderer.fontHeight * 5 - 16) * 2473 / 470) - 4,
-            minOf(textRenderer.fontHeight * 5 - 16, (width / 3 - 16) * 470 / 2473)
-        )
+        context.drawTextWithShadow(textRenderer, Text.translatable("actions.ui.sharing.title"), 16, 12 + textRenderer.fontHeight * 3, UIColors.WHITE.color.rgb)
 
         // Button 2 (Discord)
         val hover2 = mouseX in (width / 3 + 4)..(width / 3 + 4 + width / 3 - 8) && mouseY in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8)
@@ -84,13 +77,7 @@ class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ot
             if (hover2) UIColors.DISCORD_BLURPLE.color.brighter().rgb else UIColors.DISCORD_BLURPLE.color.darker().rgb
         )
 
-        RenderUtil.drawIcon(
-            context, "discord_white",
-            width / 3 + 8 + (width / 3 - 16 - minOf(width / 3 - 16, (textRenderer.fontHeight * 5 - 16) * 2473 / 470)) / 2,
-            4 + textRenderer.fontHeight * 3 + 8 + (textRenderer.fontHeight * 5 - 16 - minOf(textRenderer.fontHeight * 5 - 16, (width / 3 - 16) * 470 / 2473)) / 2,
-            minOf(width / 3 - 16, (textRenderer.fontHeight * 5 - 16) * 2473 / 470),
-            minOf(textRenderer.fontHeight * 5 - 16, (width / 3 - 16) * 470 / 2473)
-        )
+        context.drawTextWithShadow(textRenderer, Text.translatable("actions.ui.discord.title"), width / 3 + 12, 12 + textRenderer.fontHeight * 3, UIColors.WHITE.color.rgb)
 
         // Button 3 (Settings)
         val hover3 = mouseX in (width / 3 + 4 + width / 3 + 4 - 4)..(width / 3 - 4 + width / 3 - 4 + width / 3) && mouseY in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8)
@@ -103,13 +90,7 @@ class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ot
             if (hover3) UIColors.PURPLE.color.brighter().rgb else UIColors.PURPLE.color.darker().rgb
         )
 
-        RenderUtil.drawIcon(
-            context, "settings_white",
-            ((2 * width / 3) + 4 + (width / 3 - 16 - minOf(width / 3 - 16, (textRenderer.fontHeight * 5 - 16) * 2473 / 470)) / 2) + 4,
-            4 + textRenderer.fontHeight * 3 + 8 + (textRenderer.fontHeight * 5 - 16 - minOf(textRenderer.fontHeight * 5 - 16, (width / 3 - 16) * 470 / 2473)) / 2,
-            minOf(width / 3 - 16, (textRenderer.fontHeight * 5 - 16) * 2473 / 470) - 4,
-            minOf(textRenderer.fontHeight * 5 - 16, (width / 3 - 16) * 470 / 2473)
-        )
+        context.drawTextWithShadow(textRenderer, Text.translatable("actions.ui.settings.title"), width / 3 + 4 + width / 3 + 8, 12 + textRenderer.fontHeight * 3, UIColors.WHITE.color.rgb)
 
         // List
         // Button 1 (Regions)
