@@ -1,6 +1,7 @@
 package de.henritom.actions.variables
 
 import net.minecraft.client.MinecraftClient
+import net.minecraft.entity.EquipmentSlot
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.sqrt
@@ -113,16 +114,16 @@ class GlobalVariableStorage {
         variables["player_in_fire"] = client.player?.isOnFire ?: "Unknown"
         variables["player_in_water"] = client.player?.isTouchingWater ?: "Unknown"
         variables["player_in_lava"] = client.player?.isInLava ?: "Unknown"
-        variables["player_in_rain"] = client.player?.isWet ?: "Unknown"
+        variables["player_in_rain"] = (client.player?.isTouchingWaterOrRain == true && client.player?.isTouchingWater != true)
 
         variables["player_effects"] = client.player?.statusEffects?.map { it.effectType.key.get().value.toString() } ?: "None"
 
         variables["player_main_hand"] = client.player?.mainHandStack ?: "Unknown"
         variables["player_off_hand"] = client.player?.offHandStack ?: "Unknown"
-        variables["player_helmet"] = client.player?.inventory?.armor?.get(3) ?: "Unknown"
-        variables["player_chestplate"] = client.player?.inventory?.armor?.get(2) ?: "Unknown"
-        variables["player_leggings"] = client.player?.inventory?.armor?.get(1) ?: "Unknown"
-        variables["player_boots"] = client.player?.inventory?.armor?.get(0) ?: "Unknown"
+        variables["player_helmet"] = client.player?.getEquippedStack(EquipmentSlot.HEAD) ?: "Unknown"
+        variables["player_chestplate"] = client.player?.getEquippedStack(EquipmentSlot.CHEST) ?: "Unknown"
+        variables["player_leggings"] = client.player?.getEquippedStack(EquipmentSlot.LEGS) ?: "Unknown"
+        variables["player_boots"] = client.player?.getEquippedStack(EquipmentSlot.FEET) ?: "Unknown"
 
         variables["player_light_level"] = client.world?.getLightLevel(client.player?.blockPos) ?: "Unknown"
         variables["player_block"] = client.world?.getBlockState(client.player?.blockPos)?.block?.name?.string ?: "Unknown"
