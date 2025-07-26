@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "me.henritom.actionsv2.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ExampleClientMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
