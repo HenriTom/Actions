@@ -1,0 +1,9 @@
+{
+  "actions.commands.debug.forcetrigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
+  "actions.commands.file.save.all.success": "§8» §f§lActions §8┃ §7Saved all changed actions",
+  "actions.commands.file.save.all_unchanged.success": "§8» §f§lActions §8┃ §7Saved all actions",
+  "actions.commands.file.load.all.success": "§8» §f§lActions §8┃ §7Loaded all unique actions",
+  "actions.commands.file.load.all_duplicates.success": "§8» §f§lActions §8┃ §7Loaded all actions",
+  "actions.commands.list.title": "§8» §7Actions (%s§7):",
+  "actions.commands.list.it": "§8» %s§8[%s§8]"
+}

@@ -1,9 +1,9 @@
 package me.henritom.actionsv2.axn.task.impl
 
-import TimeUtil
 import kotlinx.coroutines.delay
 import me.henritom.actionsv2.axn.AxnContext
 import me.henritom.actionsv2.axn.task.AxnTask
+import me.henritom.actionsv2.util.TimeUtil
 
 class WaitTask: AxnTask("wait") {
 

@@ -2,6 +2,7 @@ package me.henritom.actionsv2
 
 import me.henritom.actionsv2.axn.task.TaskRegistry
 import me.henritom.actionsv2.axn.trigger.TriggerRegistry
+import me.henritom.actionsv2.command.ActionsCommand
 import me.henritom.actionsv2.loader.ActionsLoader
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents
@@ -11,13 +12,12 @@ object ActionsV2Client : ClientModInitializer {
 		TaskRegistry.initTypes()
 		TriggerRegistry.initTypes()
 
-		val loader = ActionsLoader()
-		loader.loadAll()
+		ActionsCommand.register()
+
+		ActionsLoader.loadAll()
 
 		ClientLifecycleEvents.CLIENT_STOPPING.register {
-			loader.saveAll()
+			ActionsLoader.saveAll()
 		}
-
-		TriggerRegistry.triggerAll("test_trigger")
 	}
 }

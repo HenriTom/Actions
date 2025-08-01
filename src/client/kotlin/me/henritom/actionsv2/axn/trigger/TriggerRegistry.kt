@@ -1,7 +1,7 @@
 package me.henritom.actionsv2.axn.trigger
 
 object TriggerRegistry {
-    private val registeredTriggers: MutableMap<String, AxnTrigger> = mutableMapOf()
+    private val registeredTriggers: MutableMap<AxnTrigger, String> = mutableMapOf()
     private val registeredTriggerTypes: MutableSet<TriggerType> = mutableSetOf()
 
     fun initTypes() {
@@ -79,17 +79,17 @@ object TriggerRegistry {
     }
 
     fun registerTrigger(trigger: AxnTrigger): Boolean {
-        if (registeredTriggers.containsValue(trigger))
+        if (registeredTriggers.containsKey(trigger))
             return false
 
-        registeredTriggers.put(trigger.type, trigger)
+        registeredTriggers.put(trigger, trigger.type)
 
         return true
     }
 
-    fun triggerAll(type: String) {
-        for (registeredTrigger in registeredTriggers.values)
-            if (registeredTrigger.type == type)
-                registeredTrigger.trigger()
+    fun triggerAll(triggerType: String) {
+        for ((trigger, type) in registeredTriggers)
+            if (triggerType == type)
+                trigger.trigger()
     }
 }

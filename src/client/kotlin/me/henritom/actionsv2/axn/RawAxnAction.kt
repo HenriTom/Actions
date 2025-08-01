@@ -13,7 +13,7 @@ data class RawAxnAction(
     val disabled: Boolean,
 
     val name: String,
-    val id: String,
+    var id: String,
     val version: String,
     val author: String,
     val description: String,

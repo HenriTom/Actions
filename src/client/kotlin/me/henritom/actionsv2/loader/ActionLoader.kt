@@ -18,12 +18,12 @@ private val logger = LogManager.getLogger("Actions/Loader")
 private val axnDir = Paths.get(FabricLoader.getInstance().configDir.toString(), "actionsv2", "actions")
 
 // Loads Actions eXtended Notation (.axn) files as Actions
-class ActionsLoader {
+object ActionsLoader {
 
     private var processed = 0
     private var failed = 0
 
-    fun loadAll() {
+    fun loadAll(skipDuplicates: Boolean = true) {
         processed = 0
         failed = 0
 
@@ -42,7 +42,7 @@ class ActionsLoader {
                             logger.warn("Unsupported environment: ${rawAxnAction.environment} at ${rawAxnAction.id}")
 
                         when (rawAxnAction.loaderVersion) {
-                            1 -> loadV1(rawAxnAction)
+                            1 -> loadV1(rawAxnAction, skipDuplicates)
                             else -> logger.error("Unknown Loader version: ${rawAxnAction.loaderVersion} at ${rawAxnAction.id}")
                         }
                     }
@@ -56,10 +56,23 @@ class ActionsLoader {
         logger.info("Loaded $processed/${processed + failed} actions from $axnDir")
     }
 
-    fun loadV1(rawAxnAction: RawAxnAction) {
+    fun loadV1(rawAxnAction: RawAxnAction, skipDuplicate: Boolean) {
         val action = rawAxnAction.toAxnAction()
 
-        ActionManager.loadedActions.add(action)
+        if (ActionManager.loadedActions.contains(action.id)) {
+            if (skipDuplicate) {
+                logger.warn("Action with ID ${action.id} already exists, skipping")
+                return
+            }
+
+            logger.warn("Action with ID ${action.id} already exists, appending suffix")
+            rawAxnAction.id += "_${System.currentTimeMillis() % 1000}"
+
+            loadV1(rawAxnAction, false)
+            return
+        }
+
+        ActionManager.loadedActions.put(action.id, action)
 
         processed++
     }
@@ -68,7 +81,7 @@ class ActionsLoader {
         processed = 0
         failed = 0
 
-        for (action in ActionManager.loadedActions) {
+        for ((_, action) in ActionManager.loadedActions) {
             if (onlyChanged && !action.changed)
                 continue
 
