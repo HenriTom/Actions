@@ -51,7 +51,11 @@ object LocalVariableStorage {
         variables[name] = value
     }
 
-    fun getVariable(name: String): JsonPrimitive? {
-        return variables[name]
+    fun removeVariable(name: String) {
+        variables.remove(name)
+    }
+
+    fun getVariable(name: String): String? {
+        return variables[name]?.content
     }
 }
