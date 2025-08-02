@@ -1,5 +1,6 @@
 {
-  "actions.commands.debug.forcetrigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
+  "actions.commands.debug.time_convert.success": "§8» §f§lActions §8┃ §7Converted %s §7to %s",
+  "actions.commands.debug.force_trigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
 
   "actions.commands.file.save.all.success": "§8» §f§lActions §8┃ §7Saved all changed actions",
   "actions.commands.file.save.all_unchanged.success": "§8» §f§lActions §8┃ §7Saved all actions",
