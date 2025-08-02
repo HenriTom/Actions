@@ -1,9 +1,6 @@
 package me.henritom.actionsv2.command
 
-import me.henritom.actionsv2.command.impl.AboutCommand
-import me.henritom.actionsv2.command.impl.DebugCommand
-import me.henritom.actionsv2.command.impl.FileCommand
-import me.henritom.actionsv2.command.impl.ListCommand
+import me.henritom.actionsv2.command.impl.*
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 
@@ -16,6 +13,7 @@ object ActionsCommand {
                     .then(DebugCommand.register())
                     .then(FileCommand.register())
                     .then(ListCommand.register())
+                    .then(VariablesCommand.register())
             )
         }
     }

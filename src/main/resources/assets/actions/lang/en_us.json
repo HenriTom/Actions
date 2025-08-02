@@ -1,11 +1,18 @@
 {
   "actions.commands.debug.forcetrigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
+
   "actions.commands.file.save.all.success": "§8» §f§lActions §8┃ §7Saved all changed actions",
   "actions.commands.file.save.all_unchanged.success": "§8» §f§lActions §8┃ §7Saved all actions",
   "actions.commands.file.load.all.success": "§8» §f§lActions §8┃ §7Loaded all unique actions",
   "actions.commands.file.load.all_duplicates.success": "§8» §f§lActions §8┃ §7Loaded all actions",
+
+  "actions.commands.variables.title": "§8» §7Variables (%s§7):",
+  "actions.commands.variables.page": "§8» §7Page %s§8/%s",
+  "actions.commands.variables.page_not_found": "§8» §f§lActions §8┃ §7No variables found on page %s",
+
   "actions.commands.list.title": "§8» §7Actions (%s§7):",
   "actions.commands.list.it": "§8» %s§8[%s§8]",
+
   "actions.commands.about.not_found": "§8» §f§lActions §8┃ §7No action found with the id %s",
   "actions.commands.about.no_option": "§8» §f§lActions §8┃ §7Invalid option %s",
   "actions.commands.about.message": "§8§m                                \n§8» §7About %s§7\n§8» %s §7v%s\n§8» §7by %s\n§8» §7for %s §7v%s\n§8§m                                \n§8» §7Description:\n%s\n§8§m                                \n§8» §7Triggers: %s\n§8» §7Tasks: %s\n§8» §7Variables: %s\n§8§m                                \n§8» §7Changed: %s\n§8» §7Selected: %s\n§8» §7Hidden: %s\n§8» §7Disabled: %s\n§8§m                                ",
