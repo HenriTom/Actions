@@ -9,6 +9,7 @@
   "actions.commands.variables.title": "§8» §7Variables (%s§7):",
   "actions.commands.variables.page": "§8» §7Page %s§8/%s",
   "actions.commands.variables.page_not_found": "§8» §f§lActions §8┃ §7No variables found on page %s",
+  "actions.commands.variables.set": "§8» §f§lActions §8┃ §7Set variable %s to %s",
 
   "actions.commands.list.title": "§8» §7Actions (%s§7):",
   "actions.commands.list.it": "§8» %s§8[%s§8]",
