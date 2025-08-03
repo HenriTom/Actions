@@ -1,5 +1,6 @@
 package me.henritom.actionsv2
 
+import me.henritom.actionsv2.ace.SchemaBuilder
 import me.henritom.actionsv2.axn.task.TaskRegistry
 import me.henritom.actionsv2.axn.trigger.TriggerRegistry
 import me.henritom.actionsv2.command.ActionsCommand
@@ -24,5 +25,7 @@ object ActionsV2Client : ClientModInitializer {
 		ClientLifecycleEvents.CLIENT_STOPPING.register {
 			ActionsLoader.saveAll()
 		}
+
+		SchemaBuilder.build()
 	}
 }

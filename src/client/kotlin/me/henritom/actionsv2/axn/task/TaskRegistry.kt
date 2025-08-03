@@ -2,7 +2,7 @@ package me.henritom.actionsv2.axn.task
 
 object TaskRegistry {
     private val registeredTasks: MutableMap<String, AxnTask> = mutableMapOf()
-    private val registeredTaskTypes: MutableSet<TaskType> = mutableSetOf()
+    val registeredTaskTypes: MutableSet<TaskType> = mutableSetOf()
 
     fun initTypes() {
         TaskType("wait", "Waits for a specified amount of time before proceeding.",

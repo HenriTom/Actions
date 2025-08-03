@@ -2,7 +2,7 @@ package me.henritom.actionsv2.axn.trigger
 
 object TriggerRegistry {
     private val registeredTriggers: MutableMap<AxnTrigger, String> = mutableMapOf()
-    private val registeredTriggerTypes: MutableSet<TriggerType> = mutableSetOf()
+    val registeredTriggerTypes: MutableSet<TriggerType> = mutableSetOf()
 
     fun initTypes() {
         TriggerType("biome_update", "Triggers, when the biome is updated.",

@@ -1,6 +1,6 @@
 package me.henritom.actionsv2.axn.trigger
 
-class TriggerType(type: String, description: String, requiredData: List<TriggerSetting> = listOf()) {
+class TriggerType(val type: String, val description: String, val requiredData: List<TriggerSetting> = listOf()) {
     init {
         TriggerRegistry.registerTriggerType(this)
     }
