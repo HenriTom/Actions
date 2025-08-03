@@ -1,5 +1,6 @@
 package me.henritom.actionsv2.util
 
+import me.henritom.actionsv2.variables.VariableHelper
 import net.objecthunter.exp4j.ExpressionBuilder
 import org.apache.logging.log4j.LogManager
 
@@ -9,8 +10,7 @@ object CalcUtil {
 
     fun evaluateExpression(expression: String): Double? {
         return try {
-            val expression = ExpressionBuilder(expression).build()
-            expression.evaluate()
+            ExpressionBuilder(VariableHelper.replaceStr(expression)).build().evaluate()
         } catch (e: Exception) {
             logger.error("Failed to evaluate expression: $expression", e)
             null

@@ -4,7 +4,7 @@ import me.henritom.actionsv2.axn.AxnContext
 
 object VariableHelper {
 
-    fun replaceStr(str: String, context: AxnContext? = null): Any? {
+    fun replaceStr(str: String, context: AxnContext? = null): String {
         var new = str
 
         for (word in str.split(" "))
