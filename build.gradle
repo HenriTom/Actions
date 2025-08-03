@@ -20,6 +20,8 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 
+	gradlePluginPortal()
+
 	maven {
 		name = "Terraformers"
 		url = "https://maven.terraformersmc.com/"
@@ -49,7 +51,10 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
 	// ModMenu (https://github.com/TerraformersMC/ModMenu)
-	modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+	// modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+
+	// Exp4j (https://github.com/fasseg/exp4j/tree/master)
+	implementation 'net.objecthunter:exp4j:0.4.8'
 }
 
 processResources {
@@ -86,6 +91,13 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${inputs.properties.archivesName}"}
 	}
+
+	from("licenses") {
+		into("licenses")
+	}
+
+	dependsOn("includeExp4j")
+	from("$buildDir/intermediates/mergedExp4j")
 }
 
 // configure the maven publication
@@ -104,4 +116,26 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+
+tasks.named("remapJar") {
+	dependsOn(tasks.named("jar"))
+	inputFile.set(tasks.named("jar").get().archiveFile)
+	archiveClassifier.set("")
+}
+
+tasks.named("build") {
+	dependsOn(tasks.named("remapJar"))
+}
+
+tasks.register("includeExp4j", Copy) {
+	dependsOn configurations.runtimeClasspath
+
+	from {
+		configurations.runtimeClasspath.findAll {
+			it.name.contains("exp4j")
+		}.collect { zipTree(it) }
+	}
+
+	into("$buildDir/intermediates/mergedExp4j")
 }

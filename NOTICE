@@ -1,0 +1,7 @@
+Third-Party Libraries
+
+This project uses the library **exp4j** (https://github.com/fasseg/exp4j), which is licensed under the Apache License 2.0.
+
+The license file for exp4j is included in the 'licenses/APACHE-2.0.txt' directory.
+
+Please refer to that file for details regarding the permissions and limitations under the Apache License 2.0.
