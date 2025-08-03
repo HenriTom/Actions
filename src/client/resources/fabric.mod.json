@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "actions",
-	"version": "1.4.2",
-	"name": "Actions",
+	"id": "actions_legacy",
+	"version": "1.5.0",
+	"name": "Actions Legacy",
 	"description": "Allows you to create actions that do things for you in Minecraft.",
 	"authors": [
 		"HenriTom"

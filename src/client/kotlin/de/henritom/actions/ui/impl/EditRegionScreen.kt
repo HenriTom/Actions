@@ -83,7 +83,7 @@ class EditRegionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         // Version
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
+            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions_legacy").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
             UIColors.PURPLE.color.rgb,

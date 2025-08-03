@@ -7,8 +7,23 @@ class ConditionHelper {
         fun checkIf(condition: String): Boolean {
             val conditionParts = MessageUtil(null).translateVariables(condition).split(" ")
 
-            if (conditionParts.size != 3)
+            println("Checking condition: ")
+            for (conditionPart in conditionParts)
+                print("$conditionPart ")
+            println()
+
+            if (conditionParts.size != 3) {
+                if (conditionParts.size < 7)
+                    return false
+
+                if (conditionParts[3] == "&&" || conditionParts[3] == "and")
+                    return checkIf(conditionParts[0] + " " + conditionParts[1] + " " + conditionParts[2]) && checkIf(conditionParts[4] + " " + conditionParts[5] + " " + conditionParts[6])
+
+                if (conditionParts[3] == "||" || conditionParts[3] == "or")
+                    return checkIf(conditionParts[0] + " " + conditionParts[1] + " " + conditionParts[2]) || checkIf(conditionParts[4] + " " + conditionParts[5] + " " + conditionParts[6])
+
                 return false
+            }
 
             fun parseValue(value: String): Any = when {
                 value.equals("true", ignoreCase = true) -> true
@@ -50,14 +65,14 @@ class ConditionHelper {
                     "=" -> varA == varB
 
                     "equals" -> varA == varB
-                    "contains" -> varA.contains(varB.toString())
-                    "startswith" -> varA.startsWith(varB.toString())
-                    "endswith" -> varA.endsWith(varB.toString())
+                    "contains" -> varA.contains(varB)
+                    "startswith" -> varA.startsWith(varB)
+                    "endswith" -> varA.endsWith(varB)
 
-                    "equalsignorecase" -> varA.equals(varB.toString(), ignoreCase = true)
-                    "containsignorecase" -> varA.contains(varB.toString(), ignoreCase = true)
-                    "startswithignorecase" -> varA.startsWith(varB.toString(), ignoreCase = true)
-                    "endswithignorecase" -> varA.endsWith(varB.toString(), ignoreCase = true)
+                    "equalsignorecase" -> varA.equals(varB, ignoreCase = true)
+                    "containsignorecase" -> varA.contains(varB, ignoreCase = true)
+                    "startswithignorecase" -> varA.startsWith(varB, ignoreCase = true)
+                    "endswithignorecase" -> varA.endsWith(varB, ignoreCase = true)
 
                     else -> false
                 }
