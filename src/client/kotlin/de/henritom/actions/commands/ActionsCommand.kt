@@ -17,7 +17,7 @@ class ActionsCommand {
         fun register() {
             ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
                 dispatcher.register(
-                    ClientCommandManager.literal("actions")
+                    ClientCommandManager.literal("actions_legacy")
                         .then(ActionCommand.register())
                         .then(FileCommand.register())
                         .then(InfoCommand.register())

@@ -76,7 +76,7 @@ class AddRegionScreen(val parent: Screen?) : Screen(Text.translatable("actions.u
         // Version
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
+            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions_legacy").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
             UIColors.PURPLE.color.rgb,
@@ -319,7 +319,7 @@ class AddRegionScreen(val parent: Screen?) : Screen(Text.translatable("actions.u
                     MinecraftClient.getInstance().setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
                 }
 
-                return@builder;
+                return@builder
             }
                 .dimensions(
                     4,

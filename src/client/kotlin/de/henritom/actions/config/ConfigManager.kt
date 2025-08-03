@@ -22,7 +22,7 @@ import java.io.File
 
 class ConfigManager {
 
-    private val logger: Logger = LoggerFactory.getLogger("actions")
+    private val logger: Logger = LoggerFactory.getLogger("actions_legacy")
 
     fun saveConfig() {
         val gson = GsonBuilder().setPrettyPrinting().create()

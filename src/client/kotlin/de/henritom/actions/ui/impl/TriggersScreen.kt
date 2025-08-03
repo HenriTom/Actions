@@ -62,7 +62,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
         // Version
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
+            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions_legacy").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
             UIColors.YELLOW.color.rgb,
@@ -204,7 +204,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
                 MinecraftClient.getInstance().setScreen(AddTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asAction(action!!))
-                return@builder;
+                return@builder
             }
                 .dimensions(
                     width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth(

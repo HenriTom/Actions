@@ -82,7 +82,7 @@
   "actions.region.added": "§8» §7Region §f'%s'§7 added.",
   "actions.region.already_used": "§8» §7Name §f'%s'§7 already used.",
 
-  "actions.version": "§8» §7Actions v%s",
+  "actions.version": "§8» §7Actions Legacy v%s",
   "actions.wiki": "§8» §7Actions Wiki: §fhttps://github.com/HenriTom/Actions/wiki",
   "actions.discord": "§8» §7Actions Discord: §fhttps://discord.gg/XdHBJKTvxJ",
   "actions.modrinth": "§8» §7Actions Modrinth: §fhttps://modrinth.com/mod/actions",
@@ -99,7 +99,7 @@
   "actions.triggers.command.called": "§8» §7Action §f'%s'§7 called.",
   "actions.triggers.command.not_found": "§8» §7Command-Trigger §f'%s'§7 not found.",
 
-  "actions.ui.button": "Actions",
+  "actions.ui.button": "Actions Legacy",
 
   "actions.ui.main.title": "Actions GUI",
   "actions.ui.main.version": "v%s",
@@ -207,6 +207,6 @@
 
   "actions.ui.settings.add_options_screen": "Add an Actions button to the Options screen",
 
-  "actions.options.category": "Actions",
+  "actions.options.category": "Actions Legacy",
   "actions.options.open_gui": "Open GUI"
 }

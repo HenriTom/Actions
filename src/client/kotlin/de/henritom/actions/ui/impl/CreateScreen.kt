@@ -25,7 +25,7 @@ class CreateScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.c
     private var createButton: ButtonWidget? = null
     private var callTrigger = true
 
-    private var createText = "actions.ui.create.default";
+    private var createText = "actions.ui.create.default"
 
     override fun init() {
         super.init()
@@ -181,7 +181,7 @@ class CreateScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.c
         // Version
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
+            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions_legacy").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
             UIColors.BLUE.color.rgb,

@@ -63,7 +63,7 @@ class TasksScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ta
         // Version
         context.drawText(
             textRenderer,
-            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions").get().metadata.version.toString()),
+            Text.translatable("actions.ui.main.version", FabricLoader.getInstance().getModContainer("actions_legacy").get().metadata.version.toString()),
             4,
             4 + textRenderer.fontHeight,
             UIColors.YELLOW.color.rgb,
@@ -205,7 +205,7 @@ class TasksScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ta
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
                 MinecraftClient.getInstance().setScreen(AddTaskScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asAction(action!!))
-                return@builder;
+                return@builder
             }
                 .dimensions(
                     width - (textRenderer.getWidth(Text.translatable("actions.ui.triggers.add")) + textRenderer.getWidth(
