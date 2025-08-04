@@ -2,10 +2,21 @@
   "actions.commands.debug.time_convert.success": "§8» §f§lActions §8┃ §7Converted %s §7to %s",
   "actions.commands.debug.force_trigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
 
-  "actions.commands.file.save.all.success": "§8» §f§lActions §8┃ §7Saved all changed actions",
-  "actions.commands.file.save.all_unchanged.success": "§8» §f§lActions §8┃ §7Saved all actions",
-  "actions.commands.file.load.all.success": "§8» §f§lActions §8┃ §7Loaded all unique actions",
-  "actions.commands.file.load.all_duplicates.success": "§8» §f§lActions §8┃ §7Loaded all actions",
+  "actions.commands.file.save.all_variables.success": "§8» §f§lActions §8┃ §7Saved all variables",
+  "actions.commands.file.load.all_variables.success": "§8» §f§lActions §8┃ §7Loaded all variables",
+
+  "actions.commands.file.save.all_regions.success": "§8» §f§lActions §8┃ §7Saved all regions",
+  "actions.commands.file.load.all_regions.success": "§8» §f§lActions §8┃ §7Loaded all regions",
+
+  "actions.commands.file.save.all_actions.success": "§8» §f§lActions §8┃ §7Saved all changed actions",
+  "actions.commands.file.save.all_actions_unchanged.success": "§8» §f§lActions §8┃ §7Saved all actions",
+  "actions.commands.file.load.all_actions.success": "§8» §f§lActions §8┃ §7Loaded all unique actions",
+  "actions.commands.file.load.all_actions_duplicates.success": "§8» §f§lActions §8┃ §7Loaded all actions",
+
+  "actions.commands.file.save.all.success": "§8» §f§lActions §8┃ §7Saved all changed actions, variables & regions",
+  "actions.commands.file.save.all_unchanged.success": "§8» §f§lActions §8┃ §7Saved all actions, variables & regions",
+  "actions.commands.file.load.all.success": "§8» §f§lActions §8┃ §7Loaded all unique actions, variables & regions",
+  "actions.commands.file.load.all_duplicates.success": "§8» §f§lActions §8┃ §7Loaded all actions, variables & regions",
 
   "actions.commands.variables.title": "§8» §7Variables (%s§7):",
   "actions.commands.variables.page": "§8» §7Page %s§8/%s",

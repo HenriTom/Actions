@@ -22,7 +22,7 @@ object LocalVariableStorage {
         }
     }
 
-    private fun loadVariables() {
+    fun loadVariables() {
         try {
             val file = dataDir.resolve("local_variables.json").toFile()
             if (file.exists())
@@ -38,7 +38,7 @@ object LocalVariableStorage {
         }
     }
 
-    private fun saveVariables() {
+    fun saveVariables() {
         try {
             val file = dataDir.resolve("local_variables.json").toFile()
             file.parentFile.mkdirs()

@@ -3,38 +3,32 @@ package me.henritom.actionsv2.command.impl.file.load
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import me.henritom.actionsv2.loader.ActionsLoader
-import me.henritom.actionsv2.regions.RegionManager
-import me.henritom.actionsv2.variables.LocalVariableStorage
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.text.Text
 
-object LoadAllCommand {
+object LoadAllActionsCommand {
 
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
-        return ClientCommandManager.literal("all")
+        return ClientCommandManager.literal("actions")
             .then(ClientCommandManager.argument("includeDuplicates", BoolArgumentType.bool())
                 .executes { context ->
                     val includeDuplicates = BoolArgumentType.getBool(context, "includeDuplicates")
 
                     ActionsLoader.loadAll(!includeDuplicates)
-                    LocalVariableStorage.loadVariables()
-                    RegionManager.loadRegions()
 
                     if (includeDuplicates)
-                        context.source.sendFeedback(Text.translatable("actions.commands.file.load.all_duplicates.success"))
+                        context.source.sendFeedback(Text.translatable("actions.commands.file.load.all_actions_duplicates.success"))
                     else
-                        context.source.sendFeedback(Text.translatable("actions.commands.file.load.all.success"))
+                        context.source.sendFeedback(Text.translatable("actions.commands.file.load.all_actions.success"))
 
                     1
                 }
             )
             .executes { context ->
                 ActionsLoader.loadAll()
-                LocalVariableStorage.loadVariables()
-                RegionManager.loadRegions()
 
-                context.source.sendFeedback(Text.translatable("actions.commands.file.load.all.success"))
+                context.source.sendFeedback(Text.translatable("actions.commands.file.load.all_actions.success"))
 
                 1
             }
