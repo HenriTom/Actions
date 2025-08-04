@@ -13,6 +13,12 @@
   "actions.commands.variables.set": "§8» §f§lActions §8┃ §7Set variable %s §7to %s",
   "actions.commands.variables.removed": "§8» §f§lActions §8┃ §7Removed variable %s",
 
+  "actions.commands.regions.title": "§8» §7Regions (%s§7):",
+  "actions.commands.regions.list.it": "§8» %s§8[%s§8/%s§8]: (%s§8/%s§8/%s§8) (%s§8/%s§8/%s§8)",
+  "actions.commands.regions.set.success": "§8» §f§lActions §8┃ §7Set region %s §7to §8[%s§8/%s§8]: (%s§8/%s§8/%s§8) (%s§8/%s§8/%s§8)",
+  "actions.commands.regions.remove.success": "§8» §f§lActions §8┃ §7Removed region %s",
+  "actions.commands.regions.not_found": "§8» §f§lActions §8┃ §7No region found with the id %s",
+
   "actions.commands.list.title": "§8» §7Actions (%s§7):",
   "actions.commands.list.it": "§8» %s§8[%s§8]",
 

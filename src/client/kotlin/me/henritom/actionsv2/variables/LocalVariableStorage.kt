@@ -30,6 +30,8 @@ object LocalVariableStorage {
                     val loadedVariables = Json.decodeFromString<Map<String, JsonPrimitive>>(content)
                     variables.putAll(loadedVariables)
                 }
+
+            logger.info("Loaded ${variables.size} variables.")
         } catch (e: Exception) {
             e.printStackTrace()
             logger.error("Failed to load local variables: ${e.message}")
@@ -41,6 +43,7 @@ object LocalVariableStorage {
             val file = dataDir.resolve("local_variables.json").toFile()
             file.parentFile.mkdirs()
             file.writeText(Json { prettyPrint = true }.encodeToString(variables))
+            logger.info("Saved ${variables.size} variables.")
         } catch (e: Exception) {
             e.printStackTrace()
             logger.error("Failed to save local variables: ${e.message}")

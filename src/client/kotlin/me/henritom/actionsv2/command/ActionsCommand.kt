@@ -13,6 +13,7 @@ object ActionsCommand {
                     .then(DebugCommand.register())
                     .then(FileCommand.register())
                     .then(ListCommand.register())
+                    .then(RegionsCommand.register())
                     .then(VariablesCommand.register())
             )
         }

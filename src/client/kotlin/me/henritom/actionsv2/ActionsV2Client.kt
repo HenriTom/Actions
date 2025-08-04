@@ -5,6 +5,7 @@ import me.henritom.actionsv2.axn.task.TaskRegistry
 import me.henritom.actionsv2.axn.trigger.TriggerRegistry
 import me.henritom.actionsv2.command.ActionsCommand
 import me.henritom.actionsv2.loader.ActionsLoader
+import me.henritom.actionsv2.regions.RegionManager
 import me.henritom.actionsv2.variables.GlobalVariableStorage
 import me.henritom.actionsv2.variables.LocalVariableStorage
 import net.fabricmc.api.ClientModInitializer
@@ -14,6 +15,8 @@ object ActionsV2Client : ClientModInitializer {
 	override fun onInitializeClient() {
 		GlobalVariableStorage.init()
 		LocalVariableStorage.init()
+
+		RegionManager.init()
 
 		TaskRegistry.initTypes()
 		TriggerRegistry.initTypes()
