@@ -8,7 +8,7 @@ object ConditionUtil {
     private val logger = LogManager.getLogger("Actions/Condition")
 
     fun evaluateCondition(condition: String): Boolean {
-        val replaced = VariableHelper.replaceStr(condition)
+        val replaced = VariableHelper.replaceStr(condition, null)
         val parts = replaced.trim().split(" ")
 
         return evalParts(parts)

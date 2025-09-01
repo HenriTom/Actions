@@ -16,7 +16,7 @@ object ConditionConvertCommand {
                 .executes { context ->
                     val condition = StringArgumentType.getString(context, "condition")
 
-                    context.source.sendFeedback(Text.translatable("actions.commands.debug.time_convert.success", VariableHelper.replaceStr(condition), ConditionUtil.evaluateCondition(condition)))
+                    context.source.sendFeedback(Text.translatable("actions.commands.debug.time_convert.success", VariableHelper.replaceStr(condition, null), ConditionUtil.evaluateCondition(condition)))
 
                     1
                 }

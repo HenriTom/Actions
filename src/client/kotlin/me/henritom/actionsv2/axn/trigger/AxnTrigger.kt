@@ -4,7 +4,8 @@ import me.henritom.actionsv2.axn.AxnAction
 
 class AxnTrigger (
     val type: String,
-    val data: MutableMap<String, Any> = mutableMapOf()
+    val data: MutableMap<String, Any> = mutableMapOf(),
+    var callArgs: String
 ) {
     @Transient
     var parent: AxnAction? = null
@@ -16,7 +17,7 @@ class AxnTrigger (
             if (data["privilege_level"] != null)
                 privilegeLevel = data["privilege_level"] as Int
 
-            parent?.execute(this, privilegeLevel)
+            parent?.execute(this, privilegeLevel, callArgs)
             true
         } catch (e: Exception) {
             e.printStackTrace()

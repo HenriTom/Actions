@@ -10,6 +10,7 @@ object ActionsCommand {
             dispatcher.register(
                 ClientCommandManager.literal("actions")
                     .then(AboutCommand.register())
+                    .then(CallCommand.register())
                     .then(DebugCommand.register())
                     .then(FileCommand.register())
                     .then(ListCommand.register())

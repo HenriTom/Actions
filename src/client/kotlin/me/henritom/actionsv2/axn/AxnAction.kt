@@ -46,7 +46,7 @@ class AxnAction(
     var privilegeLevel: Int = 0 // Privilege level the action uses while running (0 = Basic, 1 = Elevated, 2 = Privileged)
         private set
 
-    fun execute(trigger: AxnTrigger, privilegeLevel: Int = 0): ActionScheduler? {
+    fun execute(trigger: AxnTrigger, privilegeLevel: Int = 0, callArgs: String = ""): ActionScheduler? {
         if (disabled) {
             logger.warn("Action $id is disabled.")
             return null
@@ -59,6 +59,9 @@ class AxnAction(
 
         require(privilegeLevel in 0..2) { "Invalid privilege level: $privilegeLevel" }
         this.privilegeLevel = privilegeLevel
+
+        variables["privilege_level"] = privilegeLevel
+        variables["call_args"] = callArgs
 
         scheduler = ActionScheduler(this).start()
 

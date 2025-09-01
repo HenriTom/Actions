@@ -4,19 +4,22 @@ import me.henritom.actionsv2.axn.AxnContext
 
 object VariableHelper {
 
-    fun replaceStr(str: String, context: AxnContext? = null): String {
+    fun replaceStr(str: String, context: AxnContext?): String {
         var new = str
 
         for (word in str.split(" "))
             if (word.startsWith("$"))
-                new = new.replaceFirst(word, get(word.substring(1)).toString())
+                new = new.replaceFirst(word, get(word.substring(1), context).toString())
 
         return new
     }
 
-    fun get(variable: String, context: AxnContext? = null): Any? {
+    fun get(variable: String, context: AxnContext?): Any? {
         if (variable.startsWith("$"))
             return variable
+
+        if (context != null && variable.startsWith("action."))
+            return context.variables[variable.substring("action.".length)]
 
         if (variable.startsWith("local."))
             return LocalVariableStorage.getVariable(variable.substring("local.".length))

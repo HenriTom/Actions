@@ -18,6 +18,9 @@
   "actions.commands.file.load.all.success": "§8» §f§lActions §8┃ §7Loaded all unique actions, variables & regions",
   "actions.commands.file.load.all_duplicates.success": "§8» §f§lActions §8┃ §7Loaded all actions, variables & regions",
 
+  "actions.commands.call.no_call_trigger": "§8» §f§lActions §8┃ §7No %s §7trigger found",
+  "actions.commands.call.success": "§8» §f§lActions §8┃ §7Called action %s",
+
   "actions.commands.variables.title": "§8» §7Variables (%s§7):",
   "actions.commands.variables.page": "§8» §7Page %s§8/%s",
   "actions.commands.variables.page_not_found": "§8» §f§lActions §8┃ §7No variables found on page %s",

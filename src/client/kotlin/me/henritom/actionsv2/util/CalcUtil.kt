@@ -10,7 +10,7 @@ object CalcUtil {
 
     fun evaluateExpression(expression: String): Double? {
         return try {
-            ExpressionBuilder(VariableHelper.replaceStr(expression)).build().evaluate()
+            ExpressionBuilder(VariableHelper.replaceStr(expression, null)).build().evaluate()
         } catch (e: Exception) {
             logger.error("Failed to evaluate expression: $expression", e)
             null

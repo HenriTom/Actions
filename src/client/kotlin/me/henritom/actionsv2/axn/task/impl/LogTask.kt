@@ -7,7 +7,7 @@ import me.henritom.actionsv2.variables.VariableHelper
 class LogTask: AxnTask("log") {
 
     override suspend fun execute(context: AxnContext, extraData: Map<String, Any>): Boolean {
-        val message = VariableHelper.replaceStr(data["message"]?.toString() ?: "No message provided")
+        val message = VariableHelper.replaceStr(data["message"]?.toString() ?: "No message provided", context)
 
         when (data["level"]?.toString()?.lowercase()) {
             "debug" -> context.logger.debug(message)

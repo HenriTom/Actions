@@ -11,6 +11,12 @@ object AboutCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("about")
             .then(ClientCommandManager.argument("actionID", StringArgumentType.string())
+                .suggests {  _, builder ->
+                    ActionManager.loadedActions.forEach { (id, _) ->
+                        builder.suggest(id)
+                    }
+                    builder.buildFuture()
+                }
                 .then(ClientCommandManager.argument("stat", StringArgumentType.string())
                     .suggests { context, builder ->
                         builder.suggest("triggers")

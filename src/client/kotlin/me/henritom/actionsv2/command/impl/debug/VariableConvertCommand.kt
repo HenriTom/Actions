@@ -15,7 +15,7 @@ object VariableConvertCommand {
                 .executes { context ->
                     val variable = StringArgumentType.getString(context, "variable")
 
-                    context.source.sendFeedback(Text.translatable("actions.commands.debug.time_convert.success", variable, VariableHelper.replaceStr(variable)))
+                    context.source.sendFeedback(Text.translatable("actions.commands.debug.time_convert.success", variable, VariableHelper.replaceStr(variable, null)))
 
                     1
                 }
