@@ -86,9 +86,8 @@ object CallCommand {
         }
 
         callTrigger.data["privilege_level"] = privilegeLevel
-        callTrigger.callArgs = callArgs
 
-        callTrigger.trigger()
+        callTrigger.trigger(callArgs)
 
         context.source.sendFeedback(Text.translatable("actions.commands.call.success", actionID))
 

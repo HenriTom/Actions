@@ -82,7 +82,7 @@ object TriggerRegistry {
         if (registeredTriggers.containsKey(trigger))
             return false
 
-        registeredTriggers.put(trigger, trigger.type)
+        registeredTriggers[trigger] = trigger.type
 
         return true
     }
@@ -90,6 +90,6 @@ object TriggerRegistry {
     fun triggerAll(triggerType: String) {
         for ((trigger, type) in registeredTriggers)
             if (triggerType == type)
-                trigger.trigger()
+                trigger.trigger("forced")
     }
 }
