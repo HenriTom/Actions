@@ -31,6 +31,21 @@ object TaskRegistry {
                 TaskSetting("length", "The number of tasks to execute if the previous 'if' condition is false", "number", "1", false)
             )
         )
+
+        TaskType("for", "Repeats a set of tasks a specified number of times",
+            listOf(
+                TaskSetting("times", "The number of times to repeat the tasks", "number", "0", true),
+                TaskSetting("length", "The number of tasks to repeat", "number", "1", false)
+            )
+        )
+
+        TaskType("while", "Repeats a set of tasks while a specified condition is true",
+            listOf(
+                TaskSetting("condition", "The condition to evaluate", "string", "", true),
+                TaskSetting("length", "The number of tasks to repeat", "number", "1", false),
+                TaskSetting("max_iterations", "The maximum number of iterations to prevent infinite loops (0 for unlimited)", "number", "0", false)
+            )
+        )
     }
 
     fun registerTaskType(taskType: TaskType): Boolean {

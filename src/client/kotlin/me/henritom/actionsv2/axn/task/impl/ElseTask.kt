@@ -4,7 +4,7 @@ import me.henritom.actionsv2.axn.AxnContext
 import me.henritom.actionsv2.axn.task.AxnTask
 import me.henritom.actionsv2.util.ConditionUtil
 
-class ElseTask : AxnTask("if") {
+class ElseTask : AxnTask("else") {
     override suspend fun execute(context: AxnContext, extraData: Map<String, Any>): Boolean {
         var taskIndex = context.scheduler.currentTaskIndex
         var condition = "1 != 1"

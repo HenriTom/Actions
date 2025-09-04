@@ -1,9 +1,6 @@
 package me.henritom.actionsv2.axn.task
 
-import me.henritom.actionsv2.axn.task.impl.ElseTask
-import me.henritom.actionsv2.axn.task.impl.IfTask
-import me.henritom.actionsv2.axn.task.impl.LogTask
-import me.henritom.actionsv2.axn.task.impl.WaitTask
+import me.henritom.actionsv2.axn.task.impl.*
 import org.apache.logging.log4j.LogManager
 
 data class RawAxnTask(
@@ -17,6 +14,8 @@ fun RawAxnTask.toAxnTask(): AxnTask? {
         "wait" -> WaitTask().apply { data.putAll(this@toAxnTask.data) }
         "if" -> IfTask().apply { data.putAll(this@toAxnTask.data) }
         "else" -> ElseTask().apply { data.putAll(this@toAxnTask.data) }
+        "for" -> ForTask().apply { data.putAll(this@toAxnTask.data) }
+        "while" -> WhileTask().apply { data.putAll(this@toAxnTask.data) }
         else -> {
             LogManager.getLogger("Actions/RawAxnTask").error("Unknown task type: $type")
             null
