@@ -14,7 +14,7 @@ class WhileTask : AxnTask("while") {
         val loopEnd = thisTask + length
 
         var iterations = 0
-        while(ConditionUtil.evaluateCondition(condition) && iterations < max_iterations || max_iterations == 0) {
+        while(ConditionUtil.evaluateCondition(condition) && (iterations < max_iterations || max_iterations == 0)) {
             for (taskIndex in (thisTask + 1) until loopEnd + 1)
                 context.action.tasks[taskIndex].execute(context, extraData)
 

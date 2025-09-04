@@ -46,6 +46,12 @@ object TaskRegistry {
                 TaskSetting("max_iterations", "The maximum number of iterations to prevent infinite loops (0 for unlimited)", "number", "0", false)
             )
         )
+
+        TaskType("jump", "Jumps to a specified task index in the task list",
+            listOf(
+                TaskSetting("destination", "The index of the task to jump to", "number", "0", true)
+            )
+        )
     }
 
     fun registerTaskType(taskType: TaskType): Boolean {

@@ -1,6 +1,5 @@
 {
-  "actions.commands.debug.time_convert.success": "§8» §f§lActions §8┃ §7Converted time %s §7to %s",
-  "actions.commands.debug.key_convert.success": "§8» §f§lActions §8┃ §7Converted key %s §7to %s",
+  "actions.commands.debug.time_convert.success": "§8» §f§lActions §8┃ §7Converted %s §7to %s",
   "actions.commands.debug.force_trigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
 
   "actions.commands.file.save.all_variables.success": "§8» §f§lActions §8┃ §7Saved all variables",

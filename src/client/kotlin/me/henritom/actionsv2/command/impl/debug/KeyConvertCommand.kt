@@ -15,7 +15,7 @@ object KeyConvertCommand {
                 .executes { context ->
                     val keyStr = StringArgumentType.getString(context, "keyStr")
 
-                    context.source.sendFeedback(Text.translatable("actions.commands.debug.key_convert.success", keyStr, KeyUtil.parseKeyString(keyStr)))
+                    context.source.sendFeedback(Text.translatable("actions.commands.debug.time_convert.success", keyStr, KeyUtil.parseKeyString(keyStr)))
 
                     1
                 }
