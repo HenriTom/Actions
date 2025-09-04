@@ -10,7 +10,8 @@ class ActionScheduler(private val action: AxnAction) {
     private val logger = LogManager.getLogger("Actions/Scheduler/${action.id}")
     private val scope = CoroutineScope(Dispatchers.Default)
 
-    private var currentTaskIndex = 0
+    var currentTaskIndex: Int = 0
+        private set
     private var running = false
     private var alive = false
     private var speed = 1.0
