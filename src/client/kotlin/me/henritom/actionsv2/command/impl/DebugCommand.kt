@@ -12,6 +12,7 @@ object DebugCommand {
             .then(CalcCommand.register())
             .then(ConditionConvertCommand.register())
             .then(ForceTriggerCommand.register())
+            .then(KeyConvertCommand.register())
             .then(TimeConvertCommand.register())
             .then(VariableConvertCommand.register())
     }

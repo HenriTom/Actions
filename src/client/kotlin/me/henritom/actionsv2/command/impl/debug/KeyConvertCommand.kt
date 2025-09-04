@@ -2,20 +2,20 @@ package me.henritom.actionsv2.command.impl.debug
 
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
-import me.henritom.actionsv2.util.TimeUtil
+import me.henritom.actionsv2.util.KeyUtil
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.text.Text
 
-object TimeConvertCommand {
+object KeyConvertCommand {
 
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
-        return ClientCommandManager.literal("time_convert")
-            .then(ClientCommandManager.argument("timeStr", StringArgumentType.string())
+        return ClientCommandManager.literal("key_convert")
+            .then(ClientCommandManager.argument("keyStr", StringArgumentType.string())
                 .executes { context ->
-                    val timeStr = StringArgumentType.getString(context, "timeStr")
+                    val keyStr = StringArgumentType.getString(context, "keyStr")
 
-                    context.source.sendFeedback(Text.translatable("actions.commands.debug.time_convert.success", timeStr, TimeUtil.parseTimeString(timeStr)))
+                    context.source.sendFeedback(Text.translatable("actions.commands.debug.key_convert.success", keyStr, KeyUtil.parseKeyString(keyStr)))
 
                     1
                 }

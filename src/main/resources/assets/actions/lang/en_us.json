@@ -1,5 +1,6 @@
 {
-  "actions.commands.debug.time_convert.success": "§8» §f§lActions §8┃ §7Converted %s §7to %s",
+  "actions.commands.debug.time_convert.success": "§8» §f§lActions §8┃ §7Converted time %s §7to %s",
+  "actions.commands.debug.key_convert.success": "§8» §f§lActions §8┃ §7Converted key %s §7to %s",
   "actions.commands.debug.force_trigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
 
   "actions.commands.file.save.all_variables.success": "§8» §f§lActions §8┃ §7Saved all variables",
@@ -47,7 +48,7 @@
   "actions.commands.about.it": "§8» %s",
   "actions.commands.about.trigger.start": "§8§m                                \n§8» §7About %s §7trigger\n§8§m                                \n§8» §7Description:\n%s\n§8§m                                \n§8» §7Data:",
   "actions.commands.about.task.start": "§8§m                                \n§8» §7About %s §7task\n§8§m                                \n§8» §7Description:\n%s\n§8§m                                \n§8» §7Data:",
-  "actions.commands.about.trigger.setting_it": "§8• %s§8[%s§8]:\n  §7required=%s§7, optional=%s§7, default=%s",
+  "actions.commands.about.trigger.setting_it": "§8• %s§8[%s§8]:\n  §7required=%s§7, type=%s§7, default=%s",
   "actions.commands.about.trigger.no_data": "No data required",
   "actions.commands.about.trigger.end": "§8§m                                "
 }

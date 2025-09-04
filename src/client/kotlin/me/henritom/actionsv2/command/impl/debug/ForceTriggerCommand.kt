@@ -15,7 +15,7 @@ object ForceTriggerCommand {
                 .executes { context ->
                     val triggerName = StringArgumentType.getString(context, "trigger")
 
-                    TriggerRegistry.triggerAll(triggerName)
+                    TriggerRegistry.triggerAll(triggerName, "forced")
 
                     context.source.sendFeedback(Text.translatable("actions.commands.debug.force_trigger.success", triggerName))
 
