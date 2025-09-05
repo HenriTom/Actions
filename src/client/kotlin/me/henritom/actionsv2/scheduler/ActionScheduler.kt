@@ -12,7 +12,8 @@ class ActionScheduler(private val action: AxnAction) {
 
     var currentTaskIndex: Int = 0
         private set
-    private var running = false
+    var running = false
+        private set
     private var alive = false
     private var speed = 1.0
 
