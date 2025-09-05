@@ -64,17 +64,12 @@ object CallCommand {
             )
     }
 
-    fun trigger(
-        context: CommandContext<FabricClientCommandSource>,
-        ct: String = "call",
-        privilegeLevel: Int = 0,
-        callArgs: String = ""
-    ): Int {
+    fun trigger(context: CommandContext<FabricClientCommandSource>, ct: String = "call", privilegeLevel: Int = 0, callArgs: String = ""): Int {
         val actionID = StringArgumentType.getString(context, "actionID")
         val action = ActionManager.loadedActions[actionID]
 
         if (action == null) {
-            context.source.sendError(Text.translatable("actions.commands.about.not_found", actionID))
+            context.source.sendError(Text.translatable("actions.commands.about.action_not_found", actionID))
             return 0
         }
 

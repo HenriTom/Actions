@@ -15,6 +15,7 @@ object ActionsCommand {
                     .then(FileCommand.register())
                     .then(ListCommand.register())
                     .then(RegionsCommand.register())
+                    .then(SchedulerCommand.register())
                     .then(VariablesCommand.register())
             )
         }
