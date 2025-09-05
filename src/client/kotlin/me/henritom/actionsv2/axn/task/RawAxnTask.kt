@@ -17,6 +17,8 @@ fun RawAxnTask.toAxnTask(): AxnTask? {
         "for" -> ForTask().apply { data.putAll(this@toAxnTask.data) }
         "while" -> WhileTask().apply { data.putAll(this@toAxnTask.data) }
         "jump" -> JumpTask().apply { data.putAll(this@toAxnTask.data) }
+        "end" -> EndTask().apply { data.putAll(this@toAxnTask.data) }
+        "pause" -> PauseTask().apply { data.putAll(this@toAxnTask.data) }
         else -> {
             LogManager.getLogger("Actions/RawAxnTask").error("Unknown task type: $type")
             null

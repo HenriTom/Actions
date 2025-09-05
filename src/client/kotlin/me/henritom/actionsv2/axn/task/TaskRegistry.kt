@@ -52,6 +52,14 @@ object TaskRegistry {
                 TaskSetting("destination", "The index of the task to jump to", "number", "0", true)
             )
         )
+
+        TaskType("end", "Ends the current action execution",
+            emptyList()
+        )
+
+        TaskType("pause", "Pauses/Resumes the current action execution",
+            emptyList()
+        )
     }
 
     fun registerTaskType(taskType: TaskType): Boolean {
