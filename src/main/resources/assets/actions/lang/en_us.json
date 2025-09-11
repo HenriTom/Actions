@@ -1,6 +1,7 @@
 {
   "actions.commands.debug.time_convert.success": "§8» §f§lActions §8┃ §7Converted %s §7to %s",
   "actions.commands.debug.force_trigger.success": "§8» §f§lActions §8┃ §7Forced %s §7to trigger",
+  "actions.commands.debug.current_region.success": "§8» §f§lActions §8┃ §7Current region(s): %s",
 
   "actions.commands.file.save.all_variables.success": "§8» §f§lActions §8┃ §7Saved all variables",
   "actions.commands.file.load.all_variables.success": "§8» §f§lActions §8┃ §7Loaded all variables",

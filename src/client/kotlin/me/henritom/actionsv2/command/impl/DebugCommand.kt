@@ -11,6 +11,7 @@ object DebugCommand {
         return ClientCommandManager.literal("debug")
             .then(CalcCommand.register())
             .then(ConditionConvertCommand.register())
+            .then(CurrentRegionCommand.register())
             .then(ForceTriggerCommand.register())
             .then(KeyConvertCommand.register())
             .then(TimeConvertCommand.register())
