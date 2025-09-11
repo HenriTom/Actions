@@ -56,5 +56,6 @@
   "actions.commands.scheduler.resume": "§8» §f§lActions §8┃ §7Resumed scheduler for action %s",
   "actions.commands.scheduler.no_scheduler": "§8» §f§lActions §8┃ §7No scheduler found for action %s",
   "actions.commands.scheduler.speedup.success": "§8» §f§lActions §8┃ §7Sped up action %s §7by %s§7x",
-  "actions.commands.scheduler.slowdown.success": "§8» §f§lActions §8┃ §7Slowed down action %s §7by %s§7x"
+  "actions.commands.scheduler.slowdown.success": "§8» §f§lActions §8┃ §7Slowed down action %s §7by %s§7x",
+  "actions.commands.scheduler.kill": "§8» §f§lActions §8┃ §7Killed all running tasks for action %s"
 }
