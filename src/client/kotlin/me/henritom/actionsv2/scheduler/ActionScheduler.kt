@@ -52,13 +52,14 @@ class ActionScheduler(private val action: AxnAction) {
         job = null
     }
 
-    fun jumpTo(taskIndex: Int) {
+    fun jumpTo(taskIndex: Int): Boolean {
         if (taskIndex !in action.tasks.indices) {
             logger.error("Task index out of bounds: $taskIndex")
-            return
+            return false
         }
 
         currentTaskIndex = taskIndex
+        return true
     }
 
     fun speedUp(factor: Double) {

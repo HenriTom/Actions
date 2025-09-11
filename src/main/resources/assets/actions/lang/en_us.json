@@ -57,5 +57,7 @@
   "actions.commands.scheduler.no_scheduler": "§8» §f§lActions §8┃ §7No scheduler found for action %s",
   "actions.commands.scheduler.speedup.success": "§8» §f§lActions §8┃ §7Sped up action %s §7by %s§7x",
   "actions.commands.scheduler.slowdown.success": "§8» §f§lActions §8┃ §7Slowed down action %s §7by %s§7x",
-  "actions.commands.scheduler.kill": "§8» §f§lActions §8┃ §7Killed all running tasks for action %s"
+  "actions.commands.scheduler.kill": "§8» §f§lActions §8┃ §7Killed all running tasks for action %s",
+  "actions.commands.scheduler.jump.too_high": "§8» §f§lActions §8┃ §7Task %s §7out of bounds for action %s",
+  "actions.commands.scheduler.jump.success": "§8» §f§lActions §8┃ §7Jumped to task %s §7for action %s"
 }
