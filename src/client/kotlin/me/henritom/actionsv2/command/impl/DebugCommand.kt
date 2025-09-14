@@ -13,6 +13,7 @@ object DebugCommand {
             .then(ConditionConvertCommand.register())
             .then(CurrentRegionCommand.register())
             .then(ForceTriggerCommand.register())
+            .then(FunctionConvertCommand.register())
             .then(KeyConvertCommand.register())
             .then(TimeConvertCommand.register())
             .then(VariableConvertCommand.register())

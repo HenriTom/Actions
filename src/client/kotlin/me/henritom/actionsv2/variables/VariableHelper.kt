@@ -1,15 +1,20 @@
 package me.henritom.actionsv2.variables
 
 import me.henritom.actionsv2.axn.AxnContext
+import me.henritom.actionsv2.util.FunctionUtil
 
 object VariableHelper {
 
     fun replaceStr(str: String, context: AxnContext?): String {
         var new = str
 
-        for (word in str.split(" "))
+        for (word in str.split(" ")) {
             if (word.startsWith("$"))
                 new = new.replaceFirst(word, get(word.substring(1), context).toString())
+
+            if (word.startsWith("%"))
+                new = new.replaceFirst(word, FunctionUtil.functionStringToBoolean(word.substring(1)).toString())
+        }
 
         return new
     }
