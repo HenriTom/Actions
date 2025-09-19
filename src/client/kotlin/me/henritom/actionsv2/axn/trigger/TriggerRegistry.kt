@@ -1,5 +1,7 @@
 package me.henritom.actionsv2.axn.trigger
 
+import me.henritom.actionsv2.axn.trigger.impl.RegionTrigger
+
 object TriggerRegistry {
     private val registeredTriggers: MutableMap<AxnTrigger, String> = mutableMapOf()
     val registeredTriggerTypes: MutableSet<TriggerType> = mutableSetOf()
@@ -50,8 +52,8 @@ object TriggerRegistry {
 
         TriggerType("region_update", "Triggers, when the region is updated",
             listOf(
-                TriggerSetting("region", "The region to watch for changes", "string"),
-                TriggerSetting("type", "The type of the region update", "list(enter,leave)", "enter")
+                TriggerSetting("region", "The region to watch for changes", "string", required = false),
+                TriggerSetting("type", "The type of the region update", "list(any,enter,leave)", "enter", required = false)
             )
         )
 
@@ -68,6 +70,8 @@ object TriggerRegistry {
                 TriggerSetting("type", "The type of the world change event", "list(enter,leave)", "enter")
             )
         )
+
+        RegionTrigger.register()
     }
 
     fun registerTriggerType(triggerType: TriggerType): Boolean {
