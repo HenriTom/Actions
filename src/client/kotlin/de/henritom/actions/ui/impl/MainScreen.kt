@@ -9,6 +9,7 @@ import de.henritom.actions.util.MessageUtil
 import de.henritom.actions.util.RenderUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
@@ -284,43 +285,43 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
             }
     }
 
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
+    override fun mouseClicked(click: Click, doubled: Boolean): Boolean {
+        super.mouseClicked(click, doubled)
 
-        if (button != 0)
+        if (click.button() != 0)
             return false
 
         // Single End Buttons
-        if (mouseX.toInt() in (width / 1.5 + width / 24).toInt()..(width - width / 24) && mouseY.toInt() in width / 24..height - width / 24) {
+        if (click.x.toInt() in (width / 1.5 + width / 24).toInt()..(width - width / 24) && click.y.toInt() in width / 24..height - width / 24) {
             for (i in 0 until ActionScheduler.runningActions.size)
-                if (isMouseOverEndButton(mouseX.toInt(), mouseY.toInt(), i) && i + scrollRunning < ActionScheduler.runningActions.size) {
+                if (isMouseOverEndButton(click.x.toInt(), click.y.toInt(), i) && i + scrollRunning < ActionScheduler.runningActions.size) {
                     ActionScheduler.runningActions[i + scrollRunning].end()
                     return true
                 }
         }
 
         // End All Actions Button
-        if (mouseX.toInt() in (width / 1.5 + width / 24).toInt()..(width - width / 24) && mouseY.toInt() in (height - width / 24 - textRenderer.fontHeight - 1)..height - width / 24)
+        if (click.x.toInt() in (width / 1.5 + width / 24).toInt()..(width - width / 24) && click.y.toInt() in (height - width / 24 - textRenderer.fontHeight - 1)..height - width / 24)
             scrollRunning = SchedulerHelper().endAllActions()
 
         // Clear Console Button
-        if (mouseX.toInt() in width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY.toInt() in height - width / 24 - textRenderer.fontHeight - 1..height - width / 24)
+        if (click.x.toInt() in width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && click.y.toInt() in height - width / 24 - textRenderer.fontHeight - 1..height - width / 24)
             scrollConsole = MessageUtil(null).clearConsole()
 
         // Button 1 (Add Action)
-        if (mouseX.toInt() in width / 24..(width / 24) * 8 && mouseY.toInt() in width / 24..(height / 24) * 6)
+        if (click.x.toInt() in width / 24..(width / 24) * 8 && click.y.toInt() in width / 24..(height / 24) * 6)
             MinecraftClient.getInstance().setScreen(CreateScreen(this))
 
         // Button 2 (Edit Action)
-        if (mouseX.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY.toInt() in width / 24..(height / 24) * 6)
+        if (click.x.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && click.y.toInt() in width / 24..(height / 24) * 6)
             MinecraftClient.getInstance().setScreen(ManageScreen(this))
 
         // Button 3 (Disabled Actions)
-        if (mouseX.toInt() in width / 24..(width / 24) * 8 && mouseY.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
+        if (click.x.toInt() in width / 24..(width / 24) * 8 && click.y.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
             MinecraftClient.getInstance().setScreen(DisabledActionsScreen(this))
 
         // Button 4 (Other)
-        if (mouseX.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && mouseY.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
+        if (click.x.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && click.y.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
             MinecraftClient.getInstance().setScreen(OtherScreen(this))
 
         return false

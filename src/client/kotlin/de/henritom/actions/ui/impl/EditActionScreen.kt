@@ -9,6 +9,7 @@ import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
@@ -297,8 +298,8 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         )
     }
 
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
+    override fun mouseClicked(click: Click, doubled: Boolean): Boolean {
+        super.mouseClicked(click, doubled)
 
         return true
     }

@@ -8,6 +8,7 @@ import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
@@ -230,10 +231,10 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
         )
     }
 
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
+    override fun mouseClicked(click: Click, doubled: Boolean): Boolean {
+        super.mouseClicked(click, doubled)
 
-        if (button != 0)
+        if (click.button() != 0)
             return false
 
         val triggersList = action?.triggers?.drop(scroll) ?: return false
@@ -259,7 +260,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 val xEnd = xPos + width - 8
                 val yEnd = yPos + textRenderer.fontHeight + 4
 
-                if (mouseX.toInt() in xStart..xEnd && mouseY.toInt() in yPos..yEnd) {
+                if (click.x.toInt() in xStart..xEnd && click.y.toInt() in yPos..yEnd) {
                     when (value) {
                         "actions.ui.triggers.top.remove" -> {
                             action?.triggers?.remove(trigger)

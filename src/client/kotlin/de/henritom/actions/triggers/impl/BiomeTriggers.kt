@@ -18,7 +18,7 @@ class BiomeTriggers {
                     for (trigger in action.triggers) {
                         when (trigger.type) {
                             TriggerEnum.BIOME_ENTER -> {
-                                val biome = client.player?.world?.getBiome(client.player?.blockPos)
+                                val biome = client.world?.getBiome(client.player?.blockPos)
 
                                 if (biome != lastBiomeEnter && biome != null)
                                     if (biome.key.get().value.toString().contains(trigger.value.toString()))
@@ -28,7 +28,7 @@ class BiomeTriggers {
                             }
 
                             TriggerEnum.BIOME_LEAVE -> {
-                                val biome = client.player?.world?.getBiome(client.player?.blockPos)
+                                val biome = client.world?.getBiome(client.player?.blockPos)
 
                                 if (biome != lastBiomeLeave && lastBiomeLeave != null)
                                     if (lastBiomeLeave!!.key.get().value.toString().contains(trigger.value.toString()))

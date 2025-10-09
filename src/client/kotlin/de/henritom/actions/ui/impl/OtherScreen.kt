@@ -6,6 +6,7 @@ import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.ConfirmLinkScreen
 import net.minecraft.client.gui.screen.Screen
@@ -122,19 +123,19 @@ class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ot
         )
     }
 
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
+    override fun mouseClicked(click: Click, doubled: Boolean): Boolean {
+        super.mouseClicked(click, doubled)
 
-        if (button != 0)
+        if (click.button() != 0)
             return false
 
         // Top Buttons
         // Button 1
-        if (mouseX.toInt() in 8..(width / 3 - 4) && mouseY.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
+        if (click.x.toInt() in 8..(width / 3 - 4) && click.y.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
             MinecraftClient.getInstance().setScreen(SharingScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
 
         // Button 2
-        if (mouseX.toInt() in (width / 3 + 4)..(width / 3 + 4 + width / 3 - 8) && mouseY.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
+        if (click.x.toInt() in (width / 3 + 4)..(width / 3 + 4 + width / 3 - 8) && click.y.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
             MinecraftClient.getInstance().setScreen(ConfirmLinkScreen({ bl: Boolean ->
                 if (bl)
                     Util.getOperatingSystem().open(URI("https://discord.gg/XdHBJKTvxJ"))
@@ -142,12 +143,12 @@ class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ot
                 MinecraftClient.getInstance().setScreen(this) }, "https://discord.gg/XdHBJKTvxJ", true))
 
         // Button 3
-        if (mouseX.toInt() in (width / 3 + 4 + width / 3 + 4 - 4)..(width / 3 - 4 + width / 3 - 4 + width / 3) && mouseY.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
+        if (click.x.toInt() in (width / 3 + 4 + width / 3 + 4 - 4)..(width / 3 - 4 + width / 3 - 4 + width / 3) && click.y.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
             MinecraftClient.getInstance().setScreen(SettingsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
 
         // List
         // Button 1
-        if (mouseX.toInt() in 8..(width - 8) && mouseY.toInt() in (3 + textRenderer.fontHeight * 9)..(4 + textRenderer.fontHeight * 12))
+        if (click.x.toInt() in 8..(width - 8) && click.y.toInt() in (3 + textRenderer.fontHeight * 9)..(4 + textRenderer.fontHeight * 12))
             MinecraftClient.getInstance().setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
 
         return true

@@ -6,6 +6,7 @@ import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
@@ -236,10 +237,10 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
         )
     }
 
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
+    override fun mouseClicked(click: Click, doubled: Boolean): Boolean {
+        super.mouseClicked(click, doubled)
 
-        if (button != 0)
+        if (click.button() != 0)
             return false
 
         val actionList = ActionManager.instance.actions.drop(scroll)
@@ -268,7 +269,7 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
 
                 val messageUtil = MessageUtil(null)
 
-                if (mouseX.toInt() in xStart..xEnd && mouseY.toInt() in yPos..yEnd) {
+                if (click.x.toInt() in xStart..xEnd && click.y.toInt() in yPos..yEnd) {
                     when (value) {
                         "actions.ui.manage.top.call" -> {
                             action.call()

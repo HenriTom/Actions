@@ -4,8 +4,10 @@ import de.henritom.actions.ui.impl.MainScreen
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.input.KeyInput
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
+import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 import java.awt.event.KeyEvent
 import java.util.*
@@ -28,7 +30,7 @@ class KeyBindUtil {
                 "actions.options.open_gui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_V,
-                "actions.options.category"
+                KeyBinding.Category(Identifier.of("actions", "options.category"))
             )
         )
 
@@ -39,11 +41,15 @@ class KeyBindUtil {
     }
 
     fun simulateKeyPress(s: String) {
-        MinecraftClient.getInstance().keyboard.onKey(MinecraftClient.getInstance().window.handle, getKeyCodeByString(s), 0, GLFW.GLFW_PRESS, 0)
+        MinecraftClient.getInstance()?.execute {
+            KeyBinding.setKeyPressed(InputUtil.fromKeyCode(KeyInput(getKeyCodeByString(s), GLFW.glfwGetKeyScancode(getKeyCodeByString(s)), 0)), true)
+        }
     }
 
     fun simulateKeyRelease(s: String) {
-        MinecraftClient.getInstance().keyboard.onKey(MinecraftClient.getInstance().window.handle, getKeyCodeByString(s), 0, GLFW.GLFW_RELEASE, 0)
+        MinecraftClient.getInstance()?.execute {
+            KeyBinding.setKeyPressed(InputUtil.fromKeyCode(KeyInput(getKeyCodeByString(s), GLFW.glfwGetKeyScancode(getKeyCodeByString(s)), 0)), false)
+        }
     }
 
     fun simulateKeyClick(s: String, delay: Long) {

@@ -4,6 +4,7 @@ import de.henritom.actions.config.ConfigManager
 import de.henritom.actions.ui.UIColors
 import de.henritom.actions.util.MessageUtil
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
@@ -84,13 +85,13 @@ class SettingsScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
         )
     }
 
-    override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        super.mouseClicked(mouseX, mouseY, button)
+    override fun mouseClicked(click: Click, doubled: Boolean): Boolean {
+        super.mouseClicked(click, doubled)
 
-        if (button != 0)
+        if (click.button() != 0)
             return false
 
-        if (mouseX.toInt() in 4..4 + textRenderer.fontHeight && mouseY.toInt() in 7 + textRenderer.fontHeight * 3..7 + textRenderer.fontHeight * 4)
+        if (click.x.toInt() in 4..4 + textRenderer.fontHeight && click.y.toInt() in 7 + textRenderer.fontHeight * 3..7 + textRenderer.fontHeight * 4)
             addOptionsScreenButton = !addOptionsScreenButton
 
         return true

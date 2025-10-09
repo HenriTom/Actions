@@ -146,9 +146,9 @@ class GlobalVariableStorage {
 
         variables["world_difficulty"] = client.world?.difficulty ?: "Unknown"
 
-        variables["world_spawn_x"] = client.world?.spawnPos?.x ?: "Unknown"
-        variables["world_spawn_y"] = client.world?.spawnPos?.y ?: "Unknown"
-        variables["world_spawn_z"] = client.world?.spawnPos?.z ?: "Unknown"
+        variables["world_spawn_x"] = client.world?.spawnPoint?.pos?.x ?: "Unknown"
+        variables["world_spawn_y"] = client.world?.spawnPoint?.pos?.y ?: "Unknown"
+        variables["world_spawn_z"] = client.world?.spawnPoint?.pos?.z ?: "Unknown"
 
         // Client
         variables["client_language"] = client.languageManager?.language ?: "Unknown"
