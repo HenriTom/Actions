@@ -207,6 +207,6 @@
 
   "actions.ui.settings.add_options_screen": "Add an Actions button to the Options screen",
 
-  "actions.options.category": "Actions Legacy",
+  "key.category.minecraft.actions_legacy": "Actions Legacy",
   "actions.options.open_gui": "Open GUI"
 }

@@ -30,7 +30,7 @@ class KeyBindUtil {
                 "actions.options.open_gui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_V,
-                KeyBinding.Category(Identifier.of("actions", "options.category"))
+                KeyBinding.Category(Identifier.of("actions_legacy"))
             )
         )
 

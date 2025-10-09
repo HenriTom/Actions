@@ -207,6 +207,6 @@
 
   "actions.ui.settings.add_options_screen": "Füge einen Actions Knopf zum Hauptmenü hinzu",
 
-  "actions.options.category": "Actions Legacy",
+  "key.category.minecraft.actions_legacy": "Actions Legacy",
   "actions.options.open_gui": "GUI öffnen"
 }
