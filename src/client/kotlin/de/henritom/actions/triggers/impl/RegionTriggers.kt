@@ -21,7 +21,7 @@ class RegionTriggers {
                                     if (region.playerList.contains(client.player)) continue
                                     else {
                                         region.playerList.add(client.player!!)
-                                        action.call()
+                                        action.call(trigger.id)
                                     }
                             }
 
@@ -33,7 +33,7 @@ class RegionTriggers {
                                     if (!region.playerList.contains(client.player)) continue
                                     else {
                                         region.playerList.remove(client.player!!)
-                                        action.call()
+                                        action.call(trigger.id)
                                     }
                             }
 

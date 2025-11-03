@@ -13,8 +13,9 @@ abstract class Action(val name: String) {
     var author = "%Unknown%"
     var file: File? = null
 
-    open fun call(vararg callArgs: Any) {
+    open fun call(triggerID: Int, vararg callArgs: Any) {
         this.callArgs.clear()
+        this.callArgs.add(triggerID)
         this.callArgs.addAll(callArgs)
     }
 }

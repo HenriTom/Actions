@@ -1,5 +1,6 @@
 package de.henritom.actions.variables
 
+import de.henritom.actions.region.RegionManager
 import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.EquipmentSlot
 import java.text.SimpleDateFormat
@@ -118,18 +119,29 @@ class GlobalVariableStorage {
 
         variables["player_effects"] = client.player?.statusEffects?.map { it.effectType.key.get().value.toString() } ?: "None"
 
-        variables["player_main_hand"] = client.player?.mainHandStack ?: "Unknown"
-        variables["player_off_hand"] = client.player?.offHandStack ?: "Unknown"
-        variables["player_helmet"] = client.player?.getEquippedStack(EquipmentSlot.HEAD) ?: "Unknown"
-        variables["player_chestplate"] = client.player?.getEquippedStack(EquipmentSlot.CHEST) ?: "Unknown"
-        variables["player_leggings"] = client.player?.getEquippedStack(EquipmentSlot.LEGS) ?: "Unknown"
-        variables["player_boots"] = client.player?.getEquippedStack(EquipmentSlot.FEET) ?: "Unknown"
+        variables["player_main_hand"] = client.player?.mainHandStack?.toString()?.split(" ")[1] ?: "Unknown"
+        variables["amount_player_main_hand"] = client.player?.mainHandStack?.toString()?.split(" ")[0] ?: "Unknown"
+        variables["player_off_hand"] = client.player?.offHandStack?.toString()?.split(" ")[1] ?: "Unknown"
+        variables["amount_player_off_hand"] = client.player?.offHandStack?.toString()?.split(" ")[0] ?: "Unknown"
+        variables["player_helmet"] = client.player?.getEquippedStack(EquipmentSlot.HEAD)?.toString()?.split(" ")[1] ?: "Unknown"
+        variables["amount_player_helmet"] = client.player?.getEquippedStack(EquipmentSlot.HEAD)?.toString()?.split(" ")[0] ?: "Unknown"
+        variables["player_chestplate"] = client.player?.getEquippedStack(EquipmentSlot.CHEST)?.toString()?.split(" ")[1] ?: "Unknown"
+        variables["amount_player_chestplate"] = client.player?.getEquippedStack(EquipmentSlot.CHEST) ?.toString()?.split(" ")[0]?: "Unknown"
+        variables["player_leggings"] = client.player?.getEquippedStack(EquipmentSlot.LEGS)?.toString()?.split(" ")[1] ?: "Unknown"
+        variables["amount_player_leggings"] = client.player?.getEquippedStack(EquipmentSlot.LEGS)?.toString()?.split(" ")[0] ?: "Unknown"
+        variables["player_boots"] = client.player?.getEquippedStack(EquipmentSlot.FEET)?.toString()?.split(" ")[1] ?: "Unknown"
+        variables["amount_player_boots"] = client.player?.getEquippedStack(EquipmentSlot.FEET)?.toString()?.split(" ")[0] ?: "Unknown"
 
         variables["player_light_level"] = client.world?.getLightLevel(client.player?.blockPos) ?: "Unknown"
         variables["player_block"] = client.world?.getBlockState(client.player?.blockPos)?.block?.name?.string ?: "Unknown"
         variables["player_block_details"] = client.world?.getBlockState(client.player?.blockPos) ?: "Unknown"
 
         variables["player_gamemode"] = client.interactionManager?.currentGameMode ?: "Unknown"
+
+        variables["player_region"] = RegionManager.instance.regionsThePlayerIsIn()
+
+        variables["player_last_damage_source"] = client.player?.recentDamageSource?.name ?: "Unknown"
+        variables["player_inventory_count"] = client.player?.inventory?.count { !it.isEmpty } ?: 0
 
         // World
         variables["world_dimension"] = client.world?.dimension?.effects ?: "Unknown"

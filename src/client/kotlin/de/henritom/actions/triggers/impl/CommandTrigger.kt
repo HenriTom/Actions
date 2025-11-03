@@ -14,7 +14,7 @@ class CommandTrigger {
         for (action in ActionManager.instance.actions)
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.COMMAND && trigger.value == nameID) {
-                    action.call()
+                    action.call(trigger.id)
                     messageUtil.printTranslatable("actions.triggers.command.called", nameID)
                     return
                 }

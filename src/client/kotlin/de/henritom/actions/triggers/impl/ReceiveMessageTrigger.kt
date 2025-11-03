@@ -21,7 +21,7 @@ class ReceiveMessageTrigger {
                 }
 
                 if (triggerType == ReceiveMessageEnum.ANY)
-                    action.call()
+                    action.call(trigger.id)
 
                 if (split.size < 2)
                     return
@@ -34,19 +34,19 @@ class ReceiveMessageTrigger {
                 }
 
                 if (triggerType == ReceiveMessageEnum.CONTAINS && message.contains(msg))
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.CONTAINS_NOT && !message.contains(msg))
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.STARTS && message.startsWith(msg))
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.EQUALS && message == msg)
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.EQUALS_IGNORE_CASE && message.equals(msg, ignoreCase = true))
-                    action.call()
+                    action.call(trigger.id)
             }
     }
 }

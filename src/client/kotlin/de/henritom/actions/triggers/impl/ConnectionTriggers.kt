@@ -12,14 +12,14 @@ class ConnectionTriggers {
                 for (action in ActionManager.instance.actions)
                     for (trigger in action.triggers)
                         if (trigger.type == TriggerEnum.JOIN)
-                            action.call()
+                            action.call(trigger.id)
             }
 
             ClientPlayConnectionEvents.DISCONNECT.register { _, _ ->
                 for (action in ActionManager.instance.actions)
                     for (trigger in action.triggers)
                         if (trigger.type == TriggerEnum.DISCONNECT)
-                            action.call()
+                            action.call(trigger.id)
             }
         }
     }

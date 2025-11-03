@@ -9,6 +9,6 @@ class RespawnTrigger {
         for (action in ActionManager.instance.actions)
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.RESPAWN)
-                    action.call()
+                    action.call(trigger.id)
     }
 }

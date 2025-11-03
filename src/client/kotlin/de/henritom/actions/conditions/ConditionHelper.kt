@@ -7,11 +7,6 @@ class ConditionHelper {
         fun checkIf(condition: String): Boolean {
             val conditionParts = MessageUtil(null).translateVariables(condition).split(" ")
 
-            println("Checking condition: ")
-            for (conditionPart in conditionParts)
-                print("$conditionPart ")
-            println()
-
             if (conditionParts.size != 3) {
                 if (conditionParts.size < 7)
                     return false

@@ -22,7 +22,7 @@ class BiomeTriggers {
 
                                 if (biome != lastBiomeEnter && biome != null)
                                     if (biome.key.get().value.toString().contains(trigger.value.toString()))
-                                        action.call()
+                                        action.call(trigger.id)
 
                                 lastBiomeEnter = biome
                             }
@@ -32,7 +32,7 @@ class BiomeTriggers {
 
                                 if (biome != lastBiomeLeave && lastBiomeLeave != null)
                                     if (lastBiomeLeave!!.key.get().value.toString().contains(trigger.value.toString()))
-                                        action.call()
+                                        action.call(trigger.id)
 
                                 lastBiomeLeave = biome
                             }

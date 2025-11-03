@@ -40,11 +40,11 @@ class InvUpdateTrigger {
                         }
 
                         when (triggerType) {
-                            InvUpdateEnum.ANY -> action.call()
-                            InvUpdateEnum.CONTAINS_ANY -> if (triggerStr.split("-").size > 1 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) }) action.call()
-                            InvUpdateEnum.CONTAINS_EXACT -> if (triggerStr.split("-").size > 2 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) && inv[it] == triggerStr.split("-")[2].toInt() }) action.call()
-                            InvUpdateEnum.CONTAINS_LESS -> if (triggerStr.split("-").size > 2 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) && inv[it]!! < triggerStr.split("-")[2].toInt() }) action.call()
-                            InvUpdateEnum.CONTAINS_MORE -> if (triggerStr.split("-").size > 2 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) && inv[it]!! > triggerStr.split("-")[2].toInt() }) action.call()
+                            InvUpdateEnum.ANY -> action.call(trigger.id)
+                            InvUpdateEnum.CONTAINS_ANY -> if (triggerStr.split("-").size > 1 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) }) action.call(trigger.id)
+                            InvUpdateEnum.CONTAINS_EXACT -> if (triggerStr.split("-").size > 2 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) && inv[it] == triggerStr.split("-")[2].toInt() }) action.call(trigger.id)
+                            InvUpdateEnum.CONTAINS_LESS -> if (triggerStr.split("-").size > 2 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) && inv[it]!! < triggerStr.split("-")[2].toInt() }) action.call(trigger.id)
+                            InvUpdateEnum.CONTAINS_MORE -> if (triggerStr.split("-").size > 2 && inv.keys.any { it.translationKey.contains(triggerStr.split("-")[1].lowercase()) && inv[it]!! > triggerStr.split("-")[2].toInt() }) action.call(trigger.id)
                         }
                     }
                 }

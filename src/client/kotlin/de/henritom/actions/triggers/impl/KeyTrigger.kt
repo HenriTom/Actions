@@ -15,6 +15,6 @@ class KeyTrigger {
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.KEYBIND)
                     if (trigger.value.toString().toIntOrNull() == key || KeyBindUtil().getKeyCodeByString(trigger.value.toString()) == key)
-                        action.call()
+                        action.call(trigger.id)
     }
 }
