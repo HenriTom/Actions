@@ -6,6 +6,7 @@ import me.henritom.actionsv2.axn.trigger.TriggerRegistry
 import me.henritom.actionsv2.command.ActionsCommand
 import me.henritom.actionsv2.loader.ActionsLoader
 import me.henritom.actionsv2.regions.RegionManager
+import me.henritom.actionsv2.util.SessionUtil
 import me.henritom.actionsv2.variables.GlobalVariableStorage
 import me.henritom.actionsv2.variables.LocalVariableStorage
 import net.fabricmc.api.ClientModInitializer
@@ -17,6 +18,7 @@ object ActionsV2Client : ClientModInitializer {
 		LocalVariableStorage.init()
 
 		RegionManager.init()
+        SessionUtil.loadSession()
 
 		TaskRegistry.initTypes()
 		TriggerRegistry.initTypes()
@@ -27,6 +29,7 @@ object ActionsV2Client : ClientModInitializer {
 
 		ClientLifecycleEvents.CLIENT_STOPPING.register {
 			ActionsLoader.saveAll()
+            SessionUtil.saveSession()
 		}
 
 		SchemaBuilder.build()

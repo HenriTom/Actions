@@ -14,7 +14,7 @@ object RegionUtil {
                 list.add(region.key)
 
         if (list.isEmpty())
-            list.add("no_region")
+            list.add("%no_region")
 
         return list
     }

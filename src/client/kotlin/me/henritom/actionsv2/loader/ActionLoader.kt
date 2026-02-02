@@ -72,7 +72,7 @@ object ActionsLoader {
             return
         }
 
-        ActionManager.loadedActions.put(action.id, action)
+        ActionManager.loadedActions[action.id] = action
 
         processed++
     }
