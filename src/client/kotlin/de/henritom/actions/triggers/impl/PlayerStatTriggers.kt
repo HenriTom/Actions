@@ -50,49 +50,49 @@ class PlayerStatTriggers {
         }
 
         private fun onHealthChange() {
-            ActionManager.instance.actions.forEach { action ->
-                action.triggers.filter { it.type == TriggerEnum.HEALTH_UPDATE }.forEach { _ ->
-                    client.player?.health?.let { action.call(it) }
+            ActionManager.instance.actions.toList().forEach { action ->
+                action.triggers.filter { it.type == TriggerEnum.HEALTH_UPDATE }.forEach { trigger ->
+                    client.player?.health?.let { action.call(trigger.id, it) }
                 }
             }
         }
 
         private fun onHungerChange() {
-            ActionManager.instance.actions.forEach { action ->
-                action.triggers.filter { it.type == TriggerEnum.HUNGER_UPDATE }.forEach { _ ->
-                    client.player?.hungerManager?.foodLevel?.let { action.call(it) }
+            ActionManager.instance.actions.toList().forEach { action ->
+                action.triggers.filter { it.type == TriggerEnum.HUNGER_UPDATE }.forEach { trigger ->
+                    client.player?.hungerManager?.foodLevel?.let { action.call(trigger.id, it) }
                 }
             }
         }
 
         private fun onArmorChange() {
-            ActionManager.instance.actions.forEach { action ->
-                action.triggers.filter { it.type == TriggerEnum.ARMOR_UPDATE }.forEach { _ ->
-                    client.player?.armor?.let { action.call(it) }
+            ActionManager.instance.actions.toList().forEach { action ->
+                action.triggers.filter { it.type == TriggerEnum.ARMOR_UPDATE }.forEach { trigger ->
+                    client.player?.armor?.let { action.call(trigger.id, it) }
                 }
             }
         }
 
         private fun onXPChange() {
             ActionManager.instance.actions.forEach { action ->
-                action.triggers.filter { it.type == TriggerEnum.XP_UPDATE }.forEach { _ ->
-                    client.player?.experienceProgress?.let { action.call(it) }
+                action.triggers.filter { it.type == TriggerEnum.XP_UPDATE }.forEach { trigger ->
+                    client.player?.experienceProgress?.let { action.call(trigger.id, it) }
                 }
             }
         }
 
         private fun onLevelChange() {
             ActionManager.instance.actions.forEach { action ->
-                action.triggers.filter { it.type == TriggerEnum.LEVEL_UPDATE }.forEach { _ ->
-                    client.player?.experienceLevel?.let { action.call(it) }
+                action.triggers.filter { it.type == TriggerEnum.LEVEL_UPDATE }.forEach { trigger ->
+                    client.player?.experienceLevel?.let { action.call(trigger.id, it) }
                 }
             }
         }
 
         private fun onTick() {
             ActionManager.instance.actions.forEach { action ->
-                action.triggers.filter { it.type == TriggerEnum.TICK }.forEach { _ ->
-                    action.call(0)
+                action.triggers.filter { it.type == TriggerEnum.TICK }.forEach { trigger ->
+                    action.call(trigger.id, 0)
                 }
             }
         }

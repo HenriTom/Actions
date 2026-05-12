@@ -113,7 +113,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                     val newAction = ActionEditManager.instance.renameAction(action!!, name)
                     if (newAction != null) {
                         messageUtil.printTranslatable("actions.ui.edit.changed_name", name)
-                        MinecraftClient.getInstance().setScreen(this.asAction(newAction))
+                        MinecraftClient.getInstance()?.setScreen(this.asAction(newAction))
                         return@builder
                     }
                 }
@@ -165,7 +165,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 val name = idField?.text ?: ""
 
                 val id = name.toIntOrNull()
-                if (id == null || id < 0 || !ActionManager.instance.actions.none { it.id == id }) {
+                if (id == null || id < 0 || !ActionManager.instance.actions.toList().none { it.id == id }) {
                     messageUtil.printTranslatable("actions.ui.edit.invalid_id")
                     return@builder
                 }
@@ -209,7 +209,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
             clearButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.clear")) {
                 ActionEditManager.instance.removeAuthor(action!!)
                 messageUtil.printTranslatable("actions.ui.edit.cleared_author")
-                MinecraftClient.getInstance().setScreen(this.asAction(action!!))
+                MinecraftClient.getInstance()?.setScreen(this.asAction(action!!))
                 return@builder
             }
                 .dimensions(
@@ -229,7 +229,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 if (ActionEditManager.instance.disableAction(action!!)) {
                     messageUtil.printTranslatable("actions.action.disabled", action!!.name)
                     ConfigManager().reloadActions()
-                    MinecraftClient.getInstance().setScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent)))
+                    MinecraftClient.getInstance()?.setScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent)))
                 } else
                     messageUtil.printTranslatable("actions.action.not_disabled", action!!.name)
             }
@@ -248,7 +248,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         if (triggersButton == null) {
             triggersButton =
                 ButtonWidget.builder(Text.translatable("actions.ui.edit.triggers", action!!.triggers.size)) {
-                    MinecraftClient.getInstance().setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
+                    MinecraftClient.getInstance()?.setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
                 }
                     .dimensions(
                         4,
@@ -264,7 +264,7 @@ class EditActionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         // Tasks Button
         if (tasksButton == null) {
             tasksButton = ButtonWidget.builder(Text.translatable("actions.ui.edit.tasks", action!!.tasks.size)) {
-                MinecraftClient.getInstance().setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
+                MinecraftClient.getInstance()?.setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
             }
                 .dimensions(
                     4,

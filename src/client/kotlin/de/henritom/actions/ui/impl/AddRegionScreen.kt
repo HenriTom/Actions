@@ -316,7 +316,7 @@ class AddRegionScreen(val parent: Screen?) : Screen(Text.translatable("actions.u
 
                 if (name.isNotEmpty() && RegionManager.instance.regions.none { it.name == name }) {
                     RegionManager.instance.addRegion(Region(name, pos1, pos2))
-                    MinecraftClient.getInstance().setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
+                    MinecraftClient.getInstance()?.setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
                 }
 
                 return@builder

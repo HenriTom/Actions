@@ -111,7 +111,7 @@ class EditTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                 task!!.value = value
 
                 messageUtil.printTranslatable("actions.task.edited", task!!.type.name, task!!.id.toString(), value)
-                MinecraftClient.getInstance().setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(task!!.action)).asAction(task!!.action))
+                MinecraftClient.getInstance()?.setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(task!!.action)).asAction(task!!.action))
             }
                 .dimensions(
                     4,

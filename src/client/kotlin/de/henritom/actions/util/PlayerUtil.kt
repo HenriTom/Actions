@@ -6,7 +6,7 @@ class PlayerUtil {
     companion object {
         fun setHotbarSlot(slot: Int) {
             if (slot in 0..8)
-                MinecraftClient.getInstance().player?.inventory?.selectedSlot = slot
+                MinecraftClient.getInstance()?.player?.inventory?.selectedSlot = slot
         }
     }
 }

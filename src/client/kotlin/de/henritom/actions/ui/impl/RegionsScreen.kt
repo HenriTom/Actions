@@ -213,7 +213,7 @@ class RegionsScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.
         // Add Button
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
-                MinecraftClient.getInstance().setScreen(AddRegionScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent)))))
+                MinecraftClient.getInstance()?.setScreen(AddRegionScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent)))))
                 return@builder
             }
                 .dimensions(
@@ -276,7 +276,7 @@ class RegionsScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.
                         }
 
                         "actions.ui.manage.top.edit" -> {
-                            MinecraftClient.getInstance().setScreen(EditRegionScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent)))).asRegion(region))
+                            MinecraftClient.getInstance()?.setScreen(EditRegionScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent)))).asRegion(region))
                         }
                     }
                     return true

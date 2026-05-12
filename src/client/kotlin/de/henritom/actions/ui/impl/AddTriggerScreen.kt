@@ -275,7 +275,7 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                             action!!.name,
                             value
                         )
-                        MinecraftClient.getInstance().setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
+                        MinecraftClient.getInstance()?.setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
                     }
 
                     2 -> {

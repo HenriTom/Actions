@@ -14,9 +14,9 @@ object ListCommand {
             .executes {
                 val messageUtil = MessageUtil(null)
 
-                messageUtil.printTranslatable("actions.list.title", ActionManager.instance.actions.size.toString())
+                messageUtil.printTranslatable("actions.list.title", ActionManager.instance.actions.toList().size.toString())
 
-                for (action in ActionManager.instance.actions)
+                for (action in ActionManager.instance.actions.toList())
                     messageUtil.printTranslatable("actions.list.it", action.name, action.id.toString())
 
                 Command.SINGLE_SUCCESS

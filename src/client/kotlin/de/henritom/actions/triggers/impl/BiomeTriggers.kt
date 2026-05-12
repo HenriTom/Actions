@@ -14,7 +14,7 @@ class BiomeTriggers {
 
         fun register() {
             ClientTickEvents.END_CLIENT_TICK.register { client ->
-                for (action in ActionManager.instance.actions) {
+                for (action in ActionManager.instance.actions.toList()) {
                     for (trigger in action.triggers) {
                         when (trigger.type) {
                             TriggerEnum.BIOME_ENTER -> {
@@ -22,7 +22,7 @@ class BiomeTriggers {
 
                                 if (biome != lastBiomeEnter && biome != null)
                                     if (biome.key.get().value.toString().contains(trigger.value.toString()))
-                                        action.call()
+                                        action.call(trigger.id)
 
                                 lastBiomeEnter = biome
                             }
@@ -32,7 +32,7 @@ class BiomeTriggers {
 
                                 if (biome != lastBiomeLeave && lastBiomeLeave != null)
                                     if (lastBiomeLeave!!.key.get().value.toString().contains(trigger.value.toString()))
-                                        action.call()
+                                        action.call(trigger.id)
 
                                 lastBiomeLeave = biome
                             }

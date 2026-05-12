@@ -2,6 +2,7 @@ package de.henritom.actions.commands.impl.scheduler.end
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.IntegerArgumentType
+import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import de.henritom.actions.scheduler.ActionScheduler
 import de.henritom.actions.scheduler.SchedulerHelper
@@ -31,6 +32,38 @@ object EndCommand {
                         messageUtil.printTranslatable("actions.scheduler.ended", scheduler.action.name, scheduler.runID.toString())
                     else
                         messageUtil.printTranslatable("actions.scheduler.not_ended", runID.toString())
+
+                    Command.SINGLE_SUCCESS
+                })
+    }
+
+    fun register2(): LiteralArgumentBuilder<FabricClientCommandSource>? {
+        return ClientCommandManager.literal("endall")
+            .then(ClientCommandManager.argument("actionID", StringArgumentType.string())
+                .suggests { _, builder ->
+                    ActionScheduler.runningActions
+                        .distinctBy { it.action.id }
+                        .forEach { scheduler ->
+                            builder.suggest(scheduler.action.id.toString())
+                        }
+                    builder.buildFuture()
+                }
+                .executes { context ->
+                    val actionId = StringArgumentType.getString(context, "actionID")
+                    val schedulers = SchedulerHelper().getSchedulersByActionId(actionId)
+
+                    val messageUtil = MessageUtil(null)
+
+                    if (schedulers.isEmpty()) {
+                        messageUtil.printTranslatable("actions.scheduler.not_ended", actionId)
+                        return@executes Command.SINGLE_SUCCESS
+                    }
+
+                    for (scheduler in schedulers) {
+                        scheduler.end()
+
+                        messageUtil.printTranslatable("actions.scheduler.ended", scheduler.action.name, scheduler.runID.toString())
+                    }
 
                     Command.SINGLE_SUCCESS
                 })

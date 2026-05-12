@@ -18,4 +18,8 @@ class SchedulerHelper {
     fun getSchedulerByRunID(runID: Int): ActionScheduler? {
         return ActionScheduler.runningActions.find { it.runID == runID }
     }
+
+    fun getSchedulersByActionId(actionId: String): List<ActionScheduler> {
+        return ActionScheduler.runningActions.filter { it.action.id.toString() == actionId || it.action.name == actionId }
+    }
 }

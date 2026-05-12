@@ -1,6 +1,7 @@
 package de.henritom.actions.region
 
 import de.henritom.actions.config.ConfigManager
+import net.minecraft.client.MinecraftClient
 import net.minecraft.util.math.BlockPos
 
 class RegionManager {
@@ -28,6 +29,16 @@ class RegionManager {
                     return true
 
         return false
+    }
+
+    fun regionsThePlayerIsIn(): MutableList<String> {
+        val list = mutableListOf<String>()
+
+        for (region in regions)
+            if (region.playerList.contains(MinecraftClient.getInstance()?.player))
+                list.add(region.name)
+
+        return list
     }
 
     fun regionByName(name: String): Region? {

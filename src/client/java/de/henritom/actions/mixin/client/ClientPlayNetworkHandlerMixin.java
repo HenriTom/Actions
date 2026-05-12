@@ -25,14 +25,15 @@ public class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onGameMessage", at = @At("HEAD"))
     private void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
         if (!Thread.currentThread().getName().contains("Netty"))
-            receiveMessageTrigger.trigger(String.valueOf(packet.content()));
+            receiveMessageTrigger.trigger(packet.content().getString());
     }
 
     @Inject(method = "onChatMessage", at = @At("HEAD"))
     private void onChatMessage(ChatMessageS2CPacket packet, CallbackInfo ci) {
         if (!Thread.currentThread().getName().contains("Netty"))
-            if (packet.sender() != null && !packet.sender().toString().equals(MinecraftClient.getInstance().getSession().getUuidOrNull().toString()))
+            if (packet.sender() != null && MinecraftClient.getInstance() != null && !packet.sender().toString().equals(MinecraftClient.getInstance().getSession().getUuidOrNull().toString())) {
                 receiveMessageTrigger.trigger(String.valueOf(packet.unsignedContent() == null ? packet.body().content() : packet.unsignedContent()));
+            }
     }
 
     @Inject(method = "onPlayerRespawn", at = @At("HEAD"))

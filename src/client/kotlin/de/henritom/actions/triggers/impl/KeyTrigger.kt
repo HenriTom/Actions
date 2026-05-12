@@ -8,13 +8,13 @@ import net.minecraft.client.MinecraftClient
 class KeyTrigger {
 
     fun trigger(key: Int) {
-        if (MinecraftClient.getInstance().currentScreen != null)
+        if (MinecraftClient.getInstance()?.currentScreen != null)
             return
 
         for (action in ActionManager.instance.actions)
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.KEYBIND)
                     if (trigger.value.toString().toIntOrNull() == key || KeyBindUtil().getKeyCodeByString(trigger.value.toString()) == key)
-                        action.call()
+                        action.call(trigger.id)
     }
 }

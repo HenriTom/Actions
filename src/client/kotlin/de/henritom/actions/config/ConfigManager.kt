@@ -154,7 +154,7 @@ class ConfigManager {
     fun saveAllActions() {
         logger.info("Trying to save all actions...")
 
-        for (action in ActionManager.instance.actions)
+        for (action in ActionManager.instance.actions.toList())
             saveAction(action)
 
         logger.info("Saved all actions!")

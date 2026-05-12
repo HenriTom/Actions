@@ -204,7 +204,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
         // Add Button
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
-                MinecraftClient.getInstance().setScreen(AddTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asAction(action!!))
+                MinecraftClient.getInstance()?.setScreen(AddTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asAction(action!!))
                 return@builder
             }
                 .dimensions(
@@ -267,7 +267,7 @@ class TriggersScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui
                             MessageUtil(null).printTranslatable("actions.trigger.removed", trigger.type.name, trigger.id.toString(), action!!.name)
                         }
                         "actions.ui.manage.top.edit" -> {
-                            MinecraftClient.getInstance().setScreen(EditTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asTrigger(trigger))
+                            MinecraftClient.getInstance()?.setScreen(EditTriggerScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!)).asTrigger(trigger))
                         }
                     }
                     return true

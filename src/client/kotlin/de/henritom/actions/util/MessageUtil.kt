@@ -17,7 +17,9 @@ class MessageUtil(var action: Action?) {
     }
 
     fun printChat(message: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.literal(message))
+        MinecraftClient.getInstance()?.execute {
+            MinecraftClient.getInstance()?.inGameHud?.chatHud?.addMessage(Text.literal(message))
+        }
     }
 
     fun printConsole(message: String, scheduler: ActionScheduler? = null) {
@@ -26,27 +28,27 @@ class MessageUtil(var action: Action?) {
     }
 
     fun printTranslatable(key: String, vararg vars: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.translatable(key, *vars.map { Text.literal(it) }.toTypedArray()))
+        MinecraftClient.getInstance()?.inGameHud?.chatHud?.addMessage(Text.translatable(key, *vars.map { Text.literal(it) }.toTypedArray()))
     }
 
     fun printTranslatableClickable(key: String, urlString: String, vararg vars: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.translatable(key, *vars.map { Text.literal(it) }.toTypedArray()).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
+        MinecraftClient.getInstance()?.inGameHud?.chatHud?.addMessage(Text.translatable(key, *vars.map { Text.literal(it) }.toTypedArray()).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
     }
 
     fun printTranslatableClickable(message: String, urlString: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.translatable(message).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
+        MinecraftClient.getInstance()?.inGameHud?.chatHud?.addMessage(Text.translatable(message).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
     }
 
     fun printClickable(message: String, urlString: String) {
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(Text.literal(message).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
+        MinecraftClient.getInstance()?.inGameHud?.chatHud?.addMessage(Text.literal(message).styled { it.withClickEvent(ClickEvent.OpenUrl(URI(urlString))) })
     }
 
     fun sendCommand(command: String) {
-        MinecraftClient.getInstance().player?.networkHandler?.sendChatCommand(command)
+        MinecraftClient.getInstance()?.player?.networkHandler?.sendChatCommand(command)
     }
 
     fun sayChat(message: String) {
-        MinecraftClient.getInstance().player?.networkHandler?.sendChatMessage(message)
+        MinecraftClient.getInstance()?.player?.networkHandler?.sendChatMessage(message)
     }
 
     fun clearConsole(): Int {

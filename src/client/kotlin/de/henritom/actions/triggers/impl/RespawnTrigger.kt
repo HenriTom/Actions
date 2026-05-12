@@ -6,9 +6,9 @@ import de.henritom.actions.triggers.TriggerEnum
 class RespawnTrigger {
 
     fun trigger() {
-        for (action in ActionManager.instance.actions)
+        for (action in ActionManager.instance.actions.toList())
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.RESPAWN)
-                    action.call()
+                    action.call(trigger.id)
     }
 }

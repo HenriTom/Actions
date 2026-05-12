@@ -210,7 +210,7 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
         // Add Button
         if (addButton == null) {
             addButton = ButtonWidget.builder(Text.translatable("actions.ui.triggers.add")) {
-                MinecraftClient.getInstance().setScreen(CreateScreen(this))
+                MinecraftClient.getInstance()?.setScreen(CreateScreen(this))
                 return@builder
             }
                 .dimensions(
@@ -272,11 +272,11 @@ class ManageScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.m
                 if (click.x.toInt() in xStart..xEnd && click.y.toInt() in yPos..yEnd) {
                     when (value) {
                         "actions.ui.manage.top.call" -> {
-                            action.call()
+                            action.call(-1)
                             messageUtil.printTranslatable("actions.action.called", action.name)
                         }
                         "actions.ui.manage.top.delete" -> if (ActionManager.instance.deleteAction(action.name)) messageUtil.printTranslatable("actions.action.deleted", action.name) else messageUtil.printTranslatable("actions.action.not_found", action.name)
-                        "actions.ui.manage.top.edit" -> MinecraftClient.getInstance().setScreen(EditActionScreen(this).asAction(action))
+                        "actions.ui.manage.top.edit" -> MinecraftClient.getInstance()?.setScreen(EditActionScreen(this).asAction(action))
                     }
                     return true
                 }

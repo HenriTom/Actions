@@ -132,24 +132,24 @@ class OtherScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.ot
         // Top Buttons
         // Button 1
         if (click.x.toInt() in 8..(width / 3 - 4) && click.y.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
-            MinecraftClient.getInstance().setScreen(SharingScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
+            MinecraftClient.getInstance()?.setScreen(SharingScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
 
         // Button 2
         if (click.x.toInt() in (width / 3 + 4)..(width / 3 + 4 + width / 3 - 8) && click.y.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
-            MinecraftClient.getInstance().setScreen(ConfirmLinkScreen({ bl: Boolean ->
+            MinecraftClient.getInstance()?.setScreen(ConfirmLinkScreen({ bl: Boolean ->
                 if (bl)
                     Util.getOperatingSystem().open(URI("https://discord.gg/XdHBJKTvxJ"))
 
-                MinecraftClient.getInstance().setScreen(this) }, "https://discord.gg/XdHBJKTvxJ", true))
+                MinecraftClient.getInstance()?.setScreen(this) }, "https://discord.gg/XdHBJKTvxJ", true))
 
         // Button 3
         if (click.x.toInt() in (width / 3 + 4 + width / 3 + 4 - 4)..(width / 3 - 4 + width / 3 - 4 + width / 3) && click.y.toInt() in (4 + textRenderer.fontHeight * 3)..(4 + textRenderer.fontHeight * 8))
-            MinecraftClient.getInstance().setScreen(SettingsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
+            MinecraftClient.getInstance()?.setScreen(SettingsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
 
         // List
         // Button 1
         if (click.x.toInt() in 8..(width - 8) && click.y.toInt() in (3 + textRenderer.fontHeight * 9)..(4 + textRenderer.fontHeight * 12))
-            MinecraftClient.getInstance().setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
+            MinecraftClient.getInstance()?.setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
 
         return true
     }

@@ -7,7 +7,7 @@ import de.henritom.actions.triggers.settings.ReceiveMessageEnum
 class ReceiveMessageTrigger {
 
     fun trigger(inMessage: String) {
-        for (action in ActionManager.instance.actions)
+        for (action in ActionManager.instance.actions.toList())
             for (trigger in action.triggers) {
                 if (trigger.type != TriggerEnum.RECEIVE_MESSAGE)
                     continue
@@ -21,7 +21,7 @@ class ReceiveMessageTrigger {
                 }
 
                 if (triggerType == ReceiveMessageEnum.ANY)
-                    action.call()
+                    action.call(trigger.id)
 
                 if (split.size < 2)
                     return
@@ -33,20 +33,22 @@ class ReceiveMessageTrigger {
                     message = message.substring(0, message.length - 1)
                 }
 
+                print("Message: $message, Message to check: $msg")
+
                 if (triggerType == ReceiveMessageEnum.CONTAINS && message.contains(msg))
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.CONTAINS_NOT && !message.contains(msg))
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.STARTS && message.startsWith(msg))
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.EQUALS && message == msg)
-                    action.call()
+                    action.call(trigger.id)
 
                 if (triggerType == ReceiveMessageEnum.EQUALS_IGNORE_CASE && message.equals(msg, ignoreCase = true))
-                    action.call()
+                    action.call(trigger.id)
             }
     }
 }

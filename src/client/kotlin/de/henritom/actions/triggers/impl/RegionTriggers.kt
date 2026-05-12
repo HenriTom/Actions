@@ -10,7 +10,7 @@ class RegionTriggers {
     companion object {
         fun register() {
             ClientTickEvents.END_CLIENT_TICK.register { client ->
-                for (action in ActionManager.instance.actions) {
+                for (action in ActionManager.instance.actions.toList()) {
                     for (trigger in action.triggers) {
                         when (trigger.type) {
                             TriggerEnum.REGION_ENTER -> {
@@ -21,7 +21,7 @@ class RegionTriggers {
                                     if (region.playerList.contains(client.player)) continue
                                     else {
                                         region.playerList.add(client.player!!)
-                                        action.call()
+                                        action.call(trigger.id)
                                     }
                             }
 
@@ -33,7 +33,7 @@ class RegionTriggers {
                                     if (!region.playerList.contains(client.player)) continue
                                     else {
                                         region.playerList.remove(client.player!!)
-                                        action.call()
+                                        action.call(trigger.id)
                                     }
                             }
 

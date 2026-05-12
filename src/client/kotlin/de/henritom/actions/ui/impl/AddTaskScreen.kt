@@ -142,7 +142,7 @@ class AddTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.
                     action!!.tasks.last().value = value
 
                     messageUtil.printTranslatable("actions.task.added.initial_value", task.name, action!!.name, value)
-                    MinecraftClient.getInstance().setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
+                    MinecraftClient.getInstance()?.setScreen(TasksScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(action!!)).asAction(action!!))
                 }
             }
                 .dimensions(

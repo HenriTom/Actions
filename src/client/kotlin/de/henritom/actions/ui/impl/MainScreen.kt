@@ -310,19 +310,19 @@ class MainScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.mai
 
         // Button 1 (Add Action)
         if (click.x.toInt() in width / 24..(width / 24) * 8 && click.y.toInt() in width / 24..(height / 24) * 6)
-            MinecraftClient.getInstance().setScreen(CreateScreen(this))
+            MinecraftClient.getInstance()?.setScreen(CreateScreen(this))
 
         // Button 2 (Edit Action)
         if (click.x.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && click.y.toInt() in width / 24..(height / 24) * 6)
-            MinecraftClient.getInstance().setScreen(ManageScreen(this))
+            MinecraftClient.getInstance()?.setScreen(ManageScreen(this))
 
         // Button 3 (Disabled Actions)
         if (click.x.toInt() in width / 24..(width / 24) * 8 && click.y.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
-            MinecraftClient.getInstance().setScreen(DisabledActionsScreen(this))
+            MinecraftClient.getInstance()?.setScreen(DisabledActionsScreen(this))
 
         // Button 4 (Other)
         if (click.x.toInt() in (width / 1.5 + width / 24).toInt() - width / 24 - (width / 24) * 8 + width / 24..(width / 1.5 + width / 24).toInt() - width / 24 && click.y.toInt() in (height / 24) * 6 + width / 24..(height / 24) * 6 + width / 24 + (height / 24) * 6 - width / 24)
-            MinecraftClient.getInstance().setScreen(OtherScreen(this))
+            MinecraftClient.getInstance()?.setScreen(OtherScreen(this))
 
         return false
     }

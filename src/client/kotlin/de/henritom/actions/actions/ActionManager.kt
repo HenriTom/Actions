@@ -30,7 +30,7 @@ class ActionManager {
         getActionByNameID(nameID)?.let { action ->
             for (trigger in action.triggers)
                 if (trigger.type == TriggerEnum.CALL) {
-                    action.call()
+                    action.call(trigger.id)
                     return 1
                 }
 
@@ -52,8 +52,8 @@ class ActionManager {
             return 2
 
         object : Action(name) {
-            override fun call(vararg callArgs: Any) {
-                super.call(*callArgs)
+            override fun call(triggerID: Int, vararg callArgs: Any) {
+                super.call(triggerID, *callArgs)
 
                 Thread {
                     val actionScheduler = ActionScheduler(this).start()
@@ -111,7 +111,7 @@ class ActionManager {
                 it.file = file
 
             actions.add(it)
-            it.author = MinecraftClient.getInstance().player?.name?.literalString ?: "%Unknown%"
+            it.author = MinecraftClient.getInstance()?.player?.name?.literalString ?: "%Unknown%"
         }
 
         return 1

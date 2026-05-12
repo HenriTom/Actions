@@ -15,7 +15,7 @@ object CallCommand {
         return ClientCommandManager.literal("call")
             .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
                 .suggests { _, builder ->
-                    ActionManager.instance.actions.filter { action ->
+                    ActionManager.instance.actions.toList().filter { action ->
                         for (trigger in action.triggers)
                             if (trigger.type == TriggerEnum.CALL)
                                 return@filter true

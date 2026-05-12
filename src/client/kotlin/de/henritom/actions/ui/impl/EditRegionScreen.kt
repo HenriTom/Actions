@@ -338,7 +338,7 @@ class EditRegionScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 if (name.isNotEmpty()) {
                     RegionManager.instance.removeRegion(region!!)
                     RegionManager.instance.addRegion(Region(name, pos1, pos2))
-                    MinecraftClient.getInstance().setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
+                    MinecraftClient.getInstance()?.setScreen(RegionsScreen(OtherScreen(MainScreen(GlobalUI.mainScreenParent))))
                 }
 
                 return@builder

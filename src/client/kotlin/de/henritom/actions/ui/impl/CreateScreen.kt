@@ -146,12 +146,12 @@ class CreateScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.c
                         }
 
                         if (action.id != preferredID)
-                            action.id = if (ActionManager.instance.actions.none { it.id == preferredID })
+                            action.id = if (ActionManager.instance.actions.toList().none { it.id == preferredID })
                                 preferredID
                             else
                                 ActionManager.instance.getNextAvailableID()
 
-                        MinecraftClient.getInstance().setScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent)))
+                        MinecraftClient.getInstance()?.setScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent)))
                     }
 
                     2 -> createText = "actions.ui.create.already_used"

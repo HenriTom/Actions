@@ -12,6 +12,7 @@ object SchedulerCommand {
     fun register(): LiteralArgumentBuilder<FabricClientCommandSource>? {
         return ClientCommandManager.literal("scheduler")
             .then(EndCommand.register())
+            .then(EndCommand.register2())
             .then(EndAllCommand.register())
             .then(SchListCommand.register())
     }

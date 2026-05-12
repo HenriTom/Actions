@@ -116,7 +116,7 @@ class EditTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions
                     trigger!!.id.toString(),
                     value
                 )
-                MinecraftClient.getInstance().setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(trigger!!.action)).asAction(trigger!!.action))
+                MinecraftClient.getInstance()?.setScreen(TriggersScreen(EditActionScreen(ManageScreen(MainScreen(GlobalUI.mainScreenParent))).asAction(trigger!!.action)).asAction(trigger!!.action))
             }
                 .dimensions(
                     4,

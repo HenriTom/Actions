@@ -14,7 +14,7 @@ object DeleteCommand {
         return ClientCommandManager.literal("delete")
             .then(ClientCommandManager.argument("name/id", StringArgumentType.string())
                 .suggests { _, builder ->
-                    ActionManager.instance.actions.forEach { action ->
+                    ActionManager.instance.actions.toList().forEach { action ->
                         builder.suggest(action.name)
                     }
                     builder.buildFuture()
