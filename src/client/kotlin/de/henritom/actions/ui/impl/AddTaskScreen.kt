@@ -86,16 +86,12 @@ class AddTaskScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.
         )
 
         if (typeButton == null) {
-            typeButton = CyclingButtonWidget.builder { taskEnum: TaskEnum -> Text.literal(taskEnum.name) }
+            typeButton = CyclingButtonWidget.builder(
+                { taskEnum -> Text.literal(taskEnum.name) },
+                TaskEnum.entries.first()
+            )
                 .values(TaskEnum.entries)
-                .initially(TaskEnum.entries.first())
-                .build(
-                    4,
-                    8 + textRenderer.fontHeight * 4,
-                    textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TaskEnum.entries.toTypedArray()
-                        .maxOf { textRenderer.getWidth(it.toString()) } + 16,
-                    textRenderer.fontHeight + 8,
-                    Text.translatable("actions.ui.addtask.type"))
+                .build(4, 8 + textRenderer.fontHeight * 4, textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TaskEnum.entries.maxOf { textRenderer.getWidth(it.toString()) } + 16,textRenderer.fontHeight + 8, Text.translatable("actions.ui.addtask.type")) { _, _ -> }
 
             addDrawableChild(typeButton)
         }

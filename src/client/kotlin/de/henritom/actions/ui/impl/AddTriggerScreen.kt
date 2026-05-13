@@ -27,7 +27,7 @@ import kotlin.io.path.exists
 class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.ui.addtrigger.title")) {
 
     private var typeButton: CyclingButtonWidget<TriggerEnum>? = null
-    private var subtypeButton: CyclingButtonWidget<Enum<*>>? = null
+    private var subtypeButton: CyclingButtonWidget<*>? = null
     private var valueField: TextFieldWidget? = null
     private var amountField: TextFieldWidget? = null
     private var addButton: ButtonWidget? = null
@@ -94,15 +94,12 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         )
 
         if (typeButton == null && action != null) {
-            typeButton = CyclingButtonWidget.builder { triggerEnum: TriggerEnum -> Text.literal(triggerEnum.name) }
+            typeButton = CyclingButtonWidget.builder(
+                { triggerEnum -> Text.literal(triggerEnum.name) },
+                ActionManager().getAvailableTriggersForAction(action!!).first()
+            )
                 .values(ActionManager().getAvailableTriggersForAction(action!!))
-                .initially(TriggerEnum.entries.first())
-                .build(
-                    4,
-                    8 + textRenderer.fontHeight * 4,
-                    textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray().maxOf { textRenderer.getWidth(it.toString()) } + 16,
-                    textRenderer.fontHeight + 8,
-                    Text.translatable("actions.ui.addtask.type"))
+                .build(4, 8 + textRenderer.fontHeight * 4, textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + ActionManager().getAvailableTriggersForAction(action!!).maxOf { textRenderer.getWidth(it.toString()) } + 16, textRenderer.fontHeight + 8, Text.translatable("actions.ui.addtask.type")) { _, _ -> }
 
             addDrawableChild(typeButton)
         }
@@ -111,19 +108,15 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
         when (typeButton?.value) {
             TriggerEnum.RECEIVE_MESSAGE -> {
                 if (subtypeButton == null && action != null) {
-                    subtypeButton =
-                        CyclingButtonWidget.builder { receiveMessageEnum: Enum<*> -> Text.literal(receiveMessageEnum.name) }
-                            .values(ReceiveMessageEnum.entries)
-                            .initially(ReceiveMessageEnum.entries.first())
-                            .build(
-                                8 + textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray()
-                                    .maxOf { textRenderer.getWidth(it.toString()) } + 16,
-                                8 + textRenderer.fontHeight * 4,
-                                textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.filter")) + ReceiveMessageEnum.entries.toTypedArray()
-                                    .maxOf { textRenderer.getWidth(it.toString()) } + 16,
-                                textRenderer.fontHeight + 8,
-                                Text.translatable("actions.ui.addtask.filter")
-                            )
+
+                    val values = ReceiveMessageEnum.entries
+
+                    subtypeButton = CyclingButtonWidget.builder(
+                        { e -> Text.literal(e.name) },
+                        values.first()
+                    )
+                        .values(values)
+                        .build(8 + textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.maxOf { textRenderer.getWidth(it.toString()) } + 16, 8 + textRenderer.fontHeight * 4, textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.filter")) + values.maxOf { textRenderer.getWidth(it.toString()) } + 16, textRenderer.fontHeight + 8, Text.translatable("actions.ui.addtask.filter")) { _, _ -> } as CyclingButtonWidget<*>?
 
                     subtypeButton!!.visible = true
                     addDrawableChild(subtypeButton)
@@ -132,22 +125,16 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
 
             TriggerEnum.INV_UPDATE -> {
                 if (subtypeButton == null && action != null) {
-                    subtypeButton =
-                        CyclingButtonWidget.builder { invUpdateEnum: Enum<*> -> Text.literal(invUpdateEnum.name) }
-                            .values(InvUpdateEnum.entries)
-                            .initially(InvUpdateEnum.entries.first())
-                            .build(
-                                8 + textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.toTypedArray()
-                                    .maxOf { textRenderer.getWidth(it.toString()) } + 16,
-                                8 + textRenderer.fontHeight * 4,
-                                textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.filter")) + InvUpdateEnum.entries.toTypedArray()
-                                    .maxOf { textRenderer.getWidth(it.toString()) } + 16,
-                                textRenderer.fontHeight + 8,
-                                Text.translatable("actions.ui.addtask.filter")
-                            )
+                    val values = InvUpdateEnum.entries
 
-                    amountPlus = textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.filter")) + InvUpdateEnum.entries.toTypedArray()
-                        .maxOf { textRenderer.getWidth(it.toString()) } + 16
+                    subtypeButton = CyclingButtonWidget.builder<InvUpdateEnum>(
+                        { e -> Text.literal(e.name) },
+                        values.first()
+                    )
+                        .values(values)
+                        .build(8 + textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.type")) + TriggerEnum.entries.maxOf { textRenderer.getWidth(it.toString()) } + 16,8 + textRenderer.fontHeight * 4,textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.filter")) + values.maxOf { textRenderer.getWidth(it.toString()) } + 16,textRenderer.fontHeight + 8,Text.translatable("actions.ui.addtask.filter")) { _, _ -> } as CyclingButtonWidget<*>?
+
+                    amountPlus = textRenderer.getWidth(" : ") + textRenderer.getWidth(Text.translatable("actions.ui.addtask.filter")) + values.maxOf { textRenderer.getWidth(it.toString()) } + 16
 
                     subtypeButton!!.visible = true
                     addDrawableChild(subtypeButton)
@@ -254,16 +241,18 @@ class AddTriggerScreen(val parent: Screen?) : Screen(Text.translatable("actions.
                 }
 
                 if (trigger == TriggerEnum.RECEIVE_MESSAGE && subtypeButton != null)
-                    value = subtypeButton?.value?.name + "-" + value
+                    value = (subtypeButton!!.value as ReceiveMessageEnum).name + "-" + value
+
+
 
                 if (trigger == TriggerEnum.INV_UPDATE && subtypeButton != null && amountField != null)
-                    value = subtypeButton?.value?.name + "-" + value + "-" + amountField?.text?.toInt()
+                    value = (subtypeButton!!.value as InvUpdateEnum).name + "-" + value + "-" + amountField!!.text.toInt()
 
                 else if (trigger == TriggerEnum.INV_UPDATE && subtypeButton != null)
-                    value = subtypeButton?.value?.name.toString() + "-" + value
+                    value = (subtypeButton!!.value as InvUpdateEnum).name + "-" + value
 
-                else if (trigger == TriggerEnum.INV_UPDATE && subtypeButton != null && subtypeButton?.value == InvUpdateEnum.ANY)
-                    value = subtypeButton?.value?.name.toString()
+                else if (trigger == TriggerEnum.INV_UPDATE && subtypeButton != null && subtypeButton!!.value == InvUpdateEnum.ANY)
+                    value = (subtypeButton!!.value as InvUpdateEnum).name
 
                 when (ActionEditManager.instance.addTrigger(action!!, trigger)) {
                     1 -> {

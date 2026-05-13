@@ -145,7 +145,7 @@ class GlobalVariableStorage {
         variables["player_inventory_count"] = client.player?.inventory?.count { !it.isEmpty } ?: 0
 
         // World
-        variables["world_dimension"] = client.world?.dimension?.effects ?: "Unknown"
+        variables["world_dimension"] = client.world?.dimensionEntry?.idAsString ?: "Unknown"
         variables["world_dimension_details"] = client.world?.dimension ?: "Unknown"
 
         variables["world_time"] = client.world?.time ?: "Unknown"

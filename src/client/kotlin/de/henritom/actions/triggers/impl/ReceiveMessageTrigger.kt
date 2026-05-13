@@ -16,7 +16,7 @@ class ReceiveMessageTrigger {
 
                 val triggerType = try {
                     ReceiveMessageEnum.valueOf(split[0])
-                } catch (e: IllegalArgumentException) {
+                } catch (_: IllegalArgumentException) {
                     return
                 }
 
@@ -32,8 +32,6 @@ class ReceiveMessageTrigger {
                     message = message.replace("literal{", "")
                     message = message.substring(0, message.length - 1)
                 }
-
-                print("Message: $message, Message to check: $msg")
 
                 if (triggerType == ReceiveMessageEnum.CONTAINS && message.contains(msg))
                     action.call(trigger.id)
